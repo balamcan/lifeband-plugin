@@ -25,11 +25,11 @@ add_action('wp_enqueue_scripts','lifeband_plugin_scripts');
  *  to trigger your code:*/
 
 //HOOKS
-add_action('init','super_plugin_init');
+add_action('init','lifeband_plugin_init');
 /********************************************************/
 /* FUNCTIONS
 ********************************************************/
-function super_plugin_init(){
+function lifeband_plugin_init(){
     //do work
     run_sub_process();
 }
@@ -37,5 +37,5 @@ function super_plugin_init(){
 function run_sub_process(){
     //more work
 }
-
+include_once 'init-admin.php';
 ?>
