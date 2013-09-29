@@ -37,5 +37,5 @@ function lifeband_plugin_init(){
 function run_sub_process(){
     //more work
 }
-include_once 'init-admin.php';
+include_once ('init-admin.php');
 ?>
