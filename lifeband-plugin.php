@@ -42,7 +42,7 @@ function run_sub_process(){
 
 //1
 function lifeband_plugin_menu() {
-    add_options_page('Super Plugin Options', 'Super Plugin', 'manage_options', 'lifeband-plugin-menu', 'lifeband_plugin_options');
+    add_options_page('Life Band Plugin Options', 'Life Band Plugin', 'manage_options', 'lifeband-plugin-menu', 'lifeband_plugin_options');
 }
 
 function register_mysettings() {

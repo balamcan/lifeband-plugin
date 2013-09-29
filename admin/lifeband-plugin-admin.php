@@ -14,9 +14,9 @@
 
 <form method="post" action="options.php">
 
-<?php settings_fields( 'lifeband-settings-group' ); ?>
+<?php settings_fields( 'super-settings-group' ); ?>
 
-<?php do_settings( 'lifeband-settings-group' ); ?>
+<?php do_settings_fields( 'super-settings-group', 'lifeband-plugin-menu'); ?>
 
 <table class="form-table">
 
