@@ -9,6 +9,7 @@ Author URI: http://none.com
 License: GPL2
 */
 global $wpdb;
+require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 //SETUP
 function lifeband_plugin_install(){
     //Do some installation work
