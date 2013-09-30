@@ -1,5 +1,6 @@
 <?php 
 	global $wpdb;
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	include_once($_SERVER['DOCUMENT_ROOT'].'/wp-config.php');
 	include_once($_SERVER['DOCUMENT_ROOT'].'/wp-load.php');
 	include_once($_SERVER['DOCUMENT_ROOT'].'/wp-includes/wp-db.php');
