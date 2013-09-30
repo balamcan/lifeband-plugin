@@ -13,12 +13,12 @@
 	    return $randomString;
 }
 	class generateUsers{
-			global $i = 0;
-			global $nombreUsuario = '';
-			global $pass = '';
-			global $lastId = 0;
-		function canti($cant=50){
 			
+		function canti($cant=50){
+			$i = 0;
+			$nombreUsuario = '';
+			$pass = '';
+			$lastId = 0;
 			While ($i <= $cant) DO{
 				$lastId = $wpdb->get_var("SELECT id INTO lastId from ". $wpdb->prefix."users order by id desc limit 1");
 				$lastId = $lastId + 1;
@@ -41,10 +41,10 @@
 					'comment_shortcuts'=> 'false',
 					'admin_color'=> 'fresh',
 					'use_ssl'=> '0',
-					'show_admin_bar_front'=> 'true'),
+					'show_admin_bar_front'=> 'true',
 					'wp_capabilities'=> 'a:1:{s:10:"subscriber";b:1;}',
 					'wp_user_level'=> '0',
-					'dismissed_wp_pointers'=> 'wp330_toolbar,wp330_saving_widgets,wp340_choose_image_from_library,wp340_customize_current_theme_link,wp350_media,wp360_revisions,wp360_locks';
+					'dismissed_wp_pointers'=> 'wp330_toolbar,wp330_saving_widgets,wp340_choose_image_from_library,wp340_customize_current_theme_link,wp350_media,wp360_revisions,wp360_locks'
 				);
 				$userPassTb = array('id' => $lastId,
 				'pass' => $passusr );

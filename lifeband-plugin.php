@@ -8,9 +8,23 @@ Author: Balam Palma
 Author URI: http://none.com
 License: GPL2
 */
+global $wpdb;
 //SETUP
 function lifeband_plugin_install(){
     //Do some installation work
+    $sql = "CREATE TABLE IF NOT EXISTS ".$wpdb->prefix."pass_qr(
+        `id` int(11) NOT NULL,
+        `pass` varchar(10) NOT NULL,
+        PRIMARY KEY (`id`),
+              KEY `id` (`id`),
+        CONSTRAINT `fk__#__pass__#__users1`
+          FOREIGN KEY (`id` )
+          REFERENCES `#__users` (`id`)
+          ON DELETE NO ACTION
+          ON UPDATE NO ACTION
+      ) 
+      ENGINE=MyISAM ";
+       dbDelta($sql);
     /*Create additional tables for the custom database*/
 }
 register_activation_hook(__FILE__,'lifeband_plugin_install'); 
