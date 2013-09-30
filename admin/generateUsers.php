@@ -4,14 +4,7 @@
 	include_once($_SERVER['DOCUMENT_ROOT'].'/wp-load.php');
 	include_once($_SERVER['DOCUMENT_ROOT'].'/wp-includes/wp-db.php');
 	
-	function generateRandomString($length = 10) {
-	    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	    $randomString = '';
-	    for ($i = 0; $i < $length; $i++) {
-	        $randomString .= $characters[rand(0, strlen($characters) - 1)];
-	    }
-	    return $randomString;
-}
+
 	class generateUsers{
 			
 		function canti($cant=50){
