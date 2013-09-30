@@ -14,13 +14,13 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 function lifeband_plugin_install(){
     //Do some installation work
     $sql = "CREATE TABLE IF NOT EXISTS ".$wpdb->prefix."pass_qr(
-        `id` int(11) NOT NULL,
-        `pass` varchar(10) NOT NULL,
-        PRIMARY KEY (`id`),
-        KEY `id` (`id`),
+        id int(11) NOT NULL,
+        pass varchar(10) NOT NULL,
+        PRIMARY KEY  (id),
+        KEY id (id),
         CONSTRAINT `fk___pass___users1`
-          FOREIGN KEY (`id` )
-          REFERENCES ".$wpdb->prefix."users` (`id`)
+          FOREIGN KEY (id )
+          REFERENCES ".$wpdb->prefix."users` (id)
           ON DELETE NO ACTION
           ON UPDATE NO ACTION
       ) 
