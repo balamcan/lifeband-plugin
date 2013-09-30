@@ -16,7 +16,7 @@ function lifeband_plugin_install(){
         `id` int(11) NOT NULL,
         `pass` varchar(10) NOT NULL,
         PRIMARY KEY (`id`),
-              KEY `id` (`id`),
+        KEY `id` (`id`),
         CONSTRAINT `fk___pass___users1`
           FOREIGN KEY (`id` )
           REFERENCES ".$wpdb->prefix."users` (`id`)
@@ -25,6 +25,7 @@ function lifeband_plugin_install(){
       ) 
       ENGINE=MyISAM 
       DEFAULT CHARACTER SET = utf8";
+       require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
        dbDelta($sql);
        
     /*Create additional tables for the custom database*/
