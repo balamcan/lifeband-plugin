@@ -17,14 +17,16 @@ function lifeband_plugin_install(){
         `pass` varchar(10) NOT NULL,
         PRIMARY KEY (`id`),
               KEY `id` (`id`),
-        CONSTRAINT `fk__#__pass__#__users1`
+        CONSTRAINT `fk___pass___users1`
           FOREIGN KEY (`id` )
-          REFERENCES `#__users` (`id`)
+          REFERENCES ".$wpdb->prefix."users` (`id`)
           ON DELETE NO ACTION
           ON UPDATE NO ACTION
       ) 
-      ENGINE=MyISAM ";
+      ENGINE=MyISAM 
+      DEFAULT CHARACTER SET = utf8";
        dbDelta($sql);
+       
     /*Create additional tables for the custom database*/
 }
 register_activation_hook(__FILE__,'lifeband_plugin_install'); 

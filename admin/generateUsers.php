@@ -19,7 +19,7 @@
 			$nombreUsuario = '';
 			$pass = '';
 			$lastId = 0;
-			While ($i <= $cant) DO{
+			While ($i <= $cant) {
 				$lastId = $wpdb->get_var("SELECT id INTO lastId from ". $wpdb->prefix."users order by id desc limit 1");
 				$lastId = $lastId + 1;
 				$passusr = wp_generate_password(8);
@@ -57,6 +57,6 @@
 
 	}
 
-	}
+    }
 
 ?>
