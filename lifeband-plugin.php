@@ -44,7 +44,8 @@ add_action('wp_enqueue_scripts','lifeband_plugin_scripts');
  *  to your site, you can use the ‘init’ or ‘wp_loaded’ action
  *  to trigger your code:*/
 
-
+//HOOKS
+add_action('init','lifeband_plugin_init');
 /********************************************************/
 /* FUNCTIONS
 ********************************************************/
@@ -57,8 +58,7 @@ function lifeband_plugin_init(){
 function run_sub_process(){
     //more work
 }
-//HOOKS
-add_action('init','lifeband_plugin_init');
+
 /* INITIALIZE THE ADMIN FUNCTIONS */
 
 //1

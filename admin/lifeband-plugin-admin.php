@@ -12,7 +12,7 @@ $userFactory->canti();
 
 <h3>Life Band Plugin Options</h3>
 
-<form method="post" action="options.php">
+<form method="post" action="lifeband-plugin-admin.php">
 
 <?php settings_fields( 'super-settings-group' ); ?>
 
