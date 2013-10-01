@@ -5,7 +5,7 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 include_once(ABSPATH  . '/wp-config.php');
 include_once(ABSPATH  . '/wp-load.php');
 include_once(ABSPATH . '/wp-includes/wp-db.php');
-global $wpdb;
+
 class generateUsers {
 
     function canti($cant = 50) {
@@ -13,6 +13,7 @@ class generateUsers {
         $nombreUsuario = '';
         $pass = '';
         $lastId = 0;
+        global $wpdb;
         While ($i <= $cant) {
             $lastId = $wpdb->get_var("SELECT id INTO lastId from " . $wpdb->prefix . "users order by id desc limit 1");
             $lastId = $lastId + 1;

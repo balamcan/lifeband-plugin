@@ -8,26 +8,32 @@ Author: Balam Palma
 Author URI: http://none.com
 License: GPL2
 */
-global $wpdb;
-require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+//require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 //SETUP
+global $jal_db_version;
+$jal_db_version = "1.0";
 function lifeband_plugin_install(){
     //Do some installation work
-    $sql = "CREATE TABLE IF NOT EXISTS ".$wpdb->prefix."pass_qr(
+    global $wpdb;
+    global $jal_db_version;
+    $table_name = $wpdb->prefix."pass_qr";
+    $table_users = $wpdb->prefix."users";
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name(
         id int(11) NOT NULL,
         pass varchar(10) NOT NULL,
         PRIMARY KEY  (id),
         KEY id (id),
         CONSTRAINT `fk___pass___users1`
           FOREIGN KEY (id )
-          REFERENCES ".$wpdb->prefix."users` (id)
+          REFERENCES $table_users (id)
           ON DELETE NO ACTION
           ON UPDATE NO ACTION
-      ) 
-      ENGINE=MyISAM 
-      DEFAULT CHARACTER SET = utf8";
+      ); 
+      ";
        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
        dbDelta($sql);
+       add_option( "jal_db_version", $jal_db_version );
        
     /*Create additional tables for the custom database*/
 }
@@ -50,6 +56,7 @@ add_action('init','lifeband_plugin_init');
 function lifeband_plugin_init(){
     //do work
     run_sub_process();
+    lifeband_plugin_install();
 }
 
 function run_sub_process(){
