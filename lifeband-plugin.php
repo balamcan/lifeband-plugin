@@ -24,20 +24,16 @@ function lifeband_plugin_install(){
         pass varchar(10) NOT NULL,
         PRIMARY KEY  (id),
         KEY id (id),
-        CONSTRAINT `fk___pass___users1`
-          FOREIGN KEY (id )
-          REFERENCES $table_users (id)
-          ON DELETE NO ACTION
-          ON UPDATE NO ACTION
-      ); 
-      ";
+      );";
        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
        dbDelta($sql);
        add_option( "jal_db_version", $jal_db_version );
        
     /*Create additional tables for the custom database*/
 }
-register_activation_hook(__FILE__,'lifeband_plugin_install'); 
+register_activation_hook(__FILE__,'lifeband_plugin_install');
+
+register_activation_hook( __FILE__, 'jal_install_data' );
 //SCRIPTS
 function lifeband_plugin_scripts(){
     wp_register_script('lifeband_plugin_script',plugin_dir_url( __FILE__ ).'js/lifeband-plugin.js');
