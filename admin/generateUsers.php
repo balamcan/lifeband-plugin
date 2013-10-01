@@ -21,7 +21,7 @@ class generateUsers {
             $pass = wp_hash_password($passusr);
             $nombreUsuario = substr(sha1(lastId), 1, 4) . strrev(lastId);
             $correo = $nombreUsuario . '@lifeband.com';
-
+            var_dump($lastId);
 
             $usersTb = array(
                 'user_nicename' => $nombreUsuario,
