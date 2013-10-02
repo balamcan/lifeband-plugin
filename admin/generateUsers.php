@@ -77,9 +77,9 @@ class generateUsers {
             $this->nombreUsuario = substr(sha1(lastId), 1, 4) . strrev(lastId);
             $this->correo = $this->nombreUsuario . '@lifeband.com';
             var_dump($this->lastId);
-            echo '<- lastId \n';
+            echo "<- lastId <br>";
             var_dump($wpdb->last_error);
-            echo '<- select error \n';
+            echo "<- select error <br>";
             $usersTb = array(
                 'user_nicename' => $this->nombreUsuario,
                 'user_email' => $this->correo,
@@ -88,19 +88,18 @@ class generateUsers {
                 'user_status' => 0
             );
             var_dump($usersTb);
-            echo '<- users Tb \n';
-            $userPassTb = array('id_user' => $this->lastId,
-                'pass' => $this->passusr);
+            echo "<- users Tb <br>";
+            $userPassTb = array('pass' => $this->passusr,'id_user' => $this->lastId,);
             var_dump($userPassTb);
-            echo '<- user Pass Tb \n';
+            echo "<- user Pass Tb <br>";
             $wpdb->insert($wpdb->prefix . 'users', $usersTb);
             var_dump($wpdb->last_error);
-            echo '<- Insert users Tb \n';
+            echo "<- Insert users Tb <br>";
             $this->usersMetaInsert($this->lastId, $nombreUsuario);
-            echo 'usersMetaInsert \n';
+            echo "usersMetaInsert <br>";
             $wpdb->insert($wpdb->prefix . 'pass_qr', $userPassTb);
             var_dump($wpdb->last_error);
-            echo '<- pass_qr \n';
+            echo "<- pass_qr <br>";
             $this->i++;
         }
     }
