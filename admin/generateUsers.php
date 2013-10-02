@@ -7,47 +7,94 @@ include_once(ABSPATH  . '/wp-load.php');
 include_once(ABSPATH . '/wp-includes/wp-db.php');
 
 class generateUsers {
-
-    function canti($cant = 50) {
-        $i = 0;
-        $nombreUsuario = '';
-        $pass = '';
-        $lastId = 0;
+        
+    var $i = 0;
+    var $nombreUsuario = '';
+    var $pass = '';
+    var $lastId = 0;
+    var $passusr = '';
+        
+    function usersMetaInsert($id,$nombre){
         global $wpdb;
-        While ($i <= $cant) {
-            $lastId = $wpdb->get_var("SELECT id INTO lastId from " . $wpdb->prefix . "users order by id desc limit 1");
-            $lastId = $lastId + 1;
-            $passusr = wp_generate_password(8);
-            $pass = wp_hash_password($passusr);
-            $nombreUsuario = substr(sha1(lastId), 1, 4) . strrev(lastId);
-            $correo = $nombreUsuario . '@lifeband.com';
-            var_dump($lastId);
-
+        $user_meta = array(user_id => $id,
+            meta_key => 'first_name',
+            meta_value => '');
+        $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
+        $user_meta = array(user_id => $id,
+            meta_key => 'last_name',
+            meta_value => '');
+         $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
+        $user_meta = array(user_id => $id,
+            meta_key => 'nickname',
+            meta_value => $nombre);
+        $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
+        $user_meta = array(user_id => $id,
+            meta_key => 'description',
+            meta_value => '');
+        $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
+        $user_meta = array(user_id => $id,
+            meta_key => 'rich_editing',
+            meta_value => 'true');
+        $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
+        $user_meta = array(user_id => $id,
+            meta_key => 'comment_shorcuts',
+            meta_value => 'false');
+        $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
+        $user_meta = array(user_id => $id,
+            meta_key => 'admin_color',
+            meta_value => 'fresh');
+        $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
+        $user_meta = array(user_id => $id,
+            meta_key => 'use_ssl',
+            meta_value => '0');
+        $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
+        $user_meta = array(user_id => $id,
+            meta_key => 'show_admin_bar_front',
+            meta_value => 'true');
+        $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
+        $user_meta = array(user_id => $id,
+            meta_key => 'wp_capabilities',
+            meta_value => 'a:1:{s:10:"subscriber";b:1;}');
+        $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
+        $user_meta = array(user_id => $id,
+            meta_key => 'wp_user_level',
+            meta_value => '0');
+        $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
+        $user_meta = array(user_id => $id,
+            meta_key => 'dismissed_wp_pointers',
+            meta_value => 'wp330_toolbar,wp330_saving_widgets,wp340_choose_image_from_library,wp340_customize_current_theme_link,wp350_media,wp360_revisions,wp360_locks');
+        $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);           
+    }
+            
+    function canti($cant = 50) {
+        
+        global $wpdb;
+        While ($this->i <= $cant) {
+            $this->lastId = $wpdb->get_var("SELECT id INTO lastId from " . $wpdb->prefix . "users order by id desc limit 1",0,0);
+            $this->lastId = $this->lastId + 1;
+            $this->passusr = wp_generate_password(8);
+            $this->pass = wp_hash_password($this->passusr);
+            $this->nombreUsuario = substr(sha1(lastId), 1, 4) . strrev(lastId);
+            $this->correo = $this->nombreUsuario . '@lifeband.com';
+            var_dump($this->lastId);
+            var_dump($wpdb->last_error);
             $usersTb = array(
-                'user_nicename' => $nombreUsuario,
-                'email' => $correo,
-                'password' => $pass,
+                'user_nicename' => $this->nombreUsuario,
+                'user_email' => $this->correo,
+                'user_pass' => $this->pass,
                 'user_registered' => gmdate('Y-m-d H:i:s'),
                 'user_status' => 0
             );
-            $usermetaTb = array(
-                'nickname' => $nombreUsuario,
-                'rich_editing' => 'true',
-                'comment_shortcuts' => 'false',
-                'admin_color' => 'fresh',
-                'use_ssl' => '0',
-                'show_admin_bar_front' => 'true',
-                'wp_capabilities' => 'a:1:{s:10:"subscriber";b:1;}',
-                'wp_user_level' => '0',
-                'dismissed_wp_pointers' => 'wp330_toolbar,wp330_saving_widgets,wp340_choose_image_from_library,wp340_customize_current_theme_link,wp350_media,wp360_revisions,wp360_locks'
-            );
-            $userPassTb = array('id' => $lastId,
-                'pass' => $passusr);
+            
+            $userPassTb = array('id' => $this->lastId,
+                'pass' => $this->passusr);
 
             $wpdb->insert($wpdb->prefix . 'users', $usersTb);
-            $wpdb->insert($wpdb->prefix . 'usermeta', $usermetaTb);
+            var_dump($wpdb->last_error);
+            $this->usersMetaInsert($this->lastId, $nombreUsuario);
+            var_dump($wpdb->last_error);
             $wpdb->insert($wpdb->prefix . 'pass_qr', $userPassTb);
-            $i++;
+            $this->i++;
         }
     }
 
