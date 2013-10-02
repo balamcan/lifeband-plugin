@@ -70,14 +70,16 @@ class generateUsers {
         
         global $wpdb;
         While ($this->i <= $cant) {
-            $this->lastId = $wpdb->get_var("SELECT id INTO lastId from " . $wpdb->prefix . "users order by id desc limit 1",0,0);
+            $this->lastId = $wpdb->get_var("SELECT id from " . $wpdb->prefix . "users order by id desc limit 1",0,0);
             $this->lastId = $this->lastId + 1;
             $this->passusr = wp_generate_password(8);
             $this->pass = wp_hash_password($this->passusr);
             $this->nombreUsuario = substr(sha1(lastId), 1, 4) . strrev(lastId);
             $this->correo = $this->nombreUsuario . '@lifeband.com';
             var_dump($this->lastId);
+            echo '<- lastId \n';
             var_dump($wpdb->last_error);
+            echo '<- select error \n';
             $usersTb = array(
                 'user_nicename' => $this->nombreUsuario,
                 'user_email' => $this->correo,
@@ -85,15 +87,20 @@ class generateUsers {
                 'user_registered' => gmdate('Y-m-d H:i:s'),
                 'user_status' => 0
             );
-            
-            $userPassTb = array('id' => $this->lastId,
+            var_dump($usersTb);
+            echo '<- users Tb \n';
+            $userPassTb = array('id_user' => $this->lastId,
                 'pass' => $this->passusr);
-
+            var_dump($userPassTb);
+            echo '<- user Pass Tb \n';
             $wpdb->insert($wpdb->prefix . 'users', $usersTb);
             var_dump($wpdb->last_error);
+            echo '<- Insert users Tb \n';
             $this->usersMetaInsert($this->lastId, $nombreUsuario);
-            var_dump($wpdb->last_error);
+            echo 'usersMetaInsert \n';
             $wpdb->insert($wpdb->prefix . 'pass_qr', $userPassTb);
+            var_dump($wpdb->last_error);
+            echo '<- pass_qr \n';
             $this->i++;
         }
     }
