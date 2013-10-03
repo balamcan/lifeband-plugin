@@ -20,18 +20,22 @@ class generateUsers {
             meta_key => 'first_name',
             meta_value => '');
         $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
+        var_dump($wpdb->last_error);
         $user_meta = array(user_id => $id,
             meta_key => 'last_name',
             meta_value => '');
          $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
+         var_dump($wpdb->last_error);         
         $user_meta = array(user_id => $id,
             meta_key => 'nickname',
             meta_value => $nombre);
+        var_dump($wpdb->last_error);
         $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
         $user_meta = array(user_id => $id,
             meta_key => 'description',
             meta_value => '');
         $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);
+        var_dump($wpdb->last_error);
         $user_meta = array(user_id => $id,
             meta_key => 'rich_editing',
             meta_value => 'true');
@@ -74,14 +78,15 @@ class generateUsers {
             $this->lastId = $this->lastId + 1;
             $this->passusr = wp_generate_password(8);
             $this->pass = wp_hash_password($this->passusr);
-            $this->nombreUsuario = substr(sha1(lastId), 1, 4) . strrev(lastId);
+            $this->nombreUsuario = substr(sha1($this->lastId), 1, 4) . strrev($this->lastId); 
+            echo $this->nombreUsuario;
             $this->correo = $this->nombreUsuario . '@lifeband.com';
             var_dump($this->lastId);
-            echo "<- lastId <br>";
+            echo "<br><- lastId <br>";
             var_dump($wpdb->last_error);
             echo "<- select error <br>";
             $usersTb = array(
-                'user_nicename' => $this->nombreUsuario,
+                'user_login' => $this->nombreUsuario,
                 'user_email' => $this->correo,
                 'user_pass' => $this->pass,
                 'user_registered' => gmdate('Y-m-d H:i:s'),
@@ -95,7 +100,7 @@ class generateUsers {
             $wpdb->insert($wpdb->prefix . 'users', $usersTb);
             var_dump($wpdb->last_error);
             echo "<- Insert users Tb <br>";
-            $this->usersMetaInsert($this->lastId, $nombreUsuario);
+            $this->usersMetaInsert($this->lastId, $this->nombreUsuario);
             echo "usersMetaInsert <br>";
             $wpdb->insert($wpdb->prefix . 'pass_qr', $userPassTb);
             var_dump($wpdb->last_error);
