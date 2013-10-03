@@ -5,15 +5,16 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 include_once(ABSPATH  . '/wp-config.php');
 include_once(ABSPATH  . '/wp-load.php');
 include_once(ABSPATH . '/wp-includes/wp-db.php');
-
+include_once ('param2.php');
+$qrFactory = new qr();
 class generateUsers {
-        
+   
     var $i = 0;
     var $nombreUsuario = '';
     var $pass = '';
     var $lastId = 0;
     var $passusr = '';
-        
+   
     function usersMetaInsert($id,$nombre){
         global $wpdb;
         $user_meta = array(user_id => $id,
@@ -91,6 +92,7 @@ class generateUsers {
             $wpdb->insert($wpdb->prefix . 'users', $usersTb);
             $this->usersMetaInsert($this->lastId, $this->nombreUsuario);
             $wpdb->insert($wpdb->prefix . 'pass_qr', $userPassTb);
+            $qrFactory->crearQrPNG('lifeband.com.mx/',$this->nombreUsuario);
             $this->i++;
         }
     }

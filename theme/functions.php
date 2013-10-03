@@ -525,32 +525,32 @@ function twentythirteen_customize_preview_js() {
 }
 add_action( 'customize_preview_init', 'twentythirteen_customize_preview_js' );
 
-function redirect_user_on_role()
-{
-	global $wpdb;
-	//retrieve current user info 
-	global $current_user;
-     	get_currentuserinfo();
- 	//If login user role is Subscriber
-     	if ($wpdb->get_var("SELECT user_status from " . $wpdb->prefix . "users where id =" .$current_user->ID,0,0) == 0)
-     	{
-        	wp_redirect( 'http://localhost/wordpress/datos-medicos/' ); exit;
-     	}
- 	//If login user role is Contributor
- 	else if ($current_user->user_level > 1)
- 	{
-        	 wp_redirect( home_url() ); exit;
-     	}
-  	//If login user role is Editor
-     	else if ($current_user->user_level >8)
-     	{
-		wp_redirect( home_url() ); exit;
-     	}
- 	// For other rolse 
-	else
-     	{
-      		$redirect_to = 'http://google.com/';
-        	return $redirect_to;
- 	}
-}
-add_action('admin_init','redirect_user_on_role');
+//function redirect_user_on_role()
+//{
+//	global $wpdb;
+//	//retrieve current user info 
+//	global $current_user;
+//     	get_currentuserinfo();
+// 	//If login user role is Subscriber
+//     	if ($wpdb->get_var("SELECT user_status from " . $wpdb->prefix . "users where id =" .$current_user->ID,0,0) == 0)
+//     	{
+//        	wp_redirect( 'http://localhost/wordpress/datos-medicos/' ); exit;
+//     	}
+// 	//If login user role is Contributor
+// 	else if ($current_user->user_level > 1)
+// 	{
+//        	 wp_redirect( home_url() ); exit;
+//     	}
+//  	//If login user role is Editor
+//     	else if ($current_user->user_level >8)
+//     	{
+//		wp_redirect( home_url() ); exit;
+//     	}
+// 	// For other rolse 
+//	else
+//     	{
+//      		$redirect_to = 'http://google.com/';
+//        	return $redirect_to;
+// 	}
+//}
+//add_action('admin_init','redirect_user_on_role');
