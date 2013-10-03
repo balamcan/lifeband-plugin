@@ -8,7 +8,7 @@ $codigo = $_GET['code'];
 //gives the full url
 $urlqr = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
 
-$q_user = 'select ID from ' . $wpdb->prefix . 'users where users_nicename = ' . $codigo;
+$q_user = 'select ID from ' . $wpdb->prefix . 'users where users_nicename = \'' . $codigo.'\'';
 $user = $wpdb->get_results($q_user, OBJECT);
 if (!empty($user)) {
 
@@ -121,8 +121,8 @@ if (!empty($user)) {
                         <p><label>Medicamentos de origen natural:</label><span><?php echo$medicos->med_naturales;?></span></p>
                         <div class="qr">
                             <?php
-                            echo '<img src="http://localhost/qr/param.php?txt=' . $urlqr . '"/>';
-                            //echo '<img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=http://'.$urlqr.'"/>';
+//                            echo '<img src="http://localhost/qr/param.php?txt=' . $urlqr . '"/>';
+                            echo '<img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=http://'.$urlqr.'"/>';
                             echo'<p>' . 'http://' . $urlqr . '</p>';
                             ?>
                         </div>
