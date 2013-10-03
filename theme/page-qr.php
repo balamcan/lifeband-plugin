@@ -8,7 +8,7 @@ $codigo = $_GET['code'];
 //gives the full url
 $urlqr = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
 
-$q_user = 'select ID from ' . $wpdb->prefix . 'users where users_nicename = \'' . $codigo.'\'';
+$q_user = 'select ID from ' . $wpdb->prefix . 'users where user_login = \'' . $codigo.'\'';
 $user = $wpdb->get_results($q_user, OBJECT);
 if (!empty($user)) {
 
