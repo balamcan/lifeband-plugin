@@ -77,11 +77,11 @@ if (!$human == 0) {
         my_contact_form_generate_response("error", $mensaje['nohumamo']); //not human!
     else {
 
-        if (!filter_var($_POST['diastolica_fs'], FILTER_VALIDATE_INT))
+        if (!filter_var($_POST['presion_diastolica_fs'], FILTER_VALIDATE_INT))
             my_contact_form_generate_response("error", $mensaje['diastolica']);
         else {
 
-            if (!filter_var($_POST['sistolica_fs'], FILTER_VALIDATE_INT))
+            if (!filter_var($_POST['presion_sistolica_fs'], FILTER_VALIDATE_INT))
                 my_contact_form_generate_response("error", $mensaje['sistolica']);
             else { //ready to go!
                 /* INSERTAR O ACTUALIZAR LA INFORMACION */
