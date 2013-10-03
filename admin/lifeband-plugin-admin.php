@@ -1,8 +1,7 @@
 <?php
 require_once('generateUsers.php');
 require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-$userFactory = new generateUsers();
-$userFactory->canti();
+
 ?>
 
 
