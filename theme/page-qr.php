@@ -20,11 +20,11 @@ if (!empty($user)) {
     
     $q_tipo_sangre='select nombre from ' . $wpdb->prefix . 'cat_tipo_sangre where ' . $wpdb->prefix . 'id = ' . $medicos->wp_cat_tipo_sangre_id;
     $tipo_sangre = $wpdb->get_row($q_tipo_sangre, OBJECT);
-    $tipo_sangre=$tipo_sangre->nombre;
+    $medicos->tipo_sangre=$tipo_sangre->nombre;
     
     $q_tipo_diabetes='select nombre from ' . $wpdb->prefix . 'cat_tipo_diabetes where ' . $wpdb->prefix . 'id = ' . $medicos->wp_cat_tipo_diabetes_id;
     $tipo_diabetes = $wpdb->get_row($q_tipo_diabetes, OBJECT);
-    $tipo_diabetes=$tipo_diabetes->nombre;
+    $medicos->tipo_diabetes=$tipo_diabetes->nombre;
     
 } else {
     $error = 'No existe el usuario';
@@ -98,10 +98,10 @@ if (!empty($user)) {
 
                         <h3>Datos medicos</h3>
 
-                        <p><label>Tipo de sangre:</label><span><?php echo$tipo_sangre;?></span></p>
-                        <p><label>Tipo de diabetes:</label><span><?php echo$tipo_diabetes;?></span></p>
-                        <p><label>Presi&oacute;n arterial diastolica:</label><span><?php echo$medicos->presion_diastolica;?></span></p>
-                        <p><label>Presi&oacute;n arterial sistolica:</label><span><?php echo$medicos->presion_sistolica;?></span></p>
+                        <p><label>Tipo de sangre:</label><span><?php echo$medicos->tipo_sangre;?></span></p>
+                        <p><label>Tipo de diabetes:</label><span><?php echo$medicos->tipo_diabetes;?></span></p>
+                        <p><label>Presi&oacute;n arterial diastolica:</label><span><?php echo$medicos->presion_arterial_diastolica;?></span></p>
+                        <p><label>Presi&oacute;n arterial sistolica:</label><span><?php echo$medicos->presion_arterial_sistolica;?></span></p>
                         <p><label>Donador de organos:</label><span><?php echo$medicos->donador_organos;?></span></p>
                         <p><label>Alergias:</label><span><?php echo$medicos->alergias;?></span></p>
                         <p><label>Medicamentos:</label><span><?php echo$medicos->medicamentos;?></span></p>
@@ -118,7 +118,7 @@ if (!empty($user)) {
                         <p><label>Dispositivo de soporte vital marcapasos:</label><span><?php echo$medicos->marcapasos;?></span></p>
                         <p><label>Lentes de contacto:</label><span><?php echo$medicos->lentes_contacto;?></span></p>
                         <p><label>Protesis dentales:</label><span><?php echo$medicos->p_dentales;?></span></p>
-                        <p><label>Medicamentos de origen natural:</label><span><?php echo$medicos->med_naturales;?></span></p>
+                        <p><label>Medicamentos de origen natural:</label><span><?php echo$medicos->med_natural;?></span></p>
                         <div class="qr">
                             <?php
 //                            echo '<img src="http://localhost/qr/param.php?txt=' . $urlqr . '"/>';
