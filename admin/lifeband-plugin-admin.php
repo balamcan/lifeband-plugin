@@ -1,8 +1,11 @@
 <?php
 require_once('generateUsers.php');
+include_once(ABSPATH . '/wp-includes/wp-db.php');
 require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 if(isset($_POST['submit'])) { 
-	generateUsers::canti();
+    $userFactory = new generateUsers();
+    $userFactory->canti();
+    echo "50 Usuarios Generados";
 } 
 ?>
 
@@ -20,6 +23,7 @@ if(isset($_POST['submit'])) {
 <table>
 <tr><th>Nombre usuario</th><th>Contrase&ntilde;a</th></tr>
 <?php 
+global $wpdb;
 $usuarios=$wpdb->get_results('select u.user_login as username, p.pass from wp_users as u LEFT JOIN wp_pass_qr as p on u.id = p.id_user', OBJECT);
 foreach ($usuarios as $u) {
 echo'<tr><td>'.$u->username.'</td><td>'.$u->pass.'</td></tr>';
