@@ -3,25 +3,47 @@
  * Template Name: Qr
  */
 get_header();
-$codigo=$_GET['code'];
+$codigo = $_GET['code'];
 
 //gives the full url
-$urlqr=$_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+$urlqr = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+
+$q_user = 'select ID from ' . $wpdb->prefix . 'users where ' . $wpdb->prefix . 'users_nicename = ' . $codigo;
+$user = $wpdb->get_results($q_user, OBJECT);
+if (!empty($user)) {
+
+    $q_basicos = 'select * from ' . $wpdb->prefix . 'datos_basicos where ' . $wpdb->prefix . 'users_nicename = ' . $user->ID;
+    $basicos = $wpdb->get_results($q_basicos, OBJECT);
+
+    $q_medicos = 'select * from ' . $wpdb->prefix . 'datos_medicos where ' . $wpdb->prefix . 'users_nicename = ' . $user->ID;
+    $medicos = $wpdb->get_results($q_medicos, OBJECT);
+    $q_tipo_sangre='select nombre from ' . $wpdb->prefix . 'cat_tipo_sangre where ' . $wpdb->prefix . 'id = ' . $medicos->wp_cat_tipo_sangre_id;
+    $tipo_sangre = $wpdb->get_results($q_tipo_sangre, OBJECT);
+    $medicos->tipo_sangre=$tipo_sangre;
+    
+    $q_tipo_diabetes='select nombre from ' . $wpdb->prefix . 'cat_tipo_diabetes where ' . $wpdb->prefix . 'id = ' . $medicos->wp_cat_tipo_diabetes_id;
+    $tipo_diabetes = $wpdb->get_results($q_tipo_diabetes, OBJECT);
+    $medicos->tipo_diabetes=$tipo_diabetes;
+    
+} else {
+    $error = 'No existe el usuario';
+}
 ?>
 
 <div id="primary" class="site-content">
     <div id="content" role="main">
 
-<?php while (have_posts()) : the_post(); ?>
+        <?php while (have_posts()) : the_post(); ?>
 
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
                 <header class="entry-header">
-                    <h1 class="entry-title"><?php the_title(); ?> -<b> Informaci&oacute;n de $nombre $paterno $materno</b></h1>
+                    <h1 class="entry-title"><?php the_title(); ?> -<b> Informaci&oacute;n de <?php echo $basicos->nombre.' '.
+                            $basicos->ap_paterno.' '.$basicos->ap_materno?></b></h1>
                 </header>
 
                 <div class="entry-content">
-    <?php the_content(); ?>
+                    <?php the_content(); ?>
 
                     <style type="text/css">
                         #consult-qr h2{
@@ -53,49 +75,54 @@ $urlqr=$_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
                     </style>
 
                     <div id="consult-qr">
-                        <!--<h2>Informaci&oacute;n de $nombre $paterno $materno</h2>-->
-                        <h3>Datos b&aacute;sicos</h3>
-                        <p><label>Apellido paterno:</label><span>$paterno</span></p>
-                        <p><label>Apellido materno:</label><span>$materno</span></p>
-                        <p><label>Nombre:</label><span>$nombre</span></p>
-                        <p><label>Nombre del encargado de emergencia:</label><span>$nombre_emergencia</span></p>
-                        <p><label>Telefono de emergencia:</label><span>$telefono_emergencia</span></p>
-                        <p><label>Correo de emergencia:</label><span>$correo_emergencia</span></p>
-                        <p><label>Nombre del medico:</label><span>$nombre_medico</span></p>
-                        <p><label>Telefono del medico:</label><span>$tel_medico</span></p>
-                        <p><label>Edad:</label><span>$edad</span></p>
-                        <p><label>Peso:</label><span>$peso</span></p>
-                        <p><label>Estatura:</label><span>$estatura</span></p>
-                        <p><label>Sexo:</label><span>$sexo</span></p>
+                        <?php 
+                        if(!empty($error)){
+                            echo '<h2 style="color:red;">'.$error.'</h2>';
+                        }
+                        ?>
                         
+                        <h3>Datos b&aacute;sicos</h3>
+                        <p><label>Apellido paterno:</label><span><?php echo$basicos->ap_paterno;?></span></p>
+                        <p><label>Apellido materno:</label><span><?php echo$basicos->ap_materno;?></span></p>
+                        <p><label>Nombre:</label><span><?php echo$basicos->nombre;?></span></p>
+                        <p><label>Nombre del encargado de emergencia:</label><span><?php echo$basicos->encargado_emergencia;?></span></p>
+                        <p><label>Telefono de emergencia:</label><span><?php echo$basicos->tel_emergencia;?></span></p>
+                        <p><label>Correo de emergencia:</label><span><?php echo$basicos->correo_emergencia;?></span></p>
+                        <p><label>Nombre del medico:</label><span><?php echo$basicos->nom_medico;?></span></p>
+                        <p><label>Telefono del medico:</label><span><?php echo$basicos->tel_medico;?></span></p>
+                        <p><label>Fecha de nacimiento:</label><span><?php echo$basicos->fecha_nac;?></span></p>
+                        <p><label>Peso:</label><span><?php echo$basicos->peso;?></span></p>
+                        <p><label>Estatura:</label><span><?php echo$basicos->estatura;?></span></p>
+                        <p><label>Sexo:</label><span><?php echo$basicos->sexo;?></span></p>
+
                         <h3>Datos medicos</h3>
 
-                        <p><label>Tipo de sangre:</label><span>$tipo_sangre</span></p>
-                        <p><label>Tipo de diabetes:</label><span>$tipo_diabetes</span></p>
-                        <p><label>Presi&oacute;n arterial diastolica:</label><span>$presion_diastolica</span></p>
-                        <p><label>Presi&oacute;n arterial sistolica:</label><span>$presion_sistolica</span></p>
-                        <p><label>Donador de organos:</label><span>$donador_organos</span></p>
-                        <p><label>Alergias:</label><span>$alergias</span></p>
-                        <p><label>Medicamentos:</label><span>$medicamentos</span></p>
-                        <p><label>Enfermedades:</label><span>$enfermedades</span></p>
-                        <p><label>Cirugias:</label><span>$cirugias</span></p>
-                        <p><label>Otras consideraciones:</label><span>$otras_consideraciones</span></p>
-                        
+                        <p><label>Tipo de sangre:</label><span><?php echo$medicos->tipo_sangre;?></span></p>
+                        <p><label>Tipo de diabetes:</label><span><?php echo$medicos->tipo_diabetes;?></span></p>
+                        <p><label>Presi&oacute;n arterial diastolica:</label><span><?php echo$medicos->presion_diastolica;?></span></p>
+                        <p><label>Presi&oacute;n arterial sistolica:</label><span><?php echo$medicos->presion_sistolica;?></span></p>
+                        <p><label>Donador de organos:</label><span><?php echo$medicos->donador_organos;?></span></p>
+                        <p><label>Alergias:</label><span><?php echo$medicos->alergias;?></span></p>
+                        <p><label>Medicamentos:</label><span><?php echo$medicos->medicamentos;?></span></p>
+                        <p><label>Enfermedades:</label><span><?php echo$medicos->enfermedades;?></span></p>
+                        <p><label>Cirugias:</label><span><?php echo$medicos->cirugias;?></span></p>
+                        <p><label>Otras consideraciones:</label><span><?php echo$medicos->otras_consideraciones;?></span></p>
+
                         <h3>Discapacidades y/o dispositivos</h3>
-                        
-                        <p><label>Discapacidad auditiva:</label><span>$auditiva</span></p>
-                        <p><label>Discapacidad mental:</label><span>$mental</span></p>
-                        <p><label>Discapacidad motora:</label><span>$motora</span></p>
-                        <p><label>Discapacidad visual:</label><span>$visual</span></p>
-                        <p><label>Dispositivo de soporte vital marcapasos:</label><span>$marcapasos</span></p>
-                        <p><label>Lentes de contacto:</label><span>$lentes_contacto</span></p>
-                        <p><label>Protesis dentales:</label><span>$protesis_dentales</span></p>
-                        <p><label>Medicamentos de origen natural:</label><span>$med_naturales</span></p>
+
+                        <p><label>Discapacidad auditiva:</label><span><?php echo$medicos->d_auditiva;?></span></p>
+                        <p><label>Discapacidad mental:</label><span><?php echo$medicos->d_mental;?></span></p>
+                        <p><label>Discapacidad motora:</label><span><?php echo$medicos->d_motora;?></span></p>
+                        <p><label>Discapacidad visual:</label><span><?php echo$medicos->d_visual;?></span></p>
+                        <p><label>Dispositivo de soporte vital marcapasos:</label><span><?php echo$medicos->marcapasos;?></span></p>
+                        <p><label>Lentes de contacto:</label><span><?php echo$medicos->lentes_contacto;?></span></p>
+                        <p><label>Protesis dentales:</label><span><?php echo$medicos->p_dentales;?></span></p>
+                        <p><label>Medicamentos de origen natural:</label><span><?php echo$medicos->med_naturales;?></span></p>
                         <div class="qr">
                             <?php
-                        echo '<img src="http://localhost/qr/param.php?txt='.$urlqr.'"/>'; 
-                        //echo '<img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=http://'.$urlqr.'"/>';
-                        echo'<p>'.'http://'.$urlqr.'</p>';
+                            echo '<img src="http://localhost/qr/param.php?txt=' . $urlqr . '"/>';
+                            //echo '<img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=http://'.$urlqr.'"/>';
+                            echo'<p>' . 'http://' . $urlqr . '</p>';
                             ?>
                         </div>
                     </div>
@@ -104,7 +131,7 @@ $urlqr=$_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
 
             </article><!-- #post -->
 
-<?php endwhile; // end of the loop.  ?>
+        <?php endwhile; // end of the loop.   ?>
 
     </div><!-- #content -->
 </div><!-- #primary -->

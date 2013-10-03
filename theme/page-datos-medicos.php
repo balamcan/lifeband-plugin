@@ -44,6 +44,33 @@ $human = $_POST['message_human'];
 //$subject = "Someone sent a message from " . get_bloginfo('name');
 //$headers = 'From: ' . $email . "\r\n" .
 //        'Reply-To: ' . $email . "\r\n";
+                $current_user = wp_get_current_user();
+
+                $q_user = 'select * from ' . $wpdb->prefix . 'datos_medicos where ' . $wpdb->prefix . 'users_id = ' . $current_user->ID;
+                $user = $wpdb->get_results($q_user, OBJECT);
+                
+
+if(empty($_POST['submitted']) && !empty($user)){
+$_POST['tipo_sangre_fs']=$wpdb->prefix.'cat_tipo_sangre_id';
+$_POST['tipo_diabetes_fs']=$wpdb->prefix.'cat_tipo_diabetes_id';
+$_POST['presion_diastolica_fs']='presion_arterial_diastolica';
+$_POST['presion_sistolica_fs']='presion_arterial_sistolica';
+$_POST['donador_organos_fs']='donador_organos';
+$_POST['alergias_fs']='alergias';
+$_POST['medicamentos_fs']='medicamentos';
+$_POST['enfermedades_fs']='enfermedades';
+$_POST['cirugias_fs']='cirugias';
+$_POST['otras_consideraciones_fs']='otras_consideraciones';
+$_POST['auditiva_fs']='d_auditiva';
+$_POST['mental_fs']='d_mental';
+$_POST['motora_fs']='d_motora';
+$_POST['visual_fs']='d_visual';
+$_POST['marcapasos_fs']='marcapasos';
+$_POST['lentes_contacto_fs']='lentes_contacto';
+$_POST['protesis_dentales_fs']='p_dentales';
+$_POST['protesis_oculares_fs']='p_oculares';
+$_POST['med_naturales_fs']='med_natural';
+}
 
 if (!$human == 0) {
     if ($human != 2)
@@ -58,12 +85,7 @@ if (!$human == 0) {
                 my_contact_form_generate_response("error", $mensaje['sistolica']);
             else { //ready to go!
                 /* INSERTAR O ACTUALIZAR LA INFORMACION */
-                $current_user = wp_get_current_user();
 
-                echo'funka';
-                $q_user = 'select * from ' . $wpdb->prefix . 'datos_medicos where ' . $wpdb->prefix . 'users_id = ' . $current_user->ID;
-                $user = $wpdb->get_results($q_user, OBJECT);
-                
                 if (empty($user)) {
                     if($wpdb->insert(
                             $wpdb->prefix . 'datos_medicos', array(

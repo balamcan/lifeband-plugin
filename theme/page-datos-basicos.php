@@ -49,6 +49,28 @@ $human = $_POST['message_human'];
 //$headers = 'From: ' . $email . "\r\n" .
 //        'Reply-To: ' . $email . "\r\n";
 
+$current_user = wp_get_current_user();
+$q_user = 'select * from ' . $wpdb->prefix . 'datos_basicos where ' . $wpdb->prefix . 'users_id = ' . $current_user->ID;
+$user = $wpdb->get_results($q_user, OBJECT);
+if (empty($_POST['submitted']) && !empty($user)) {
+    $_POST['nombre_fs'] = $user->nombre;
+    $_POST['ap_paterno_fs'] = $user->ap_paterno;
+    $_POST['ap_materno_fs'] = $user->ap_materno;
+    $_POST['nom_emergencia_fs'] = $user->encargado_emergencia;
+    $_POST['tel_emergencia_fs'] = $user->tel_emergencia;
+    $_POST['correo_emergencia_fs'] = $user->correo_emergencia;
+    $_POST['nom_medico_fs'] = $user->nom_medico;
+    $_POST['tel_medico_fs'] = $user->tel_medico;
+//$_POST['$fecha'] = $user->fecha_nac;
+    $_POST['peso_fs'] = $user->peso;
+    $_POST['estatura_fs'] = $user->estatura;
+    $_POST['sexo_fs'] = $user->sexo;
+
+    $fecha_c = explode('-', $user->fecha_nac);
+    $_POST['dia_fs'] = $fecha_c[2];
+    $_POST['mes_fs'] = $fecha_c[1];
+    $_POST['anio_fs'] = $fecha_c[0];
+}
 if (!$human == 0) {
     if ($human != 2)
         my_contact_form_generate_response("error", $mensaje['nohumano']); //not human!
@@ -74,68 +96,59 @@ if (!$human == 0) {
             if (empty($_POST['ap_paterno_fs'])) {
                 my_contact_form_generate_response("error", $mensaje['paterno']);
             } else { //VALIDACION COMPLETA, SIGUE LA INSERCION O ACTUALIZACION
-                $current_user = wp_get_current_user();
+                $fecha = $_POST['anio_fs'] . '-' . $_POST['mes_fs'] . '-' . $_POST['dia_fs'];
+                if (empty($user)) {
 
-                echo'funka';
-                $q_user = 'select * from ' . $wpdb->prefix . 'datos_basicos where ' . $wpdb->prefix . 'users_id = ' . $current_user->ID;
-                $user = $wpdb->get_results($q_user, OBJECT);
-            
-if (empty($user)) {
-        if($wpdb->insert(
-                $wpdb->prefix . 'datos_basicos', array(
-            'wp_users_id'=>mysql_real_escape_string($_POST['wp_users_id']),
-            'nombre'=>mysql_real_escape_string($_POST['nombre_fs']),
-            'ap_paterno'=>mysql_real_escape_string($_POST['ap_paterno_fs']),
-            'ap_materno'=>mysql_real_escape_string($_POST['ap_materno_fs']),
-            'encargado_emergencia'=>mysql_real_escape_string($_POST['nom_emergencia_fs']),
-            'tel_emergencia'=>mysql_real_escape_string($_POST['tel_emergencia_fs']),
-            'correo_emergencia'=>mysql_real_escape_string($_POST['correo_emergencia_fs']),
-            'nom_medico'=>mysql_real_escape_string($_POST['nom_medico_fs']),
-            'tel_medico'=>mysql_real_escape_string($_POST['tel_medico_fs']),
-            'fecha_nac'=>mysql_real_escape_string($_POST['$fecha']),
-            'peso'=>mysql_real_escape_string($_POST['peso_fs']),
-            'estatura'=>mysql_real_escape_string($_POST['estatura_fs']),
-            'sexo'=>mysql_real_escape_string($_POST['sexo_fs'])
+                    if ($wpdb->insert(
+                                    $wpdb->prefix . 'datos_basicos', array(
+                                'wp_users_id' => mysql_real_escape_string($current_user->ID),
+                                'nombre' => mysql_real_escape_string($_POST['nombre_fs']),
+                                'ap_paterno' => mysql_real_escape_string($_POST['ap_paterno_fs']),
+                                'ap_materno' => mysql_real_escape_string($_POST['ap_materno_fs']),
+                                'encargado_emergencia' => mysql_real_escape_string($_POST['nom_emergencia_fs']),
+                                'tel_emergencia' => mysql_real_escape_string($_POST['tel_emergencia_fs']),
+                                'correo_emergencia' => mysql_real_escape_string($_POST['correo_emergencia_fs']),
+                                'nom_medico' => mysql_real_escape_string($_POST['nom_medico_fs']),
+                                'tel_medico' => mysql_real_escape_string($_POST['tel_medico_fs']),
+                                'fecha_nac' => mysql_real_escape_string($fecha),
+                                'peso' => mysql_real_escape_string($_POST['peso_fs']),
+                                'estatura' => mysql_real_escape_string($_POST['estatura_fs']),
+                                'sexo' => mysql_real_escape_string($_POST['sexo_fs'])
+                                    )
+                            ) == FALSE) {
+                        my_contact_form_generate_response("error", $mensaje['noguardado']);
+                    } else {
+                        my_contact_form_generate_response("success", $mensaje['guardado']);
+                    }
+                } else {
+                    if ($wpdb->update(
+                                    $wpdb->prefix . 'datos_basicos', array(
+                                'wp_users_id' => mysql_real_escape_string($current_user->ID),
+                                'nombre' => mysql_real_escape_string($_POST['nombre_fs']),
+                                'ap_paterno' => mysql_real_escape_string($_POST['ap_paterno_fs']),
+                                'ap_materno' => mysql_real_escape_string($_POST['ap_materno_fs']),
+                                'encargado_emergencia' => mysql_real_escape_string($_POST['nom_emergencia_fs']),
+                                'tel_emergencia' => mysql_real_escape_string($_POST['tel_emergencia_fs']),
+                                'correo_emergencia' => mysql_real_escape_string($_POST['correo_emergencia_fs']),
+                                'nom_medico' => mysql_real_escape_string($_POST['nom_medico_fs']),
+                                'tel_medico' => mysql_real_escape_string($_POST['tel_medico_fs']),
+                                'fecha_nac' => mysql_real_escape_string($fecha),
+                                'peso' => mysql_real_escape_string($_POST['peso_fs']),
+                                'estatura' => mysql_real_escape_string($_POST['estatura_fs']),
+                                'sexo' => mysql_real_escape_string($_POST['sexo_fs'])
+                                    ), array('wp_users_id' => mysql_real_escape_string($current_user->ID))
+                            ) == FALSE)
+                        my_contact_form_generate_response("error", $mensaje['noguardado']);
+                    else
+                        my_contact_form_generate_response("success", $mensaje['guardado']);
+                }
+            }
 
-                )
-        ) == FALSE){
-                my_contact_form_generate_response("error", $mensaje['noguardado']);
-        }else{
-                my_contact_form_generate_response("success", $mensaje['guardado']);
-        }
-    } else {
-        $fecha=$_POST['anio_fs'].'-'.$_POST['mes_fs'].'-'.$_POST['dia_fs'];
-        
-        if($wpdb->update(
-            $wpdb->prefix . 'datos_basicos', array(
-            'wp_users_id'=>mysql_real_escape_string($_POST['wp_users_id']),
-            'nombre'=>mysql_real_escape_string($_POST['nombre_fs']),
-            'ap_paterno'=>mysql_real_escape_string($_POST['ap_paterno_fs']),
-            'ap_materno'=>mysql_real_escape_string($_POST['ap_materno_fs']),
-            'encargado_emergencia'=>mysql_real_escape_string($_POST['nom_emergencia_fs']),
-            'tel_emergencia'=>mysql_real_escape_string($_POST['tel_emergencia_fs']),
-            'correo_emergencia'=>mysql_real_escape_string($_POST['correo_emergencia_fs']),
-            'nom_medico'=>mysql_real_escape_string($_POST['nom_medico_fs']),
-            'tel_medico'=>mysql_real_escape_string($_POST['tel_medico_fs']),
-            'fecha_nac'=>mysql_real_escape_string($_POST['$fecha']),
-            'peso'=>mysql_real_escape_string($_POST['peso_fs']),
-            'estatura'=>mysql_real_escape_string($_POST['estatura_fs']),
-            'sexo'=>mysql_real_escape_string($_POST['sexo_fs'])
-
-                ), array('wp_users_id' => mysql_real_escape_string($current_user->ID))
-        ) == FALSE)
-                my_contact_form_generate_response("error", $mensaje['noguardado']);
-        else
-                my_contact_form_generate_response("success", $mensaje['guardado']);
-
-    }
-            
 //                $sent = wp_mail($to, $subject, strip_tags($message), $headers);
 //                if ($sent)
 //                    my_contact_form_generate_response("success", $message_sent); //message sent!
 //                else
 //                    my_contact_form_generate_response("error", $message_unsent); //message wasn't sent
-            }
         }
     }
 } else if ($_POST['submitted'])
@@ -224,28 +237,28 @@ if (empty($user)) {
                                     <label for="mes">Mes</label>
                                     <select id="mes" name="mes_fs" required="required">
                                         <option value="null">----------</option>
-    <?php
-    foreach ($mes as $k => $m) {
-        if (esc_attr($_POST['mes_fs']) == $k) {
-            echo'<option value="' . $k . '" selected="selected">' . $m . '</option>';
-        } else {
-            echo'<option value="' . $k . '">' . $m . '</option>';
-        }
-    }
-    ?>
+                                        <?php
+                                        foreach ($mes as $k => $m) {
+                                            if (esc_attr($_POST['mes_fs']) == $k) {
+                                                echo'<option value="' . $k . '" selected="selected">' . $m . '</option>';
+                                            } else {
+                                                echo'<option value="' . $k . '">' . $m . '</option>';
+                                            }
+                                        }
+                                        ?>
                                     </select>
                                     <label for="anio">A&ntilde;o</label>
                                     <select id="anio" name="anio_fs" required="required">
-    <?php
-    for ($j = 1900; $j <= date('Y'); $j++) {
-        if (esc_attr($_POST['anio_fs']) == $j)
-            echo'<option value="' . $j . '" selected="selected">' . $j . '</option>';
-        else
-            echo'<option value="' . $j . '">' . $j . '</option>';
-    }
+                                        <?php
+                                        for ($j = 1900; $j <= date('Y'); $j++) {
+                                            if (esc_attr($_POST['anio_fs']) == $j)
+                                                echo'<option value="' . $j . '" selected="selected">' . $j . '</option>';
+                                            else
+                                                echo'<option value="' . $j . '">' . $j . '</option>';
+                                        }
 
 //                                        echo esc_attr($_POST['mes_fs']); 
-    ?>
+                                        ?>
                                     </select>
                                     <p><label for="peso">Peso: <span>*</span> <br>
                                             <input type="number" required="required" name="peso_fs" value="<?php echo esc_attr($_POST['peso_fs']); ?>"></label></p>
@@ -256,9 +269,9 @@ if (empty($user)) {
                                         <input type="radio" name="sexo_fs" id="sexo_f" value="F" checked="<?php echo (esc_attr($_POST['sexo_fs'] == "F") ? 'checked' : ''); ?>"><label for="sexo_f">Femenino</label></p>
                                     <p><label for="message_human">Verificaci&oacute;n: <span>*</span> <br><input type="text" required="required" style="width: 60px;" name="message_human"> + 3 = 5</label></p>      
 
-                    <!--                  <p><label for="name">Name: <span>*</span> <br><input type="text" name="message_name" value="<?php // echo esc_attr($_POST['message_name']);      ?>"></label></p>
-                    <p><label for="message_email">Email: <span>*</span> <br><input type="text" name="message_email" value="<?php //echo esc_attr($_POST['message_email']);      ?>"></label></p>
-                    <p><label for="message_text">Message: <span>*</span> <br><textarea type="text" name="message_text"><?php //echo esc_textarea($_POST['message_text']);      ?></textarea></label></p>
+                            <!--                  <p><label for="name">Name: <span>*</span> <br><input type="text" name="message_name" value="<?php // echo esc_attr($_POST['message_name']);        ?>"></label></p>
+                            <p><label for="message_email">Email: <span>*</span> <br><input type="text" name="message_email" value="<?php //echo esc_attr($_POST['message_email']);        ?>"></label></p>
+                            <p><label for="message_text">Message: <span>*</span> <br><textarea type="text" name="message_text"><?php //echo esc_textarea($_POST['message_text']);        ?></textarea></label></p>
                                     -->
                                     <input type="hidden" name="submitted" value="1">
                                     <p><input type="submit" value="Guardar y continuar"></p>
@@ -267,13 +280,13 @@ if (empty($user)) {
 
 
                 </div><!-- .entry-content -->
-    <?php //endif; // end of the loop.    ?>
+    <?php //endif; // end of the loop.      ?>
             </article><!-- #post -->
 
-<?php endwhile; // end of the loop.    ?>
+<?php endwhile; // end of the loop.      ?>
 
     </div><!-- #content -->
 </div><!-- #primary -->
 
-<?php get_sidebar(); ?>
+        <?php get_sidebar(); ?>
 <?php get_footer(); ?>
