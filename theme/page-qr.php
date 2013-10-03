@@ -8,15 +8,16 @@ $codigo = $_GET['code'];
 //gives the full url
 $urlqr = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
 
-$q_user = 'select ID from ' . $wpdb->prefix . 'users where ' . $wpdb->prefix . 'users_nicename = ' . $codigo;
+$q_user = 'select ID from ' . $wpdb->prefix . 'users where users_nicename = ' . $codigo;
 $user = $wpdb->get_results($q_user, OBJECT);
 if (!empty($user)) {
 
-    $q_basicos = 'select * from ' . $wpdb->prefix . 'datos_basicos where ' . $wpdb->prefix . 'users_nicename = ' . $user->ID;
+    $q_basicos = 'select * from ' . $wpdb->prefix . 'datos_basicos where ' . $wpdb->prefix . 'users_id = ' . $user->ID;
     $basicos = $wpdb->get_results($q_basicos, OBJECT);
 
-    $q_medicos = 'select * from ' . $wpdb->prefix . 'datos_medicos where ' . $wpdb->prefix . 'users_nicename = ' . $user->ID;
+    $q_medicos = 'select * from ' . $wpdb->prefix . 'datos_medicos where ' . $wpdb->prefix . 'users_id = ' . $user->ID;
     $medicos = $wpdb->get_results($q_medicos, OBJECT);
+    
     $q_tipo_sangre='select nombre from ' . $wpdb->prefix . 'cat_tipo_sangre where ' . $wpdb->prefix . 'id = ' . $medicos->wp_cat_tipo_sangre_id;
     $tipo_sangre = $wpdb->get_results($q_tipo_sangre, OBJECT);
     $medicos->tipo_sangre=$tipo_sangre;
