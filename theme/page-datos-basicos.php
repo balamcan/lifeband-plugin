@@ -51,7 +51,8 @@ $human = $_POST['message_human'];
 
 $current_user = wp_get_current_user();
 $q_user = 'select * from ' . $wpdb->prefix . 'datos_basicos where ' . $wpdb->prefix . 'users_id = ' . $current_user->ID;
-$user = $wpdb->get_results($q_user, OBJECT);
+$user = $wpdb->get_row($q_user, OBJECT);
+var_dump($user);
 if (empty($_POST['submitted']) && !empty($user)) {
     $_POST['nombre_fs'] = $user->nombre;
     $_POST['ap_paterno_fs'] = $user->ap_paterno;
@@ -110,7 +111,7 @@ if (!$human == 0) {
                                 'correo_emergencia' => mysql_real_escape_string($_POST['correo_emergencia_fs']),
                                 'nom_medico' => mysql_real_escape_string($_POST['nom_medico_fs']),
                                 'tel_medico' => mysql_real_escape_string($_POST['tel_medico_fs']),
-                                'fecha_nac' => mysql_real_escape_string($fecha),
+                                'fecha_nac' => $fecha,
                                 'peso' => mysql_real_escape_string($_POST['peso_fs']),
                                 'estatura' => mysql_real_escape_string($_POST['estatura_fs']),
                                 'sexo' => mysql_real_escape_string($_POST['sexo_fs'])
@@ -132,7 +133,7 @@ if (!$human == 0) {
                                 'correo_emergencia' => mysql_real_escape_string($_POST['correo_emergencia_fs']),
                                 'nom_medico' => mysql_real_escape_string($_POST['nom_medico_fs']),
                                 'tel_medico' => mysql_real_escape_string($_POST['tel_medico_fs']),
-                                'fecha_nac' => mysql_real_escape_string($fecha),
+                                'fecha_nac' => $fecha,
                                 'peso' => mysql_real_escape_string($_POST['peso_fs']),
                                 'estatura' => mysql_real_escape_string($_POST['estatura_fs']),
                                 'sexo' => mysql_real_escape_string($_POST['sexo_fs'])
@@ -212,7 +213,7 @@ if (!$human == 0) {
                             <p><label for="tel_emergencia">Tel&eacute;fono de emergencia: <span>*</span> <br>
                                     <input type="text" required="required" name="tel_emergencia_fs" value="<?php echo esc_attr($_POST['tel_emergencia_fs']); ?>"></label></p>
                             <p><label for="correo_emergencia">Correo de emergencia: <span>*</span> <br>
-                                    <input type="text" required="required" name="correo_emergencia_fs" value="<?php echo esc_attr($_POST['correo_emergencia_fs']); ?>"></label></p>
+                                    <input type="email" required="required" name="correo_emergencia_fs" value="<?php echo esc_attr($_POST['correo_emergencia_fs']); ?>"></label></p>
                             <p><label for="nom_medico">Nombre del m&eacute;dico:  <br>
                                     <input type="text" name="nom_medico_fs" value="<?php echo esc_attr($_POST['nom_medico_fs']); ?>"></label></p>
                             <p><label for="tel_medico">Tel&eacute;fono del m&eacute;dico:  <br>
@@ -250,7 +251,7 @@ if (!$human == 0) {
                                     <label for="anio">A&ntilde;o</label>
                                     <select id="anio" name="anio_fs" required="required">
                                         <?php
-                                        for ($j = 1900; $j <= date('Y'); $j++) {
+                                        for ($j = date('Y'); $j >=1900; $j--) {
                                             if (esc_attr($_POST['anio_fs']) == $j)
                                                 echo'<option value="' . $j . '" selected="selected">' . $j . '</option>';
                                             else
@@ -265,8 +266,8 @@ if (!$human == 0) {
                                     <p><label for="estatura">Estatura: <span>*</span> <br>
                                             <input type="number" required="required" name="estatura_fs" value="<?php echo esc_attr($_POST['estatura_fs']); ?>"></label></p>
                                     <p class="one-line"><label for="sexo">Sexo: <span>*</span></label> <br>
-                                        <input type="radio" name="sexo_fs" id="sexo_m" value="M" checked="<?php echo (esc_attr($_POST['sexo_fs'] == "M") ? 'checked' : ''); ?>"><label for="sexo_m">Masculino</label>
-                                        <input type="radio" name="sexo_fs" id="sexo_f" value="F" checked="<?php echo (esc_attr($_POST['sexo_fs'] == "F") ? 'checked' : ''); ?>"><label for="sexo_f">Femenino</label></p>
+                                        <input type="radio" name="sexo_fs" id="sexo_m" value="M" checked="<?php echo(($_POST['sexo_fs'] == "M") ? 'checked' : ''); ?>"><label for="sexo_m">Masculino</label>
+                                        <input type="radio" name="sexo_fs" id="sexo_f" value="F" checked="<?php echo(($_POST['sexo_fs'] == "F") ? 'checked' : ''); ?>"><label for="sexo_f">Femenino</label></p>
                                     <p><label for="message_human">Verificaci&oacute;n: <span>*</span> <br><input type="text" required="required" style="width: 60px;" name="message_human"> + 3 = 5</label></p>      
 
                             <!--                  <p><label for="name">Name: <span>*</span> <br><input type="text" name="message_name" value="<?php // echo esc_attr($_POST['message_name']);        ?>"></label></p>
