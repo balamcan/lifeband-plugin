@@ -20,11 +20,11 @@ if (!empty($user)) {
     
     $q_tipo_sangre='select nombre from ' . $wpdb->prefix . 'cat_tipo_sangre where ' . $wpdb->prefix . 'id = ' . $medicos->wp_cat_tipo_sangre_id;
     $tipo_sangre = $wpdb->get_results($q_tipo_sangre, OBJECT);
-    $medicos->tipo_sangre=$tipo_sangre;
+    $medicos->tipo_sangre=$tipo_sangre->nombre;
     
     $q_tipo_diabetes='select nombre from ' . $wpdb->prefix . 'cat_tipo_diabetes where ' . $wpdb->prefix . 'id = ' . $medicos->wp_cat_tipo_diabetes_id;
     $tipo_diabetes = $wpdb->get_results($q_tipo_diabetes, OBJECT);
-    $medicos->tipo_diabetes=$tipo_diabetes;
+    $medicos->tipo_diabetes=$tipo_diabetes->nombre;
     
 } else {
     $error = 'No existe el usuario';
