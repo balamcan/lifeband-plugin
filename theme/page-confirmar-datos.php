@@ -98,8 +98,7 @@ if (!$human == 0) {
 
                 <header class="entry-header">
                     <h1 class="entry-title"><?php the_title();
-    echo ' - ' . $current_user->user_login;
-    ?> </h1>
+    echo ' - ' . $current_user->user_login;    ?> </h1>
                 </header>
 
                 <div class="entry-content">

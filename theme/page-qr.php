@@ -6,13 +6,13 @@
 get_header();
 $codigo = $_GET['code'];
 $error = '';
+$sucess = '';
 //gives the full url
 $urlqr = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
 if (!empty($codigo)) {
     $q_user = 'select ID from ' . $wpdb->prefix . 'users where user_login = \'' . $codigo . '\'';
     $user = $wpdb->get_row($q_user, OBJECT);
 }
-
 if (!empty($user)) {
 
     $q_basicos = 'select * from ' . $wpdb->prefix . 'datos_basicos where ' . $wpdb->prefix . 'users_id = ' . $user->ID;
@@ -21,17 +21,32 @@ if (!empty($user)) {
     $q_medicos = 'select * from ' . $wpdb->prefix . 'datos_medicos where ' . $wpdb->prefix . 'users_id = ' . $user->ID;
     $medicos = $wpdb->get_row($q_medicos, OBJECT);
 
-    $q_tipo_sangre = 'select nombre from ' . $wpdb->prefix . 'cat_tipo_sangre where id = ' . $medicos->wp_cat_tipo_sangre_id;
-    $tipo_sangre = $wpdb->get_row($q_tipo_sangre, OBJECT);
-    $medicos->tipo_sangre = $tipo_sangre->nombre;
+    if (!empty($medicos)) {
+        $q_tipo_sangre = 'select nombre from ' . $wpdb->prefix . 'cat_tipo_sangre where id = ' . $medicos->wp_cat_tipo_sangre_id;
+        $tipo_sangre = $wpdb->get_row($q_tipo_sangre, OBJECT);
+        $medicos->tipo_sangre = $tipo_sangre->nombre;
 
-    $q_tipo_diabetes = 'select nombre from ' . $wpdb->prefix . 'cat_tipo_diabetes where id = ' . $medicos->wp_cat_tipo_diabetes_id;
-    $tipo_diabetes = $wpdb->get_row($q_tipo_diabetes, OBJECT);
-    $medicos->tipo_diabetes = $tipo_diabetes->nombre;
+        $q_tipo_diabetes = 'select nombre from ' . $wpdb->prefix . 'cat_tipo_diabetes where id = ' . $medicos->wp_cat_tipo_diabetes_id;
+        $tipo_diabetes = $wpdb->get_row($q_tipo_diabetes, OBJECT);
+        $medicos->tipo_diabetes = $tipo_diabetes->nombre;
+    }
+    if (!empty($_POST['submitted'])) {
+        //php mailer variables
+        $to = get_option('admin_email');
+        $subject = "Someone sent a message from " . get_bloginfo('name');
+        $headers = 'From: ' . $email . "\r\n" .
+                'Reply-To: ' . $email . "\r\n";
+
+        $sent = wp_mail($to, $subject, strip_tags($message), $headers);
+        if ($sent)
+            $sucess = 'El correo se envio satisfactoriamente'; //message sent!
+        else
+            $error = 'Error: no se pudo enviar el correo'; //message wasn't sent
+    }
 } else {
-    if (empty($_GET['code'])){
+    if (empty($_GET['code'])) {
         $error = 'Error: No hay codigo';
-    }else{
+    } else {
         $error = 'Error: No existe el usuario';
     }
 }
@@ -48,12 +63,12 @@ if (!empty($user)) {
                     <h1 class="entry-title"><?php the_title(); ?> -<b> Informaci&oacute;n de <?php
         echo $basicos->nombre . ' ' .
         $basicos->ap_paterno . ' ' . $basicos->ap_materno
-        ?></b></h1>
+            ?></b></h1>
                     <a href="<?php echo home_url(); ?>">Ir a inicio</a>
                 </header>
 
                 <div class="entry-content">
-    <?php the_content(); ?>
+                    <?php the_content(); ?>
 
                     <style type="text/css">
                         #consult-qr h2{
@@ -88,6 +103,9 @@ if (!empty($user)) {
                         <?php
                         if (!empty($error)) {
                             echo '<h2 style="color:red;">' . $error . '</h2>';
+                        }
+                        if (!empty($success)) {
+                            echo '<h2 style="color:green;">' . $success . '</h2>';
                         }
                         ?>
 
@@ -129,8 +147,12 @@ if (!empty($user)) {
                         <p><label>Protesis dentales:</label><span><?php echo$medicos->p_dentales; ?></span></p>
                         <p><label>Medicamentos de origen natural:</label><span><?php echo$medicos->med_natural; ?></span></p>
                         <div class="qr">
+                            <form action="<?php permalink_link() ?>">
+                                <input type="submit" value="Enviar correo al medico">
+                                <input type="hidden" name="submitted" value="1">
+                            </form>
                             <?php
-//                            echo '<img src="http://localhost/qr/param.php?txt=' . $urlqr . '"/>';
+//                            echo '<img src="http://'.$_SERVER['HTTP_HOST']'.'/qr/param.php?txt=' . $urlqr . '"/>';
                             echo '<img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=http://' . $urlqr . '"/>';
                             echo'<p>' . 'http://' . $urlqr . '</p>';
                             ?>
@@ -142,7 +164,7 @@ if (!empty($user)) {
 
             </article><!-- #post -->
 
-<?php endwhile; // end of the loop.    ?>
+        <?php endwhile; // end of the loop.     ?>
 
     </div><!-- #content -->
 </div><!-- #primary -->
