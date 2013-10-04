@@ -6,7 +6,7 @@ include_once(ABSPATH  . '/wp-config.php');
 include_once(ABSPATH  . '/wp-load.php');
 include_once(ABSPATH . '/wp-includes/wp-db.php');
 include_once ('param2.php');
-$qrFactory = new qr();
+
 class generateUsers {
    
     var $i = 0;
@@ -72,7 +72,7 @@ class generateUsers {
     }
             
     function canti($cant = 50) {
-        
+        $qrFactory = new qr();
         global $wpdb;
         While ($this->i <= $cant) {
             $this->lastId = $wpdb->get_var("SELECT id from " . $wpdb->prefix . "users order by id desc limit 1",0,0);

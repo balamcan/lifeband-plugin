@@ -2,11 +2,11 @@
 require_once('generateUsers.php');
 include_once(ABSPATH . '/wp-includes/wp-db.php');
 require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-if(isset($_POST['submit'])) { 
-    $userFactory = new generateUsers();
+$userFactory = new generateUsers();
+//if(isset($_POST['submit'])) { 
     $userFactory->canti();
     echo "50 Usuarios Generados";
-} 
+//} 
 ?>
 
 
@@ -16,7 +16,7 @@ if(isset($_POST['submit'])) {
 
 <h3>Life Band Plugin Options</h3>
 
-<form method="post" action="lifeband-plugin-admin.php">
+<form method="post" action="#">
 <input type="button" name="submit" value="Generar 50 usuarios">
 </form>
 </div>
