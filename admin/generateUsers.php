@@ -6,7 +6,7 @@ include_once(ABSPATH  . '/wp-config.php');
 include_once(ABSPATH  . '/wp-load.php');
 include_once(ABSPATH . '/wp-includes/wp-db.php');
 include_once ('param2.php');
-$qrFactory = new qr();
+
 class generateUsers {
    
     var $i = 0;
@@ -70,16 +70,25 @@ class generateUsers {
             meta_value => 'wp330_toolbar,wp330_saving_widgets,wp340_choose_image_from_library,wp340_customize_current_theme_link,wp350_media,wp360_revisions,wp360_locks');
         $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);           
     }
-            
+    
+       function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    return $randomString;
+}
+    
     function canti($cant = 50) {
-        
+        $qrFactory = new qr();
         global $wpdb;
         While ($this->i <= $cant) {
             $this->lastId = $wpdb->get_var("SELECT id from " . $wpdb->prefix . "users order by id desc limit 1",0,0);
             $this->lastId = $this->lastId + 1;
             $this->passusr = wp_generate_password(8);
             $this->pass = wp_hash_password($this->passusr);
-            $this->nombreUsuario = substr(sha1($this->lastId), 1, 4) . strrev($this->lastId); 
+            $this->nombreUsuario = $this->lastId . generateRandomString(4); 
             $this->correo = $this->nombreUsuario . '@lifeband.com';
             $usersTb = array(
                 'user_login' => $this->nombreUsuario,
