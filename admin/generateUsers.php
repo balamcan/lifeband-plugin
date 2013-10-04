@@ -70,7 +70,16 @@ class generateUsers {
             meta_value => 'wp330_toolbar,wp330_saving_widgets,wp340_choose_image_from_library,wp340_customize_current_theme_link,wp350_media,wp360_revisions,wp360_locks');
         $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);           
     }
-            
+    
+       function generateRandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    return $randomString;
+}
+    
     function canti($cant = 50) {
         $qrFactory = new qr();
         global $wpdb;
@@ -79,7 +88,7 @@ class generateUsers {
             $this->lastId = $this->lastId + 1;
             $this->passusr = wp_generate_password(8);
             $this->pass = wp_hash_password($this->passusr);
-            $this->nombreUsuario = substr(sha1($this->lastId), 1, 4) . strrev($this->lastId); 
+            $this->nombreUsuario = $this->lastId . generateRandomString(4); 
             $this->correo = $this->nombreUsuario . '@lifeband.com';
             $usersTb = array(
                 'user_login' => $this->nombreUsuario,
