@@ -52,7 +52,6 @@ $human = $_POST['message_human'];
 $current_user = wp_get_current_user();
 $q_user = 'select * from ' . $wpdb->prefix . 'datos_basicos where ' . $wpdb->prefix . 'users_id = ' . $current_user->ID;
 $user = $wpdb->get_row($q_user, OBJECT);
-var_dump($user);
 if (empty($_POST['submitted']) && !empty($user)) {
     $_POST['nombre_fs'] = $user->nombre;
     $_POST['ap_paterno_fs'] = $user->ap_paterno;

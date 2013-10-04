@@ -30,12 +30,54 @@ if (!empty($user)) {
         $tipo_diabetes = $wpdb->get_row($q_tipo_diabetes, OBJECT);
         $medicos->tipo_diabetes = $tipo_diabetes->nombre;
     }
-    if (!empty($_POST['submitted'])) {
+    if (!empty($_POST['submitted']) && !empty($basicos->correo_emergencia)) {
         //php mailer variables
-        $to = get_option('admin_email');
-        $subject = "Someone sent a message from " . get_bloginfo('name');
+        $email = $basicos->correo_emergencia;
+        $to = 'hola@lifeband.com.mx';//get_option('admin_email');
+        $subject = "EMERGENCIA Life Band";
         $headers = 'From: ' . $email . "\r\n" .
-                'Reply-To: ' . $email . "\r\n";
+                'Reply-To: ' . $email . "\r\n" .
+                'Content-type: text/html; charset=iso-8859-1' . "\r\n" .
+                'MIME-Version: 1.0' . "\r\n";
+        $message = '<html>
+<head><title>Emergencia LifeBand</title></head>
+<body>  
+  <h1 class="entry-title"> Informaci&oacute;n de ' . $basicos->nombre . ' ' . $basicos->ap_paterno . ' ' . $basicos->ap_materno . '</b></h1>
+    <h3>Datos b&aacute;sicos</h3>
+    <p><label>Apellido paterno:</label><span>' . $basicos->ap_paterno . '</span></p>
+    <p><label>Apellido materno:</label><span>' . $basicos->ap_materno . '</span></p>
+    <p><label>Nombre:</label><span>' . $basicos->nombre . '</span></p>
+    <p><label>Nombre del encargado de emergencia:</label><span>' . $basicos->encargado_emergencia . '</span></p>
+    <p><label>Telefono de emergencia:</label><span>' . $basicos->tel_emergencia . '</span></p>
+    <p><label>Correo de emergencia:</label><span>' . $basicos->correo_emergencia . '</span></p>
+    <p><label>Nombre del medico:</label><span>' . $basicos->nom_medico . '</span></p>
+    <p><label>Telefono del medico:</label><span>' . $basicos->tel_medico . '</span></p>
+    <p><label>Fecha de nacimiento:</label><span>' . $basicos->fecha_nac . '</span></p>
+    <p><label>Peso:</label><span>' . $basicos->peso . '</span></p>
+    <p><label>Estatura:</label><span>' . $basicos->estatura . '</span></p>
+    <p><label>Sexo:</label><span>' . $basicos->sexo . '</span></p>
+    <h3>Datos medicos</h3>
+    <p><label>Tipo de sangre:</label><span>' . $medicos->tipo_sangre . '</span></p>
+    <p><label>Tipo de diabetes:</label><span>' . $medicos->tipo_diabetes . '</span></p>
+    <p><label>Presi&oacute;n arterial diastolica:</label><span>' . $medicos->presion_arterial_diastolica . '</span></p>
+    <p><label>Presi&oacute;n arterial sistolica:</label><span>' . $medicos->presion_arterial_sistolica . '</span></p>
+    <p><label>Donador de organos:</label><span>' . $medicos->donador_organos . '</span></p>
+    <p><label>Alergias:</label><span>' . $medicos->alergias . '</span></p>
+    <p><label>Medicamentos:</label><span>' . $medicos->medicamentos . '</span></p>
+    <p><label>Enfermedades:</label><span>' . $medicos->enfermedades . '</span></p>
+    <p><label>Cirugias:</label><span>' . $medicos->cirugias . '</span></p>
+    <p><label>Otras consideraciones:</label><span>' . $medicos->otras_consideraciones . '</span></p>
+    <h3>Discapacidades y/o dispositivos</h3>
+    <p><label>Discapacidad auditiva:</label><span>' . $medicos->d_auditiva . '</span></p>
+    <p><label>Discapacidad mental:</label><span>' . $medicos->d_mental . '</span></p>
+    <p><label>Discapacidad motora:</label><span>' . $medicos->d_motora . '</span></p>
+    <p><label>Discapacidad visual:</label><span>' . $medicos->d_visual . '</span></p>
+    <p><label>Dispositivo de soporte vital marcapasos:</label><span>' . $medicos->marcapasos . '</span></p>
+    <p><label>Lentes de contacto:</label><span>' . $medicos->lentes_contacto . '</span></p>
+    <p><label>Protesis dentales:</label><span>' . $medicos->p_dentales . '</span></p>
+    <p><label>Medicamentos de origen natural:</label><span>' . $medicos->med_natural . '</span></p>
+</body>
+</html>';
 
         $sent = wp_mail($to, $subject, strip_tags($message), $headers);
         if ($sent)
