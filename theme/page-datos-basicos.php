@@ -265,8 +265,8 @@ if (!$human == 0) {
                                     <p><label for="estatura">Estatura: <span>*</span> <br>
                                             <input type="number" required="required" name="estatura_fs" value="<?php echo esc_attr($_POST['estatura_fs']); ?>"></label></p>
                                     <p class="one-line"><label for="sexo">Sexo: <span>*</span></label> <br>
-                                        <input type="radio" name="sexo_fs" id="sexo_m" value="M" checked="<?php echo(($_POST['sexo_fs'] == "M") ? 'checked' : ''); ?>"><label for="sexo_m">Masculino</label>
-                                        <input type="radio" name="sexo_fs" id="sexo_f" value="F" checked="<?php echo(($_POST['sexo_fs'] == "F") ? 'checked' : ''); ?>"><label for="sexo_f">Femenino</label></p>
+                                        <input type="radio" name="sexo_fs" id="sexo_m" value="M" <?php if ($_POST['sexo_fs']=='M') {echo 'checked';}?>><label for="sexo_m">Masculino</label>
+                                        <input type="radio" name="sexo_fs" id="sexo_f" value="F" <?php if ($_POST['sexo_fs']=='F') {echo 'checked';}?>><label for="sexo_f">Femenino</label></p>
                                     <p><label for="message_human">Verificaci&oacute;n: <span>*</span> <br><input type="text" required="required" style="width: 60px;" name="message_human"> + 3 = 5</label></p>      
 
                             <!--                  <p><label for="name">Name: <span>*</span> <br><input type="text" name="message_name" value="<?php // echo esc_attr($_POST['message_name']);        ?>"></label></p>
