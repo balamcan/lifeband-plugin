@@ -241,7 +241,7 @@ $tipo_diabetes = $wpdb->get_results($q_tipo_diabetes, OBJECT);
                                 <p><label for="presion_sistolica">Presi&oacute;n arterial sistolica:  <br>
                                         <input type="number" name="presion_sistolica_fs" value="<?php echo esc_attr($_POST['presion_sistolica_fs']); ?>"></label></p>
                                 <p><label for="donador_organos">Donador de organos:  <br>
-                                        <input type="checkbox" name="donador_organos_fs" value="1" checked="<?php echo (($_POST['donador_organos_fs'] === 1) ? 'checked' : ''); ?>"></label></p>
+                                        <input type="checkbox" name="donador_organos_fs" value="1" <?php echo (($_POST['donador_organos_fs'] === 1) ? 'checked' : ''); ?>></label></p>
                                 <p><label for="nombre">Alergias:  <br>
                                         <textarea name="alergias_fs" ><?php echo esc_attr($_POST['alergias_fs']); ?> </textarea></label></p>
                                 <p><label for="medicamentos">Medicamentos:  <br>
