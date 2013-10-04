@@ -197,7 +197,7 @@ if (!$human == 0) {
 
                     <div id="respond">
     <?php
-//                if (is_user_logged_in()):
+                if (is_user_logged_in()):
     echo $response;
     ?>
                         <form action="<?php the_permalink(); ?>" method="post">
@@ -281,7 +281,7 @@ if (!$human == 0) {
 
 
                 </div><!-- .entry-content -->
-    <?php //endif; // end of the loop.      ?>
+    <?php endif; // end of the loop.      ?>
             </article><!-- #post -->
 
 <?php endwhile; // end of the loop.      ?>

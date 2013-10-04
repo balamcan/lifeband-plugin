@@ -130,10 +130,10 @@ if (!$human == 0) {
 
                     <div id="respond">
     <?php
-//                if (is_user_logged_in()):
+                if (is_user_logged_in()):
     echo $response;
     ?>
-                        <form action="<?php the_permalink(); ?>" method="post">
+                            <form action="<?php the_permalink(); ?>" method="post">
                             <!--<h3>Datos b&aacute;sicos</h3>-->
                             <p><label for="contrasena">Contraseña: <span>*</span> <br>
                                     <input type="password" required="required" name="contrasena_fs" value="<?php //echo esc_attr($_POST['contrasena_fs']); ?>"></label></p>
@@ -156,7 +156,7 @@ if (!$human == 0) {
 
 
                 </div><!-- .entry-content -->
-    <?php //endif; // end of the loop.        ?>
+    <?php endif; // end of the loop.        ?>
             </article><!-- #post -->
 
 <?php endwhile; // end of the loop.        ?>

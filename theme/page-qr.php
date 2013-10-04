@@ -2,15 +2,17 @@
 /*
  * Template Name: Qr
  */
+
 get_header();
 $codigo = $_GET['code'];
-
+$error = '';
 //gives the full url
 $urlqr = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
 if (!empty($codigo)) {
     $q_user = 'select ID from ' . $wpdb->prefix . 'users where user_login = \'' . $codigo . '\'';
     $user = $wpdb->get_row($q_user, OBJECT);
 }
+
 if (!empty($user)) {
 
     $q_basicos = 'select * from ' . $wpdb->prefix . 'datos_basicos where ' . $wpdb->prefix . 'users_id = ' . $user->ID;
@@ -27,7 +29,11 @@ if (!empty($user)) {
     $tipo_diabetes = $wpdb->get_row($q_tipo_diabetes, OBJECT);
     $medicos->tipo_diabetes = $tipo_diabetes->nombre;
 } else {
-    $error = 'No existe el usuario';
+    if (empty($_GET['code'])){
+        $error = 'Error: No hay codigo';
+    }else{
+        $error = 'Error: No existe el usuario';
+    }
 }
 ?>
 
@@ -39,13 +45,15 @@ if (!empty($user)) {
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
                 <header class="entry-header">
-                    <h1 class="entry-title"><?php the_title(); ?> -<b> Informaci&oacute;n de <?php echo $basicos->nombre . ' ' .
-            $basicos->ap_paterno . ' ' . $basicos->ap_materno
-            ?></b></h1>
+                    <h1 class="entry-title"><?php the_title(); ?> -<b> Informaci&oacute;n de <?php
+        echo $basicos->nombre . ' ' .
+        $basicos->ap_paterno . ' ' . $basicos->ap_materno
+        ?></b></h1>
+                    <a href="<?php echo home_url(); ?>">Ir a inicio</a>
                 </header>
 
                 <div class="entry-content">
-                    <?php the_content(); ?>
+    <?php the_content(); ?>
 
                     <style type="text/css">
                         #consult-qr h2{
@@ -127,13 +135,14 @@ if (!empty($user)) {
                             echo'<p>' . 'http://' . $urlqr . '</p>';
                             ?>
                         </div>
+                        <a href="<?php echo home_url(); ?>">Ir a inicio</a>
                     </div>
 
                 </div><!-- .entry-content -->
 
             </article><!-- #post -->
 
-        <?php endwhile; // end of the loop.   ?>
+<?php endwhile; // end of the loop.    ?>
 
     </div><!-- #content -->
 </div><!-- #primary -->
