@@ -101,7 +101,7 @@ class generateUsers {
             $wpdb->insert($wpdb->prefix . 'users', $usersTb);
             $this->usersMetaInsert($this->lastId, $this->nombreUsuario);
             $wpdb->insert($wpdb->prefix . 'pass_qr', $userPassTb);
-            $qrFactory->crearQrPNG('lifeband.com.mx/',$this->nombreUsuario);
+            $qrFactory->crearQrPNG('lifeband.com.mx/qr?code=',$this->nombreUsuario);
             $this->i++;
         }
     }

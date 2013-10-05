@@ -14,7 +14,7 @@ $userFactory = new generateUsers();
     <h2>Life Band Plugin</h2>
     <h3>Life Band Plugin Options</h3>
 
-    <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+    <form method="post" action="<?php echo plugins_url( 'lifeband-plugin\admin\lifeband-plugin-admin.php'); ?>">
         <input type="button" name="submit" value="Generar 50 usuarios">
         <input type="hidden" name="submitted" value="1">
     </form>
