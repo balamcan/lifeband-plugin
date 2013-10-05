@@ -4,7 +4,7 @@
      
         function crearQrPNG($url,$val) {
        $codeText = 'http://'.$url.$val; 
-            QRcode::png($codeText, 'qrpng/'.$val.'.png'); // creates file
+            QRcode::png($codeText, ABSPATH .'/wp-content/plugins/lifeband-plugin/admin/qrpng/'.$val.'.png'); // creates file
         }
        
     }

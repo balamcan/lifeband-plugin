@@ -66,7 +66,10 @@ function run_sub_process() {
 //1
 function lifeband_plugin_menu() {
     add_options_page('Life Band Plugin Options', 'Life Band Plugin', 'manage_options', 'lifeband-plugin-menu', 'lifeband_plugin_options');
+    add_options_page('Generar Usuarios','LifeBand Generar Usuarios','users_factory','life_band_users_factory');
+    
 }
+
 
 function register_mysettings() {
 //register our settings
@@ -81,6 +84,10 @@ add_action('admin_menu', 'lifeband_plugin_menu');
 //3
 function lifeband_plugin_options() {
     include('admin/lifeband-plugin-admin.php');
+    include('admin/lifeband-generate-users.php');
 }
-
+function life_band_users_factory(){
+    include('admin/lifeband-generate-users.php');
+    
+}
 ?>
