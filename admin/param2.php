@@ -6,6 +6,9 @@
        $codeText = 'http://'.$url.$val; 
             QRcode::png($codeText, ABSPATH .'/wp-content/plugins/lifeband-plugin/admin/qrpng/'.$val.'.png'); // creates file
         }
+        function crearQrUsuario($nombre){
+            QRcode::png('lifeband.com.mx/qr?code='.$nombre, '/wp-content/plugins/lifeband-plugin/admin/qrpng/'.$nombre.'.png');
+        }
        
     }
 ?>
