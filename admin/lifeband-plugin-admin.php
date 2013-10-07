@@ -14,7 +14,7 @@ if (!empty($_POST['generar_fs'])) {
     <h2>Life Band Plugin</h2>
     <h3>Life Band Plugin Options</h3>
 
-    <form method="post" action="<?php echo plugins_url('lifeband-plugin\admin\lifeband-plugin-admin.php'); ?>">
+    <form method="post" action="<?php echo  $_SERVER['REQUEST_URI']; ?>">
         <input type="submit" name="submit" value="Generar 50 usuarios">
         <input type="hidden" name="generar_fs" value="1">
     </form>

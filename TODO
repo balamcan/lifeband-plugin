@@ -7,3 +7,12 @@ Formulario de confirmación de cambio de correo. con su respectiva función.
 //         $copy_files['add-functions-overwriting'] = fwrite($f_functions, "\n"."include('add-functions.php');");
 //         fclose($f_functions);
 //    }
+//    /*copy files to the correct directory*/
+//    $copy_files['page-confirmar-datos']=copy($plugin_directory.'theme/page-confirmar-datos.php', $template_directory.'/page-confirmar-datos.php');
+//    $copy_files['page-datos-medicos']=copy($plugin_directory.'theme/page-datos-medicos.php', $template_directory.'/page-datos-medicos.php');
+//    $copy_files['page-qr']=copy($plugin_directory.'theme/page-qr.php', $template_directory.'/page-qr.php');
+//    $copy_files['page-datos-basicos']=copy($plugin_directory.'theme/page-datos-basicos.php', $template_directory.'/page-datos-basicos.php');
+//    $copy_files['add-functions']=copy($plugin_directory.'theme/add-functions.php', $template_directory.'/add-functions.php');
+//
+//    var_dump($copy_files);
+//   
