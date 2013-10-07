@@ -16,7 +16,8 @@ $url=urlencode($_SERVER['HTTP_HOST'].'/qr?code=');
     <?php
     $usuarios = $wpdb->get_results('select u.ID, u.user_login as username, p.pass from wp_users as u RIGHT JOIN wp_pass_qr as p on u.id = p.id_user', OBJECT);
     foreach ($usuarios as $u) {
-        crearQrUsuario($u->username);
+        $qrFactory = new qr();
+        $qrFactory->crearQrUsuario($u->username);
         echo'<tr><td>' . $u->ID . '</td><td>' . $u->username . '</td><td>' . $u->pass 
         . '</td><td><a href="http://'.$_SERVER['HTTP_HOST'].'/qr/param2.php?a[]='.
         $u->username .'&url='.$url.'">QR '.$u->username .'</a></td></tr>';
