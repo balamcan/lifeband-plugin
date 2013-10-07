@@ -7,19 +7,10 @@ $userFactory = new generateUsers();
     $userFactory->canti();
     echo "50 Usuarios Generados";
 }
+?>
 
 
-add_action('admin_menu', function() {
-add_options_page('Add an Item', 'Add an Item', 'administrator', __FILE__, function() {
-
-if(isset($_POST['submit']) && $_POST['submit'] == 'Send'){
-    import_items();
-}else
-    add_item_form();
-});
-
-function add_item_form(){
-    <div class="wrap">
+<div class="wrap">
     <h2>Life Band Plugin</h2>
     <h3>Life Band Plugin Options</h3>
 
@@ -28,12 +19,3 @@ function add_item_form(){
         <input type="hidden" name="submitted" value="1">
     </form>
 </div>
-}
-
-function import_items(){
-
-    //Your code from http://some/url/additem.php for importing items to the external DB goes here.
-
-}
-
-?>
