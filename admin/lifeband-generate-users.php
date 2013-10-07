@@ -1,11 +1,11 @@
 <?php
 
-require_once('generateUsers.php');
-include_once(ABSPATH . '/wp-includes/wp-db.php');
-require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-$userFactory = new generateUsers();
-    $userFactory->canti();
-    echo "50 Usuarios Generados";
+//require_once('generateUsers.php');
+//include_once(ABSPATH . '/wp-includes/wp-db.php');
+//require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+//$userFactory = new generateUsers();
+//    $userFactory->canti();
+//    echo "50 Usuarios Generados";
 
 ?>
 

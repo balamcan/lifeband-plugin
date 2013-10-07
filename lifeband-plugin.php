@@ -84,7 +84,8 @@ add_action('admin_menu', 'lifeband_plugin_menu');
 //3
 function lifeband_plugin_options() {
     include('admin/lifeband-plugin-admin.php');
-    include('admin/lifeband-generate-users.php');
+    include('admin/usuarios-generados.php');
+
 }
 function life_band_users_factory(){
     include('admin/lifeband-generate-users.php');
