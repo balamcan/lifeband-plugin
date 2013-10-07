@@ -1,2 +1,9 @@
 Aro:
 Formulario de confirmación de cambio de correo. con su respectiva función.
+//    $f_functions=fopen($template_directory.'/functions.php', 'r+');
+//    $a_functions=  explode("\n", $f_functions);
+//    if(end($a_functions) !== 'include("add-functions.php");'){
+//    //    array_push($a_functions, 'include("add-functions.php");');
+//         $copy_files['add-functions-overwriting'] = fwrite($f_functions, "\n"."include('add-functions.php');");
+//         fclose($f_functions);
+//    }
