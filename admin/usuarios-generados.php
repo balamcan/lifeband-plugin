@@ -10,8 +10,8 @@ $url=urlencode($_SERVER['HTTP_HOST'].'/qr?code=');
 ?>
 <div class="wrap">
     <h3>Usuarios generados</h3>
-<!--<a href="<?php // echo'http://'.$_SERVER['HTTP_HOST'].'/qr/param2.php?'.$a_build.'&'.'url='.$url;?>">Generar los QRs de los usuarios</a>-->
-<a href="<?php echo'http://'.$_SERVER['HTTP_HOST'].'/qr/img/index.php';?>">Ver los archivos QRs generados</a>
+<!--<a href="<?php // echo'http://'.$_SERVER['HTTP_HOST'].'/qrphp/param2.php?'.$a_build.'&'.'url='.$url;?>">Generar los QRs de los usuarios</a>-->
+<a href="<?php echo'http://'.$_SERVER['HTTP_HOST'].'/qrphp/img/index.php';?>">Ver los archivos QRs generados</a>
 <table>
     <tr><th>ID<th>Nombre usuario</th><th>Contrase&ntilde;a</th><th>Accesar al QR</th></tr>
     <?php
@@ -20,7 +20,7 @@ $url=urlencode($_SERVER['HTTP_HOST'].'/qr?code=');
 //        $qrFactory = new qr();
 //        $qrFactory->crearQrUsuario($u->username);
         echo'<tr><td>' . $u->ID . '</td><td>' . $u->username . '</td><td>' . $u->pass 
-        . '</td><td><a href="http://'.$_SERVER['HTTP_HOST'].'/qr/img/'.$u->username .'.png">QR </a></td></tr>';
+        . '</td><td><a href="http://'.$_SERVER['HTTP_HOST'].'/qrphp/img/'.$u->username .'.png">QR </a></td></tr>';
     }
     ?>
 </table>

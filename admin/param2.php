@@ -4,10 +4,10 @@
      
         function crearQrPNG($url,$val) {
        $codeText = 'http://'.$url.$val; 
-            QRcode::png($codeText, ABSPATH .'qr/img/'.$val.'.png'); // creates file
+            QRcode::png($codeText, ABSPATH .'qrphp/img/'.$val.'.png'); // creates file
         }
         function crearQrUsuario($nombre){
-            QRcode::png('lifeband.com.mx/qr?code='.$nombre, ABSPATH . 'qr/img/'.$nombre.'.png');
+            QRcode::png('lifeband.com.mx/qr?code='.$nombre, ABSPATH . 'qrphp/img/'.$nombre.'.png');
         }
        
     }
