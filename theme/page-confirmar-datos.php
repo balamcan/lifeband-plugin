@@ -2,6 +2,7 @@
 /*
  * Template Name: Datos basicos
  */
+global $avia_config;
 
 //response generation function
 
@@ -12,9 +13,10 @@ function my_contact_form_generate_response($type, $message) {
 
     global $response;
 
-    if ($type == "success")
+    if ($type == "success"){
         $response = "<div class='success'>{$message}</div>";
-    else
+        wp_redirect('http://'.$_SERVER['HTTP_HOST'].'/datos-basicos/');
+    }else
         $response = "<div class='error'>{$message}</div>";
 }
 
@@ -59,22 +61,22 @@ if (!$human == 0) {
                     my_contact_form_generate_response("error", $confirm_invalid);
                 } else { //ready to go!
                     //wp_set_password( $new, $current_user->ID );
-                    $complete=wp_update_user(
+                    $complete = wp_update_user(
                             array('ID' => $current_user->ID,
                                 'user_email' => $email,
                                 'user_pass' => $new
                             )
                     );
-                    
+
                     //$sent = wp_mail($to, $subject, strip_tags($message), $headers);
-                    
-                    if ($complete){
+
+                    if ($complete) {
                         //se AGREGA UN META USUARIO PARA IDENTIFICAR SI CAMBIO LA CONTRASEÑA Y CORREO
-                        if( get_user_meta($current_user->ID, 'wp_human_user'))// con esta condicional sabes si existe el user meta
+                        if (get_user_meta($current_user->ID, 'wp_human_user'))// con esta condicional sabes si existe el user meta
                             update_user_meta($current_user->ID, 'wp_human_user', true);
                         else
                             add_user_meta($current_user->ID, 'wp_human_user', true);
-                        
+
                         my_contact_form_generate_response("success", $message_sent); //message sent!
                     }else
                         my_contact_form_generate_response("error", $message_unsent); //message wasn't sent
@@ -87,81 +89,98 @@ if (!$human == 0) {
 //    my_contact_form_generate_response("error", $missing_content);
 ?>
 
-<?php get_header(); ?>
+<?php
+get_header();
+if (get_post_meta(get_the_ID(), 'header', true) != 'no')
+    echo avia_title();
+?>
 
-<div id="primary" class="site-content">
-    <div id="content" role="main">
 
-<?php while (have_posts()) : the_post(); ?>
+<div class='container_wrap main_color <?php avia_layout_class('main'); ?>'>
 
-            <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+    <div class='container'>
 
-                <header class="entry-header">
-                    <h1 class="entry-title"><?php the_title();
-    echo ' - ' . $current_user->user_login;    ?> </h1>
-                </header>
+        <div class='template-page content  <?php avia_layout_class('content'); ?> units'>
 
-                <div class="entry-content">
+            <?php
+            $avia_config['size'] = avia_layout_class('main', false) == 'entry_without_sidebar' ? '' : 'entry_with_sidebar';
+
+            while (have_posts()) : the_post();
+                ?>
+
+                <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+
+                    <header class="entry-header">
+                        <h1 class="entry-title"><?php the_title();
+                echo ' - ' . $current_user->user_login;
+                ?> </h1>
+                    </header>
+
+                    <div class="entry-content">
     <?php the_content(); ?>
 
-                    <style type="text/css">
-                        .error{
-                            padding: 5px 9px;
-                            border: 1px solid red;
-                            color: red;
-                            border-radius: 3px;
-                        }
+                        <style type="text/css">
+                            .error{
+                                padding: 5px 9px;
+                                border: 1px solid red;
+                                color: red;
+                                border-radius: 3px;
+                            }
 
-                        .success{
-                            padding: 5px 9px;
-                            border: 1px solid green;
-                            color: green;
-                            border-radius: 3px;
-                        }
+                            .success{
+                                padding: 5px 9px;
+                                border: 1px solid green;
+                                color: green;
+                                border-radius: 3px;
+                            }
 
-                        form span{
-                            color: red;
-                        }
-                        #respond form .one-line label, #respond form .one-line input{
-                            display: inline-block;
-                        }
-                    </style>
+                            form span{
+                                color: red;
+                            }
+                            #respond form .one-line label, #respond form .one-line input{
+                                display: inline-block;
+                            }
+                        </style>
 
-                    <div id="respond">
-    <?php
-                if (is_user_logged_in()):
-    echo $response;
-    ?>
-                            <form action="<?php the_permalink(); ?>" method="post">
-                            <!--<h3>Datos b&aacute;sicos</h3>-->
-                            <p><label for="contrasena">Contraseña: <span>*</span> <br>
-                                    <input type="password" required="required" name="contrasena_fs" value="<?php //echo esc_attr($_POST['contrasena_fs']); ?>"></label></p>
-                            <p><label for="n_contrasena">Nueva contraseña: <span>*</span> <br>
-                                    <input type="password" required="required" name="n_contrasena_fs" value="<?php //echo esc_attr($_POST['n_contrasena_fs']); ?>"></label></p>
-                            <p><label for="confirm">Confirmar contraseña: <span>*</span> <br>
-                                    <input type="password" required="required" name="confirm_fs" value="<?php //echo esc_attr($_POST['confirm_fs']); ?>"></label></p>
-                            <p><label for="correo">Correo: <span>*</span> <br>
-                                    <input type="email" required="required" name="correo_fs" value="<?php echo esc_attr($_POST['correo_fs']); ?>"></label></p>
-                            <p><label for="message_human">Verificaci&oacute;n: <span>*</span> <br><input type="text" required="required" style="width: 60px;" name="message_human"> + 6 = 8</label></p>      
+                        <div id="respond">
+                            <?php
+                            if (is_user_logged_in()):
+                                echo $response;
+                                ?>
+                                <form action="<?php the_permalink(); ?>" method="post">
+                                    <!--<h3>Datos b&aacute;sicos</h3>-->
+                                    <p><label for="contrasena">Contraseña: <span>*</span> <br>
+                                            <input type="password" required="required" name="contrasena_fs" value="<?php //echo esc_attr($_POST['contrasena_fs']);  ?>"></label></p>
+                                    <p><label for="n_contrasena">Nueva contraseña: <span>*</span> <br>
+                                            <input type="password" required="required" name="n_contrasena_fs" value="<?php //echo esc_attr($_POST['n_contrasena_fs']);  ?>"></label></p>
+                                    <p><label for="confirm">Confirmar contraseña: <span>*</span> <br>
+                                            <input type="password" required="required" name="confirm_fs" value="<?php //echo esc_attr($_POST['confirm_fs']);  ?>"></label></p>
+                                    <p><label for="correo">Correo: <span>*</span> <br>
+                                            <input type="email" required="required" name="correo_fs" value="<?php echo esc_attr($_POST['correo_fs']); ?>"></label></p>
+                                    <p><label for="message_human">Verificaci&oacute;n: <span>*</span> <br><input type="text" required="required" style="width: 60px;" name="message_human"> + 6 = 8</label></p>      
 
-                                    <!--                  <p><label for="name">Name: <span>*</span> <br><input type="text" name="message_name" value="<?php // echo esc_attr($_POST['message_name']);          ?>"></label></p>
-                                    <p><label for="message_email">Email: <span>*</span> <br><input type="text" name="message_email" value="<?php //echo esc_attr($_POST['message_email']);          ?>"></label></p>
-                                    <p><label for="message_text">Message: <span>*</span> <br><textarea type="text" name="message_text"><?php //echo esc_textarea($_POST['message_text']);          ?></textarea></label></p>
-                            -->
-                            <input type="hidden" name="submitted" value="1">
-                            <p><input type="submit" value="Guardar y continuar"></p>
-                        </form>
-                    </div>
+                                            <!--                  <p><label for="name">Name: <span>*</span> <br><input type="text" name="message_name" value="<?php // echo esc_attr($_POST['message_name']);           ?>"></label></p>
+                                            <p><label for="message_email">Email: <span>*</span> <br><input type="text" name="message_email" value="<?php //echo esc_attr($_POST['message_email']);           ?>"></label></p>
+                                            <p><label for="message_text">Message: <span>*</span> <br><textarea type="text" name="message_text"><?php //echo esc_textarea($_POST['message_text']);           ?></textarea></label></p>
+                                    -->
+                                    <input type="hidden" name="submitted" value="1">
+                                    <p><input type="submit" value="Guardar y continuar"></p>
+                                </form>
+                            </div>
 
 
-                </div><!-- .entry-content -->
-    <?php endif; // end of the loop.        ?>
-            </article><!-- #post -->
+                        </div><!-- .entry-content -->
+                <?php endif; // end of the loop.        ?>
+                </article><!-- #post -->
 
-<?php endwhile; // end of the loop.        ?>
+        <?php endwhile; // end of the loop.        ?>
 
-    </div><!-- #content -->
-</div><!-- #primary -->
+        </div><!-- #content -->
+        <?php
+        $avia_config['currently_viewing'] = 'page';
+        get_sidebar();
+        ?>
+    </div><!-- #primary -->
 
-<?php get_sidebar(); ?>
+
 <?php get_footer(); ?>
