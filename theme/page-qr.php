@@ -9,10 +9,11 @@ function edad($edad) {
     $anio_dif = date("Y") - $anio;
     $mes_dif = date("m") - $mes;
     $dia_dif = date("d") - $dia;
-    if ($dia_dif < 0 || $mes_dif < 0)
+    if ($mes_dif == 0 && $dia_dif < 0 || $mes_dif < 0)
         $anio_dif--;
     return $anio_dif;
 }
+
 
 get_header();
 $codigo = $_GET['code'];
@@ -20,10 +21,11 @@ $error = '';
 $sucess = '';
 //gives the full url
 $urlqr = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
-if (is_user_logged_in()) {
+if (is_user_logged_in() && empty($codigo)) {
 
     $current_user = wp_get_current_user();
     $codigo = $current_user->user_login;
+    $urlqr.='?code=' . $codigo;
 }
 
 if (!empty($codigo)) {
@@ -48,7 +50,6 @@ if (!empty($user)) {
         $tipo_diabetes = $wpdb->get_row($q_tipo_diabetes, OBJECT);
         $medicos->tipo_diabetes = $tipo_diabetes->nombre;
     }
-   
 } else {
     if (empty($_GET['code'])) {
         $error = 'Error: No hay codigo';
@@ -65,25 +66,26 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
 
         <div class='template-page content  <?php avia_layout_class('content'); ?> units'>
 
-            <?php
-            $avia_config['size'] = avia_layout_class('main', false) == 'entry_without_sidebar' ? '' : 'entry_with_sidebar';
+<?php
+$avia_config['size'] = avia_layout_class('main', false) == 'entry_without_sidebar' ? '' : 'entry_with_sidebar';
 
-            while (have_posts()) : the_post();
-                ?>
+while (have_posts()) : the_post();
+    ?>
 
                 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
                     <header class="entry-header">
-                        <h1 class="entry-title"><?php the_title(); ?> -<b> Informaci&oacute;n de <?php
+                        <h1 class="entry-title"><?php the_title(); ?> -<b><?php
             echo $basicos->nombre . ' ' .
             $basicos->ap_paterno . ' ' . $basicos->ap_materno
-                ?></b></h1>
-                        <?php
-                        if (is_user_logged_in())
-                            echo' <a href="' . 'http://' . $_SERVER['HTTP_HOST'] . '/datos-basicos/' . '"><h3>Modificar mis datos </h3></a>
-                         <a href="' . 'http://' . $_SERVER['HTTP_HOST'] . '/cnfirmar-datos/' . '"><h3>Cambiar contrase&ntilde;a</h3></a>
-                        ';
-                        ?>
+            ?></b></h1>
+                                <?php
+                                if (is_user_logged_in())
+                                    echo' 
+                                <a href="' . 'http://' . $_SERVER['HTTP_HOST'] . '/datos-basicos/' . '"><b>Modificar mis datos basicos </b></a> 
+                                <a href="' . 'http://' . $_SERVER['HTTP_HOST'] . '/datos-medicos/' . '"><b>Modificar mis datos medicos</b></a> 
+                                <a href="' . 'http://' . $_SERVER['HTTP_HOST'] . '/confirmar-datos/?hash=540f6f564efghahk' . '"><b>Cambiar contrase&ntilde;a</b></a>';
+                                ?>
                     </header>
 
                     <div class="entry-content">
@@ -119,14 +121,14 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                         </style>
 
                         <div id="consult-qr">
-                            <?php
-                            if (!empty($error)) {
-                                echo '<h2 style="color:red;">' . $error . '</h2>';
-                            }
-                            if (!empty($success)) {
-                                echo '<h2 style="color:green;">' . $success . '</h2>';
-                            }
-                            ?>
+    <?php
+    if (!empty($error)) {
+        echo '<h2 style="color:red;">' . $error . '</h2>';
+    }
+    if (!empty($success)) {
+        echo '<h2 style="color:green;">' . $success . '</h2>';
+    }
+    ?>
 
                             <h3>Datos b&aacute;sicos</h3>
                             <p><label>Apellido paterno:</label><span><?php echo$basicos->ap_paterno; ?></span></p>
@@ -137,9 +139,9 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                             <p><label>Correo de emergencia:</label><span><?php echo$basicos->correo_emergencia; ?></span></p>
                             <p><label>Nombre del medico:</label><span><?php echo$basicos->nom_medico; ?></span></p>
                             <p><label>Telefono del medico:</label><span><?php echo$basicos->tel_medico; ?></span></p>
-                            <p><label>Edad:</label><span><?php echo edad($basicos->fecha_nac).' a&ntilde;os'; ?></span></p>
-                            <p><label>Peso:</label><span><?php echo$basicos->peso.' Kilogramos'; ?></span></p>
-                            <p><label>Estatura:</label><span><?php echo$basicos->estatura.' Metros'; ?></span></p>
+                            <p><label>Edad:</label><span><?php echo edad($basicos->fecha_nac) . ' a&ntilde;os'; ?></span></p>
+                            <p><label>Peso:</label><span><?php echo$basicos->peso . ' Kilogramos'; ?></span></p>
+                            <p><label>Estatura:</label><span><?php echo$basicos->estatura . ' Metros'; ?></span></p>
                             <p><label>Sexo:</label><span><?php echo$basicos->sexo; ?></span></p>
 
                             <h3>Datos medicos</h3>
@@ -149,7 +151,7 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                             <p><label>Presi&oacute;n arterial diastolica:</label><span><?php echo$medicos->presion_arterial_diastolica; ?></span></p>
                             <p><label>Presi&oacute;n arterial sistolica:</label><span><?php echo$medicos->presion_arterial_sistolica; ?></span></p>
                             <p><label>Donador de organos:</label><span><?php echo(($medicos->donador_organos == 1) ? 'Si' : 'No' ); ?></span></p>
-                            
+
                             <p><label>Servicio medico:</label><span><?php echo$medicos->servicio_medico; ?></span></p>
                             <p><label>Numero de poliza:</label><span><?php echo$medicos->numero_poliza; ?></span></p>
                             <p><label>Embarazada:</label><span><?php echo(($medicos->embarazada == 1) ? 'Si' : 'No' ); ?></span></p>
@@ -157,7 +159,7 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                             <p><label>Alergias:</label><span><?php echo$medicos->alergias; ?></span></p>
                             <p><label>Medicamentos:</label><span><?php echo$medicos->medicamentos; ?></span></p>
                             <p><label>Enfermedades:</label><span><?php echo$medicos->enfermedades; ?></span></p>
-                            <p><label>Cirugias:</label><span><?php echo$medicos->cirugias; ?></span></p>
+                            <p><label>Cirug&iacute;as:</label><span><?php echo$medicos->cirugias; ?></span></p>
                             <p><label>Otras consideraciones:</label><span><?php echo$medicos->otras_consideraciones; ?></span></p>
 
                             <h3>Discapacidades y/o dispositivos</h3>
@@ -171,15 +173,15 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                             <p><label>Protesis dentales:</label><span><?php echo$medicos->p_dentales; ?></span></p>
                             <p><label>Medicamentos de origen natural:</label><span><?php echo$medicos->med_natural; ?></span></p>
                             <div class="qr">
-    <!--                                <form action="<?php //permalink_link()  ?>">
+    <!--                                <form action="<?php //permalink_link()   ?>">
                                     <input type="submit" value="Enviar correo al medico">
                                     <input type="hidden" name="submitted" value="1">
                                 </form>-->
-                                <?php
+    <?php
 //                            echo '<img src="http://'.$_SERVER['HTTP_HOST']'.'/qr/param.php?txt=' . $urlqr . '"/>';
-//                                echo '<img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=http://' . $urlqr . '"/>';
-//                                echo'<p>' . 'http://' . $urlqr . '</p>';
-                                ?>
+    echo '<img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=http://' . $urlqr . '"/>';
+    echo'<p>' . 'http://' . $urlqr . '</p>';
+    ?>
                             </div>
                             <a href="<?php echo home_url(); ?>">Ir a inicio</a>
                         </div>
@@ -188,16 +190,16 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
 
                 </article><!-- #post -->
 
-            <?php endwhile; // end of the loop.      ?>
+<?php endwhile; // end of the loop.       ?>
 
         </div><!-- #content -->
-        <?php
-        //get the sidebar
-        $avia_config['currently_viewing'] = 'page';
-        // get_sidebar();
-        ?>
+            <?php
+            //get the sidebar
+            $avia_config['currently_viewing'] = 'page';
+            // get_sidebar();
+            ?>
     </div><!-- #primary -->
 
 
-    <?php
-    //get_footer(); ?>
+        <?php
+        //get_footer(); ?>
