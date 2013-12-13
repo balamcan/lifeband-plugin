@@ -5,15 +5,25 @@
 global $avia_config;
 
 function edad($edad) {
-    list($anio, $mes, $dia) = explode("-", $edad);
-    $anio_dif = date("Y") - $anio;
-    $mes_dif = date("m") - $mes;
-    $dia_dif = date("d") - $dia;
-    if ($mes_dif == 0 && $dia_dif < 0 || $mes_dif < 0)
-        $anio_dif--;
-    return $anio_dif;
+    if (!isset($edad)) {
+        list($anio, $mes, $dia) = explode("-", $edad);
+        $anio_dif = date("Y") - $anio;
+        $mes_dif = date("m") - $mes;
+        $dia_dif = date("d") - $dia;
+        if ($mes_dif == 0 && $dia_dif < 0 || $mes_dif < 0)
+            $anio_dif--;
+        return $anio_dif;
+    }else {
+        return false;
+    }
 }
-
+function link_telefono($telefono=''){
+    if($telefono !== ''){
+        return '<a href=tel://"'.$telefono.'">'.$telefono.'</a>';
+    }else{
+        return false;
+    }
+}
 
 get_header();
 $codigo = $_GET['code'];
@@ -66,11 +76,11 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
 
         <div class='template-page content  <?php avia_layout_class('content'); ?> units'>
 
-<?php
-$avia_config['size'] = avia_layout_class('main', false) == 'entry_without_sidebar' ? '' : 'entry_with_sidebar';
+            <?php
+            $avia_config['size'] = avia_layout_class('main', false) == 'entry_without_sidebar' ? '' : 'entry_with_sidebar';
 
-while (have_posts()) : the_post();
-    ?>
+            while (have_posts()) : the_post();
+                ?>
 
                 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
@@ -78,14 +88,14 @@ while (have_posts()) : the_post();
                         <h1 class="entry-title"><?php the_title(); ?> -<b><?php
             echo $basicos->nombre . ' ' .
             $basicos->ap_paterno . ' ' . $basicos->ap_materno
-            ?></b></h1>
-                                <?php
-                                if (is_user_logged_in())
-                                    echo' 
+                ?></b></h1>
+                        <?php
+                        if (is_user_logged_in())
+                            echo' 
                                 <a href="' . 'http://' . $_SERVER['HTTP_HOST'] . '/datos-basicos/' . '"><b>Modificar mis datos basicos </b></a> 
                                 <a href="' . 'http://' . $_SERVER['HTTP_HOST'] . '/datos-medicos/' . '"><b>Modificar mis datos medicos</b></a> 
                                 <a href="' . 'http://' . $_SERVER['HTTP_HOST'] . '/confirmar-datos/?hash=540f6f564efghahk' . '"><b>Cambiar contrase&ntilde;a</b></a>';
-                                ?>
+                        ?>
                     </header>
 
                     <div class="entry-content">
@@ -121,25 +131,27 @@ while (have_posts()) : the_post();
                         </style>
 
                         <div id="consult-qr">
-    <?php
-    if (!empty($error)) {
-        echo '<h2 style="color:red;">' . $error . '</h2>';
-    }
-    if (!empty($success)) {
-        echo '<h2 style="color:green;">' . $success . '</h2>';
-    }
-    ?>
+                            <?php
+                            if (!empty($error)) {
+                                echo '<h2 style="color:red;">' . $error . '</h2>';
+                            }
+                            if (!empty($success)) {
+                                echo '<h2 style="color:green;">' . $success . '</h2>';
+                            }
+                            ?>
 
                             <h3>Datos b&aacute;sicos</h3>
                             <p><label>Apellido paterno:</label><span><?php echo$basicos->ap_paterno; ?></span></p>
                             <p><label>Apellido materno:</label><span><?php echo$basicos->ap_materno; ?></span></p>
                             <p><label>Nombre:</label><span><?php echo$basicos->nombre; ?></span></p>
                             <p><label>Nombre del encargado de emergencia:</label><span><?php echo$basicos->encargado_emergencia; ?></span></p>
-                            <p><label>Telefono de emergencia:</label><span><?php echo$basicos->tel_emergencia; ?></span></p>
+                            <p><label>Telefono de emergencia:</label><span><?php echo link_telefono($basicos->tel_emergencia); ?></span></p>
                             <p><label>Correo de emergencia:</label><span><?php echo$basicos->correo_emergencia; ?></span></p>
                             <p><label>Nombre del medico:</label><span><?php echo$basicos->nom_medico; ?></span></p>
-                            <p><label>Telefono del medico:</label><span><?php echo$basicos->tel_medico; ?></span></p>
-                            <p><label>Edad:</label><span><?php echo edad($basicos->fecha_nac) . ' a&ntilde;os'; ?></span></p>
+                            <p><label>Telefono del medico:</label><span><?php echo link_telefono($basicos->tel_medico); ?></span></p>
+                            <p><label>Edad:</label><span><?php 
+                            echo edad($basicos->fecha_nac)?' a&ntilde;os':'';
+                            ?></span></p>
                             <p><label>Peso:</label><span><?php echo$basicos->peso . ' Kilogramos'; ?></span></p>
                             <p><label>Estatura:</label><span><?php echo$basicos->estatura . ' Metros'; ?></span></p>
                             <p><label>Sexo:</label><span><?php echo$basicos->sexo; ?></span></p>
@@ -173,15 +185,15 @@ while (have_posts()) : the_post();
                             <p><label>Protesis dentales:</label><span><?php echo$medicos->p_dentales; ?></span></p>
                             <p><label>Medicamentos de origen natural:</label><span><?php echo$medicos->med_natural; ?></span></p>
                             <div class="qr">
-    <!--                                <form action="<?php //permalink_link()   ?>">
+    <!--                                <form action="<?php //permalink_link()      ?>">
                                     <input type="submit" value="Enviar correo al medico">
                                     <input type="hidden" name="submitted" value="1">
                                 </form>-->
-    <?php
+                                <?php
 //                            echo '<img src="http://'.$_SERVER['HTTP_HOST']'.'/qr/param.php?txt=' . $urlqr . '"/>';
-    echo '<img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=http://' . $urlqr . '"/>';
-    echo'<p>' . 'http://' . $urlqr . '</p>';
-    ?>
+                                echo '<img src="http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=http://' . $urlqr . '"/>';
+                                echo'<p>' . 'http://' . $urlqr . '</p>';
+                                ?>
                             </div>
                             <a href="<?php echo home_url(); ?>">Ir a inicio</a>
                         </div>
@@ -190,16 +202,16 @@ while (have_posts()) : the_post();
 
                 </article><!-- #post -->
 
-<?php endwhile; // end of the loop.       ?>
+            <?php endwhile; // end of the loop.        ?>
 
         </div><!-- #content -->
-            <?php
-            //get the sidebar
-            $avia_config['currently_viewing'] = 'page';
-            // get_sidebar();
-            ?>
+        <?php
+        //get the sidebar
+        $avia_config['currently_viewing'] = 'page';
+        // get_sidebar();
+        ?>
     </div><!-- #primary -->
 
 
-        <?php
-        //get_footer(); ?>
+    <?php
+    //get_footer(); ?>

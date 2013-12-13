@@ -83,10 +83,11 @@ class generateUsers {
     function canti($cant = 50) {
         $qrFactory = new qr();
         global $wpdb;
+        
         While ($this->i <= $cant) {
             $this->lastId = $wpdb->get_var("SELECT id from " . $wpdb->prefix . "users order by id desc limit 1",0,0);
             $this->lastId = $this->lastId + 1;
-            $this->passusr = wp_generate_password(8);
+            $this->passusr = wp_generate_password(8, false);
             $this->pass = wp_hash_password($this->passusr);
             $this->nombreUsuario = $this->lastId . $this->generateRandomString(4); 
             $this->correo = $this->nombreUsuario . '@lifeband.com';
