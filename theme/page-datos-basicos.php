@@ -93,10 +93,19 @@ if (!empty($_POST['submitted'])) {
                         'ap_paterno' => mysql_real_escape_string($_POST['ap_paterno_fs']),
                         'ap_materno' => mysql_real_escape_string($_POST['ap_materno_fs']),
                         'encargado_emergencia' => mysql_real_escape_string($_POST['nom_emergencia_fs']),
+                        'encargado_emergencia2' => mysql_real_escape_string($_POST['nom_emergencia2_fs']),
+                        'encargado_emergencia3' => mysql_real_escape_string($_POST['nom_emergencia3_fs']),
                         'tel_emergencia' => mysql_real_escape_string($_POST['tel_emergencia_fs']),
+                        'tel_emergencia2' => mysql_real_escape_string($_POST['tel_emergencia2_fs']),
+                        'tel_emergencia3' => mysql_real_escape_string($_POST['tel_emergencia3_fs']),
                         'correo_emergencia' => mysql_real_escape_string($_POST['correo_emergencia_fs']),
                         'nom_medico' => mysql_real_escape_string($_POST['nom_medico_fs']),
                         'tel_medico' => mysql_real_escape_string($_POST['tel_medico_fs']),
+                        'nom_medico2' => mysql_real_escape_string($_POST['nom_medico2_fs']),
+                        'tel_medico2' => mysql_real_escape_string($_POST['tel_medico2_fs']),
+                        'nom_medico3' => mysql_real_escape_string($_POST['nom_medico3_fs']),
+                        'tel_medico3' => mysql_real_escape_string($_POST['tel_medico3_fs']),
+                        'no_pasaporte' => mysql_real_escape_string($_POST['pasaporte_fs']),
                         'fecha_nac' => $fecha,
                         'peso' => mysql_real_escape_string($_POST['peso_fs']),
                         'estatura' => mysql_real_escape_string($_POST['estatura_fs']),
@@ -116,9 +125,18 @@ if (!empty($_POST['submitted'])) {
                         'ap_materno' => mysql_real_escape_string($_POST['ap_materno_fs']),
                         'encargado_emergencia' => mysql_real_escape_string($_POST['nom_emergencia_fs']),
                         'tel_emergencia' => mysql_real_escape_string($_POST['tel_emergencia_fs']),
+                        'encargado_emergencia2' => mysql_real_escape_string($_POST['nom_emergencia2_fs']),
+                        'tel_emergencia2' => mysql_real_escape_string($_POST['tel_emergencia2_fs']),
+                        'encargado_emergencia3' => mysql_real_escape_string($_POST['nom_emergencia3_fs']),
+                        'tel_emergencia3' => mysql_real_escape_string($_POST['tel_emergencia3_fs']),
                         'correo_emergencia' => mysql_real_escape_string($_POST['correo_emergencia_fs']),
                         'nom_medico' => mysql_real_escape_string($_POST['nom_medico_fs']),
                         'tel_medico' => mysql_real_escape_string($_POST['tel_medico_fs']),
+                        'nom_medico2' => mysql_real_escape_string($_POST['nom_medico2_fs']),
+                        'tel_medico2' => mysql_real_escape_string($_POST['tel_medico2_fs']),
+                        'nom_medico3' => mysql_real_escape_string($_POST['nom_medico3_fs']),
+                        'tel_medico3' => mysql_real_escape_string($_POST['tel_medico3_fs']),
+                        'no_pasaporte' => mysql_real_escape_string($_POST['pasaporte_fs']),
                         'fecha_nac' => $fecha,
                         'peso' => mysql_real_escape_string($_POST['peso_fs']),
                         'estatura' => mysql_real_escape_string($_POST['estatura_fs']),
@@ -147,10 +165,18 @@ if (!empty($user)) {
     $_POST['ap_materno_fs'] = $user->ap_materno;
     $_POST['nom_emergencia_fs'] = $user->encargado_emergencia;
     $_POST['tel_emergencia_fs'] = $user->tel_emergencia;
+    $_POST['nom_emergencia2_fs'] = $user->encargado_emergencia2;
+    $_POST['tel_emergencia2_fs'] = $user->tel_emergencia2;
+    $_POST['nom_emergencia3_fs'] = $user->encargado_emergencia3;
+    $_POST['tel_emergencia3_fs'] = $user->tel_emergencia3;
     $_POST['correo_emergencia_fs'] = $user->correo_emergencia;
     $_POST['nom_medico_fs'] = $user->nom_medico;
     $_POST['tel_medico_fs'] = $user->tel_medico;
-//$_POST['$fecha'] = $user->fecha_nac;
+    $_POST['nom_medico2_fs'] = $user->nom_medico2;
+    $_POST['tel_medico2_fs'] = $user->tel_medico2;
+    $_POST['nom_medico3_fs'] = $user->nom_medico3;
+    $_POST['tel_medico3_fs'] = $user->tel_medico3;
+    $_POST['pasaporte_fs'] = $user->no_pasaporte;
     $_POST['peso_fs'] = $user->peso;
     $_POST['estatura_fs'] = $user->estatura;
     $_POST['sexo_fs'] = $user->sexo;
@@ -212,6 +238,11 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                             #respond form .one-line label, #respond form .one-line input{
                                 display: inline-block;
                             }
+                            .consejo{
+                                display: inline-block;
+                                margin-left: 10px;
+                                font-style: italic;
+                            }
                         </style>
 
                         <div id="respond">
@@ -221,22 +252,70 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                 ?>
                                 <form action="<?php the_permalink(); ?>" method="post">
                                     <!--<h3>Datos b&aacute;sicos</h3>-->
-                                    <p><label for="nombre">Nombre: <span>*</span> <br>
-                                            <input type="text" required="required" name="nombre_fs" value="<?php echo esc_attr($_POST['nombre_fs']); ?>"></label></p>
+                                    <p><label for="nombre">Nombre: <span>*</span>
+                                            <br>
+                                            <input type="text" required="required" name="nombre_fs" value="<?php echo esc_attr($_POST['nombre_fs']); ?>"></label>
+                                    </p>
                                     <p><label for="ap_paterno">Apellido paterno: <span>*</span> <br>
                                             <input type="text" required="required" name="ap_paterno_fs" value="<?php echo esc_attr($_POST['ap_paterno_fs']); ?>"></label></p>
                                     <p><label for="ap_materno">Apellido materno:  <br>
                                             <input type="text" name="ap_materno_fs" value="<?php echo esc_attr($_POST['ap_materno_fs']); ?>"></label></p>
-                                    <p><label for="nom_emergencia">Nombre del encargado de emergencia:  <br>
+                                    <p><label for="nom_emergencia">Nombre del encargado de emergencia:
+                                            <span class="consejo">Persona a informarle de algun percance</span>
+                                            <br>
                                             <input type="text" name="nom_emergencia_fs" value="<?php echo esc_attr($_POST['nom_emergencia_fs']); ?>"></label></p>
-                                    <p><label for="tel_emergencia">Tel&eacute;fono de emergencia:  <br>
+                                    <p><label for="tel_emergencia">Tel&eacute;fono de emergencia: 
+                                            <span class="consejo">Numero de la persona a informarle con lada</span>
+                                            <br>
                                             <input type="text" name="tel_emergencia_fs" value="<?php echo esc_attr($_POST['tel_emergencia_fs']); ?>"></label></p>
-                                    <p><label for="correo_emergencia">Correo de emergencia:  <br>
+                                    <p><label for="nom_emergencia2">Nombre del encargado de emergencia adicional: 
+                                            <span class="consejo">Persona adicional para informar</span>
+                                            <br>
+                                            <input type="text" name="nom_emergencia2_fs" value="<?php echo esc_attr($_POST['nom_emergencia2_fs']); ?>"></label></p>
+                                    <p><label for="tel_emergencia2">Tel&eacute;fono de emergencia adicional:  
+                                            <span class="consejo">Numero de la persona adicional</span>
+                                            <br>
+                                            <input type="text" name="tel_emergencia2_fs" value="<?php echo esc_attr($_POST['tel_emergencia2_fs']); ?>"></label></p>
+                                    <p><label for="nom_emergencia3">Nombre del encargado de emergencia adiconal 2:
+                                            <span class="consejo">Segunda persona adicional para informar</span>
+                                            <br>
+                                            <input type="text" name="nom_emergencia3_fs" value="<?php echo esc_attr($_POST['nom_emergencia3_fs']); ?>"></label></p>
+                                    <p><label for="tel_emergencia3">Tel&eacute;fono de emergencia adicional:  
+                                            <span class="consejo">Numero de la segunda persona adicional a informar</span>
+                                            <br>
+                                            <input type="text" name="tel_emergencia3_fs" value="<?php echo esc_attr($_POST['tel_emergencia3_fs']); ?>"></label></p>
+                                    <p><label for="correo_emergencia">Correo de emergencia:  
+                                            <span class="consejo">Para mandar algun informe de algun percance</span>
+                                            <br>
                                             <input type="email" name="correo_emergencia_fs" value="<?php echo esc_attr($_POST['correo_emergencia_fs']); ?>"></label></p>
-                                    <p><label for="nom_medico">Nombre del m&eacute;dico:  <br>
+                                    <p><label for="nom_medico">Nombre del m&eacute;dico:  
+                                            <span class="consejo">Nombre y apellido del medico</span>
+                                            <br>
                                             <input type="text" name="nom_medico_fs" value="<?php echo esc_attr($_POST['nom_medico_fs']); ?>"></label></p>
-                                    <p><label for="tel_medico">Tel&eacute;fono del m&eacute;dico:  <br>
+                                    <p><label for="tel_medico">Tel&eacute;fono del m&eacute;dico:
+                                            <span class="consejo">Ejemplo: (555)555 55 55</span>
+                                            <br>
                                             <input type="text" name="tel_medico_fs" value="<?php echo esc_attr($_POST['tel_medico_fs']); ?>"></label></p>
+                                    <p><label for="nom_medico2">Nombre del m&eacute;dico adicional:  
+                                            <span class="consejo">Nombre y apellido del medico adicional</span>
+                                            <br>
+                                            <input type="text" name="nom_medico2_fs" value="<?php echo esc_attr($_POST['nom_medico2_fs']); ?>"></label></p>
+                                    <p><label for="tel_medico2">Tel&eacute;fono del m&eacute;dico adicional:  
+                                            <span class="consejo">Ejemplo: (555)555 55 55</span>
+                                            <br>
+                                            <input type="text" name="tel_medico2_fs" value="<?php echo esc_attr($_POST['tel_medico2_fs']); ?>"></label></p>
+                                    <p><label for="nom_medico3">Nombre del m&eacute;dico adicional 2: 
+                                            <span class="consejo">Nombre y apellido del segundo medico adicional</span>
+                                            <br>
+                                            <input type="text" name="nom_medico3_fs" value="<?php echo esc_attr($_POST['nom_medico3_fs']); ?>"></label></p>
+                                    <p><label for="tel_medico3">Tel&eacute;fono del m&eacute;dico adicional 2: 
+                                            <span class="consejo">Ejemplo: (555)555 55 55</span>
+                                            <br>
+                                            <input type="text" name="tel_medico3_fs" value="<?php echo esc_attr($_POST['tel_medico3_fs']); ?>"></label></p>
+                                    <p><label for="pasaporte">Numero de pasaporte: 
+                                            <span class="consejo">Debe ser entre 9 o 10 digitos</span>
+                                            <br>
+                                            <input type="text" name="pasaporte_fs" value="<?php echo esc_attr($_POST['pasaporte_fs']); ?>"></label></p>
                                     <p><label for="edad">Fecha de nacimiento:  <br>
                                             <label for="dia">D&iacute;a</label>
                                             <select id="dia" name="dia_fs" >
@@ -280,9 +359,13 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
 //                                        echo esc_attr($_POST['mes_fs']); 
                                                 ?>
                                             </select>
-                                            <p><label for="peso">Peso en Kilogramos: <br>
+                                            <p><label for="peso">Peso en Kilogramos: 
+                                                    <span class="consejo">Ejemplo: 65.5</span>
+                                                    <br>
                                                     <input type="text" size="5" name="peso_fs" value="<?php echo esc_attr($_POST['peso_fs']); ?>"></label></p>
-                                            <p><label for="estatura">Estatura en Metros:  <br>
+                                            <p><label for="estatura">Estatura en Metros:
+                                                    <span class="consejo">Ejemplo: 1.60</span>
+                                                    <br>
                                                     <input type="text" size="5" name="estatura_fs" value="<?php echo esc_attr($_POST['estatura_fs']); ?>"></label></p>
                                             <p class="one-line"><label for="sexo">Sexo: </label> <br>
                                                 <input type="radio" name="sexo_fs" id="sexo_m" value="M" <?php
@@ -297,9 +380,9 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                                 ?>><label for="sexo_f">Femenino</label></p>
                                             <!--<p><label for="message_human">Verificaci&oacute;n: <span>*</span> <br><input type="text" required="required" style="width: 60px;" name="message_human"> + 3 = 5</label></p>-->      
 
-                                                            <!--                  <p><label for="name">Name: <span>*</span> <br><input type="text" name="message_name" value="<?php // echo esc_attr($_POST['message_name']);            ?>"></label></p>
-                                                            <p><label for="message_email">Email: <span>*</span> <br><input type="text" name="message_email" value="<?php //echo esc_attr($_POST['message_email']);            ?>"></label></p>
-                                                            <p><label for="message_text">Message: <span>*</span> <br><textarea type="text" name="message_text"><?php //echo esc_textarea($_POST['message_text']);            ?></textarea></label></p>
+                                                                                    <!--                  <p><label for="name">Name: <span>*</span> <br><input type="text" name="message_name" value="<?php // echo esc_attr($_POST['message_name']);               ?>"></label></p>
+                                                                                    <p><label for="message_email">Email: <span>*</span> <br><input type="text" name="message_email" value="<?php //echo esc_attr($_POST['message_email']);               ?>"></label></p>
+                                                                                    <p><label for="message_text">Message: <span>*</span> <br><textarea type="text" name="message_text"><?php //echo esc_textarea($_POST['message_text']);               ?></textarea></label></p>
                                             -->
                                             <input type="hidden" name="submitted" value="1">
                                             <p><input type="submit" value="Guardar y continuar"></p>

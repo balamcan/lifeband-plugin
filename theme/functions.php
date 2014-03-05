@@ -1,555 +1,375 @@
 <?php
-/**
- * Twenty Thirteen functions and definitions.
+
+global $avia_config;
+
+/*
+ * if you run a child theme and dont want to load the default functions.php file
+ * set the global var bellow in you childthemes function.php to true:
  *
- * Sets up the theme and provides some helper functions, which are used in the
- * theme as custom template tags. Others are attached to action and filter
- * hooks in WordPress to change core functionality.
+ * example: global $avia_config; $avia_config['use_child_theme_functions_only'] = true;
+ * The default functions.php file will then no longer be loaded. You need to make sure than
+ * of course to include framework and functions that you want to use by yourself.
  *
- * When using a child theme (see http://codex.wordpress.org/Theme_Development
- * and http://codex.wordpress.org/Child_Themes), you can override certain
- * functions (those wrapped in a function_exists() call) by defining them first
- * in your child theme's functions.php file. The child theme's functions.php
- * file is included before the parent theme's file, so the child theme
- * functions would be used.
- *
- * Functions that are not pluggable (not wrapped in function_exists()) are
- * instead attached to a filter or action hook.
- *
- * For more information on hooks, actions, and filters,
- * see http://codex.wordpress.org/Plugin_API
- *
- * @package WordPress
- * @subpackage Twenty_Thirteen
- * @since Twenty Thirteen 1.0
+ * This is only recommended for advanced users
  */
-/**
- * Sets up the content width value based on the theme's design.
- * @see twentythirteen_content_width() for template-specific adjustments.
- */
-if (!isset($content_width))
-    $content_width = 604;
 
-/**
- * Adds support for a custom header image.
- */
-require get_template_directory() . '/inc/custom-header.php';
+ if(isset($avia_config['use_child_theme_functions_only'])) return;
 
-/**
- * Twenty Thirteen only works in WordPress 3.6 or later.
- */
-if (version_compare($GLOBALS['wp_version'], '3.6-alpha', '<'))
-    require get_template_directory() . '/inc/back-compat.php';
 
-/**
- * Sets up theme defaults and registers the various WordPress features that
- * Twenty Thirteen supports.
+
+/*
+ * wpml multi site config file
+ * needs to be loaded before the framework
+ */
+
+require_once( 'config-wpml/config.php' );
+
+
+/*
+ * These are the available color sets in your backend.
+ * If more sets are added users will be able to create additional color schemes for certain areas
  *
- * @uses load_theme_textdomain() For translation/localization support.
- * @uses add_editor_style() To add Visual Editor stylesheets.
- * @uses add_theme_support() To add support for automatic feed links, post
- * formats, and post thumbnails.
- * @uses register_nav_menu() To add support for a navigation menu.
- * @uses set_post_thumbnail_size() To set a custom post thumbnail size.
- *
- * @since Twenty Thirteen 1.0
- *
- * @return void
+ * The array key has to be the class name, the value is only used as tab heading on the styling page
  */
-function twentythirteen_setup() {
-    /*
-     * Makes Twenty Thirteen available for translation.
-     *
-     * Translations can be added to the /languages/ directory.
-     * If you're building a theme based on Twenty Thirteen, use a find and
-     * replace to change 'twentythirteen' to the name of your theme in all
-     * template files.
-     */
-    load_theme_textdomain('twentythirteen', get_template_directory() . '/languages');
 
-    /*
-     * This theme styles the visual editor to resemble the theme style,
-     * specifically font, colors, icons, and column width.
-     */
-    add_editor_style(array('css/editor-style.css', 'fonts/genericons.css', twentythirteen_fonts_url()));
 
-    // Adds RSS feed links to <head> for posts and comments.
-    add_theme_support('automatic-feed-links');
 
-    // Switches default core markup for search form, comment form, and comments
-    // to output valid HTML5.
-    add_theme_support('html5', array('search-form', 'comment-form', 'comment-list'));
+ $avia_config['color_sets'] = array(
+                            'header_color'      => 'Header',
+                            'main_color'        => 'Main Content',
+                            'alternate_color'   => 'Alternate Content',
+                            'footer_color'      => 'Footer',
+                            'socket_color'      => 'Socket'
+                            );
 
-    /*
-     * This theme supports all available post formats by default.
-     * See http://codex.wordpress.org/Post_Formats
-     */
-    add_theme_support('post-formats', array(
-        'aside', 'audio', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video'
-    ));
+/*add support for responsive mega menus*/
+add_theme_support('avia_mega_menu');
+add_filter('avia_mega_menu_walker', 'disable_default_mega_menu');
+function disable_default_mega_menu(){ return false; } // deactivates the default mega menu and allows us to pass individual menu walkers when calling a menu
 
-    // This theme uses wp_nav_menu() in one location.
-    register_nav_menu('primary', __('Navigation Menu', 'twentythirteen'));
+/*adds support for the new avia sidebar manager*/
+add_theme_support('avia_sidebar_manager');
 
-    /*
-     * This theme uses a custom image size for featured images, displayed on
-     * "standard" posts and pages.
-     */
-    add_theme_support('post-thumbnails');
-    set_post_thumbnail_size(604, 270, true);
 
-    // This theme uses its own gallery styles.
-    add_filter('use_default_gallery_style', '__return_false');
+##################################################################
+# AVIA FRAMEWORK by Kriesi
+
+# this include calls a file that automatically includes all
+# the files within the folder framework and therefore makes
+# all functions and classes available for later use
+
+require_once( 'framework/avia_framework.php' );
+
+##################################################################
+
+
+/*
+ * Register additional image thumbnail sizes
+ * Those thumbnails are generated on image upload!
+ *
+ * If the size of an array was changed after an image was uploaded you either need to re-upload the image
+ * or use the thumbnail regeneration plugin: http://wordpress.org/extend/plugins/regenerate-thumbnails/
+ */
+
+$avia_config['imgSize']['widget'] 			 	= array('width'=>36,  'height'=>36);						// small preview pics eg sidebar news
+$avia_config['imgSize']['entry_with_sidebar'] 	= array('width'=>710, 'height'=>270);		                 // big images for blog and page entries
+$avia_config['imgSize']['entry_without_sidebar']= array('width'=>1030, 'height'=>360 );						// images for fullsize pages and fullsize slider
+$avia_config['imgSize']['square'] 		 	    = array('width'=>180, 'height'=>180);		                 // small image for blogs
+$avia_config['imgSize']['featured'] 		 	= array('width'=>1500, 'height'=>430 );						// images for fullsize pages and fullsize slider
+$avia_config['imgSize']['portfolio'] 		 	= array('width'=>495, 'height'=>400 );						// images for portfolio entries (2,3 column)
+$avia_config['imgSize']['portfolio_small'] 		= array('width'=>260, 'height'=>185 );						// images for portfolio 4 columns
+$avia_config['imgSize']['gallery'] 		 		= array('width'=>710, 'height'=>575 );						// images for portfolio entries (2,3 column)
+
+
+$avia_config['slectableImgSize'] = array(
+	'square' 	=> __('Square','avia_framework'),
+	'featured'  => __('Featured','avia_framework'),
+	'portfolio' => __('Portfolio','avia_framework'),
+	'gallery' 	=> __('Gallery','avia_framework'),
+	'entry_with_sidebar' 	=> __('Entry with Sidebar','avia_framework'),
+	'entry_without_sidebar' 	=> __('Entry without Sidebar','avia_framework'),
+);
+
+avia_backend_add_thumbnail_size($avia_config);
+
+if ( ! isset( $content_width ) ) $content_width = $avia_config['imgSize']['featured']['width'];
+
+
+
+
+/*
+ * register the layout sizes: the written number represents the grid size, if the elemnt should not have a left margin add "alpha"
+ *
+ * Calculation of the with: the layout is based on a twelve column grid system, so content + sidebar must equal twelve.
+ * example:  'content' => 'nine alpha',  'sidebar' => 'three'
+ *
+ * if the theme uses fancy blog layouts ( meta data beside the content for example) use the meta and entry values.
+ * calculation of those: meta + entry = content
+ *
+ */
+
+$avia_config['layout']['fullsize'] 		= array('content' => 'twelve alpha', 'sidebar' => 'hidden', 	 'meta' => 'two alpha', 'entry' => 'eleven');
+$avia_config['layout']['sidebar_left'] 	= array('content' => 'nine', 		 'sidebar' => 'three alpha' ,'meta' => 'two alpha', 'entry' => 'nine');
+$avia_config['layout']['sidebar_right'] = array('content' => 'nine alpha',   'sidebar' => 'three alpha', 'meta' => 'two alpha', 'entry' => 'nine alpha');
+
+
+
+/*
+ * These are some of the font icons used in the theme, defined by the entypo icon font. the font files are included by the new aviaBuilder
+ * common icons are stored here for easy retrieval
+ */
+ $avia_config['font_icons'] = array(
+                            'search'  	=> '&#128269;',       	//36
+                            'standard' 	=> '&#9998;',        	//6
+                            'link'    	=> '&#128279;',       	//40
+                            'image'    	=> '&#128247;',      	//46
+                            'audio'    	=> '&#9834;',        	//51
+                            'quote'   	=> '&#10078;',        	//33
+                            'gallery'   => '&#127748;',     	//145
+                            'video'   	=> '&#127916;',       	//146
+                            'info'    	=> '&#8505;',         	//120
+                            'next'    	=> '&#59230;',        	//190
+                            'prev'    	=> '&#59229;',        	//187
+              				'behance' 	=> '&#62286;',			//246
+							'dribbble' 	=> '&#62235;',			//223
+							'facebook' 	=> '&#62220;',			//212
+							'flickr' 	=> '&#62211;',			//206
+							'gplus' 	=> '&#62223;',			//215
+							'linkedin' 	=> '&#62232;',			//221
+							'pinterest' => '&#62226;',			//217
+							'skype' 	=> '&#62265;',			//238
+							'tumblr' 	=> '&#62229;',			//219
+							'twitter' 	=> '&#62217;',			//210
+							'vimeo' 	=> '&#62214;',			//208
+							'rss' 		=> '&#59194;',			//98
+							'mail' 		=> '&#9993;',			//5
+							'cart' 		=> '&#59197;',
+							'reload'	=> '&#128260;',
+							'details'	=> '&#128196;',
+							'close'		=> '&#10006;',			//115
+							'clipboard' => '&#128203;'
+                            );
+
+
+
+
+
+
+
+if ( ! isset( $content_width ) ) $content_width = 850;
+add_theme_support( 'automatic-feed-links' );
+
+##################################################################
+# Frontend Stuff necessary for the theme:
+##################################################################
+/*
+ * Register theme text domain
+ */
+if(!function_exists('avia_lang_setup'))
+{
+	add_action('after_setup_theme', 'avia_lang_setup');
+	function avia_lang_setup()
+	{
+		$lang = get_template_directory()  . '/lang';
+		load_theme_textdomain('avia_framework', $lang);
+	}
 }
 
-add_action('after_setup_theme', 'twentythirteen_setup');
 
-/**
- * Returns the Google font stylesheet URL, if available.
- *
- * The use of Source Sans Pro and Bitter by default is localized. For languages
- * that use characters not supported by the font, the font can be disabled.
- *
- * @since Twenty Thirteen 1.0
- *
- * @return string Font stylesheet or empty string if disabled.
+/*
+ * Register frontend javascripts:
  */
-function twentythirteen_fonts_url() {
-    $fonts_url = '';
+if(!function_exists('avia_register_frontend_scripts'))
+{
+	if(!is_admin()){
+		add_action('wp_enqueue_scripts', 'avia_register_frontend_scripts');
+	}
 
-    /* Translators: If there are characters in your language that are not
-     * supported by Source Sans Pro, translate this to 'off'. Do not translate
-     * into your own language.
-     */
-    $source_sans_pro = _x('on', 'Source Sans Pro font: on or off', 'twentythirteen');
+	function avia_register_frontend_scripts()
+	{
+		$template_url = get_template_directory_uri();
+		$child_theme_url = get_stylesheet_directory_uri();
 
-    /* Translators: If there are characters in your language that are not
-     * supported by Bitter, translate this to 'off'. Do not translate into your
-     * own language.
-     */
-    $bitter = _x('on', 'Bitter font: on or off', 'twentythirteen');
+		//register js
+		wp_register_script( 'avia-compat', $template_url.'/js/avia-compat.js', array('jquery'), 1, false ); //needs to be loaded at the top to prevent bugs
+		wp_register_script( 'avia-default', $template_url.'/js/avia.js', array('jquery'), 1, true );
+		wp_register_script( 'avia-shortcodes', $template_url.'/js/shortcodes.js', array('jquery'), 1, true );
+		wp_register_script( 'avia-prettyPhoto',  $template_url.'/js/prettyPhoto/js/jquery.prettyPhoto.js', 'jquery', "3.1.5", true);
+		wp_register_script( 'avia-html5-video',  $template_url.'/js/mediaelement/mediaelement-and-player.min.js', 'jquery', "1", true);
 
-    if ('off' !== $source_sans_pro || 'off' !== $bitter) {
-        $font_families = array();
 
-        if ('off' !== $source_sans_pro)
-            $font_families[] = 'Source Sans Pro:300,400,700,300italic,400italic,700italic';
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'avia-compat' );
+		wp_enqueue_script( 'avia-default' );
+		wp_enqueue_script( 'avia-shortcodes' );
+		wp_enqueue_script( 'avia-prettyPhoto' );
+		wp_enqueue_script( 'avia-html5-video' );
 
-        if ('off' !== $bitter)
-            $font_families[] = 'Bitter:400,700';
+		if ( is_singular() && get_option( 'thread_comments' ) ) { wp_enqueue_script( 'comment-reply' ); }
 
-        $query_args = array(
-            'family' => urlencode(implode('|', $font_families)),
-            'subset' => urlencode('latin,latin-ext'),
-        );
-        $fonts_url = add_query_arg($query_args, "//fonts.googleapis.com/css");
-    }
 
-    return $fonts_url;
-}
+		//register styles
+		wp_register_style( 'avia-style' ,  $child_theme_url."/style.css", array(), '1', 'screen' ); //register default style.css file. only include in childthemes. has no purpose in main theme
+		wp_register_style( 'avia-grid' ,   $template_url."/css/grid.css", array(), '1', 'screen' );
+		wp_register_style( 'avia-base' ,   $template_url."/css/base.css", array(), '1', 'screen' );
+		wp_register_style( 'avia-layout',  $template_url."/css/layout.css", array(), '1', 'screen' );
+		wp_register_style( 'avia-scs',     $template_url."/css/shortcodes.css", array(), '1', 'screen' );
+		wp_register_style( 'avia-custom',  $template_url."/css/custom.css", array(), '1', 'screen' );
+		wp_register_style( 'avia-prettyP', $template_url."/js/prettyPhoto/css/prettyPhoto.css", array(), '1', 'screen' );
+		wp_register_style( 'avia-media'  , $template_url."/js/mediaelement/skin-1/mediaelementplayer.css", array(), '1', 'screen' );
 
-/**
- * Enqueues scripts and styles for front end.
- *
- * @since Twenty Thirteen 1.0
- *
- * @return void
- */
-function twentythirteen_scripts_styles() {
-    // Adds JavaScript to pages with the comment form to support sites with
-    // threaded comments (when in use).
-    if (is_singular() && comments_open() && get_option('thread_comments'))
-        wp_enqueue_script('comment-reply');
 
-    // Adds Masonry to handle vertical alignment of footer widgets.
-    if (is_active_sidebar('sidebar-1'))
-        wp_enqueue_script('jquery-masonry');
+		//register styles
 
-    // Loads JavaScript file with functionality specific to Twenty Thirteen.
-    wp_enqueue_script('twentythirteen-script', get_template_directory_uri() . '/js/functions.js', array('jquery'), '2013-07-18', true);
+		wp_enqueue_style( 'avia-grid');
+		wp_enqueue_style( 'avia-base');
+		wp_enqueue_style( 'avia-layout');
+		wp_enqueue_style( 'avia-scs');
+		wp_enqueue_style( 'avia-prettyP');
+		wp_enqueue_style( 'avia-media');
+		if($child_theme_url !=  $template_url)
+		{
+			wp_enqueue_style( 'avia-style');
+		}
 
-    // Add Open Sans and Bitter fonts, used in the main stylesheet.
-    wp_enqueue_style('twentythirteen-fonts', twentythirteen_fonts_url(), array(), null);
 
-    // Add Genericons font, used in the main stylesheet.
-    wp_enqueue_style('genericons', get_template_directory_uri() . '/fonts/genericons.css', array(), '2.09');
+        global $avia;
+		$safe_name = avia_backend_safe_string($avia->base_data['prefix']);
 
-    // Loads our main stylesheet.
-    wp_enqueue_style('twentythirteen-style', get_stylesheet_uri(), array(), '2013-07-18');
+        if( get_option('avia_stylesheet_exists'.$safe_name) == 'true' )
+        {
+            $avia_upload_dir = wp_upload_dir();
 
-    // Loads the Internet Explorer specific stylesheet.
-    wp_enqueue_style('twentythirteen-ie', get_template_directory_uri() . '/css/ie.css', array('twentythirteen-style'), '2013-07-18');
-    wp_style_add_data('twentythirteen-ie', 'conditional', 'lt IE 9');
-}
-
-add_action('wp_enqueue_scripts', 'twentythirteen_scripts_styles');
-
-/**
- * Creates a nicely formatted and more specific title element text for output
- * in head of document, based on current view.
- *
- * @since Twenty Thirteen 1.0
- *
- * @param string $title Default title text for current view.
- * @param string $sep Optional separator.
- * @return string The filtered title.
- */
-function twentythirteen_wp_title($title, $sep) {
-    global $paged, $page;
-
-    if (is_feed())
-        return $title;
-
-    // Add the site name.
-    $title .= get_bloginfo('name');
-
-    // Add the site description for the home/front page.
-    $site_description = get_bloginfo('description', 'display');
-    if ($site_description && ( is_home() || is_front_page() ))
-        $title = "$title $sep $site_description";
-
-    // Add a page number if necessary.
-    if ($paged >= 2 || $page >= 2)
-        $title = "$title $sep " . sprintf(__('Page %s', 'twentythirteen'), max($paged, $page));
-
-    return $title;
-}
-
-add_filter('wp_title', 'twentythirteen_wp_title', 10, 2);
-
-/**
- * Registers two widget areas.
- *
- * @since Twenty Thirteen 1.0
- *
- * @return void
- */
-function twentythirteen_widgets_init() {
-    register_sidebar(array(
-        'name' => __('Main Widget Area', 'twentythirteen'),
-        'id' => 'sidebar-1',
-        'description' => __('Appears in the footer section of the site.', 'twentythirteen'),
-        'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-        'after_widget' => '</aside>',
-        'before_title' => '<h3 class="widget-title">',
-        'after_title' => '</h3>',
-    ));
-
-    register_sidebar(array(
-        'name' => __('Secondary Widget Area', 'twentythirteen'),
-        'id' => 'sidebar-2',
-        'description' => __('Appears on posts and pages in the sidebar.', 'twentythirteen'),
-        'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-        'after_widget' => '</aside>',
-        'before_title' => '<h3 class="widget-title">',
-        'after_title' => '</h3>',
-    ));
-}
-
-add_action('widgets_init', 'twentythirteen_widgets_init');
-
-if (!function_exists('twentythirteen_paging_nav')) :
-
-    /**
-     * Displays navigation to next/previous set of posts when applicable.
-     *
-     * @since Twenty Thirteen 1.0
-     *
-     * @return void
-     */
-    function twentythirteen_paging_nav() {
-        global $wp_query;
-
-        // Don't print empty markup if there's only one page.
-        if ($wp_query->max_num_pages < 2)
-            return;
-        ?>
-        <nav class="navigation paging-navigation" role="navigation">
-            <h1 class="screen-reader-text"><?php _e('Posts navigation', 'twentythirteen'); ?></h1>
-            <div class="nav-links">
-
-                <?php if (get_next_posts_link()) : ?>
-                    <div class="nav-previous"><?php next_posts_link(__('<span class="meta-nav">&larr;</span> Older posts', 'twentythirteen')); ?></div>
-                <?php endif; ?>
-
-        <?php if (get_previous_posts_link()) : ?>
-                    <div class="nav-next"><?php previous_posts_link(__('Newer posts <span class="meta-nav">&rarr;</span>', 'twentythirteen')); ?></div>
-        <?php endif; ?>
-
-            </div><!-- .nav-links -->
-        </nav><!-- .navigation -->
-        <?php
-    }
-
-endif;
-
-if (!function_exists('twentythirteen_post_nav')) :
-
-    /**
-     * Displays navigation to next/previous post when applicable.
-     *
-     * @since Twenty Thirteen 1.0
-     *
-     * @return void
-     */
-    function twentythirteen_post_nav() {
-        global $post;
-
-        // Don't print empty markup if there's nowhere to navigate.
-        $previous = ( is_attachment() ) ? get_post($post->post_parent) : get_adjacent_post(false, '', true);
-        $next = get_adjacent_post(false, '', false);
-
-        if (!$next && !$previous)
-            return;
-        ?>
-        <nav class="navigation post-navigation" role="navigation">
-            <h1 class="screen-reader-text"><?php _e('Post navigation', 'twentythirteen'); ?></h1>
-            <div class="nav-links">
-
-        <?php previous_post_link('%link', _x('<span class="meta-nav">&larr;</span> %title', 'Previous post link', 'twentythirteen')); ?>
-        <?php next_post_link('%link', _x('%title <span class="meta-nav">&rarr;</span>', 'Next post link', 'twentythirteen')); ?>
-
-            </div><!-- .nav-links -->
-        </nav><!-- .navigation -->
-        <?php
-    }
-
-endif;
-
-if (!function_exists('twentythirteen_entry_meta')) :
-
-    /**
-     * Prints HTML with meta information for current post: categories, tags, permalink, author, and date.
-     *
-     * Create your own twentythirteen_entry_meta() to override in a child theme.
-     *
-     * @since Twenty Thirteen 1.0
-     *
-     * @return void
-     */
-    function twentythirteen_entry_meta() {
-        if (is_sticky() && is_home() && !is_paged())
-            echo '<span class="featured-post">' . __('Sticky', 'twentythirteen') . '</span>';
-
-        if (!has_post_format('link') && 'post' == get_post_type())
-            twentythirteen_entry_date();
-
-        // Translators: used between list items, there is a space after the comma.
-        $categories_list = get_the_category_list(__(', ', 'twentythirteen'));
-        if ($categories_list) {
-            echo '<span class="categories-links">' . $categories_list . '</span>';
+            $avia_dyn_stylesheet_url = $avia_upload_dir['baseurl'] . '/dynamic_avia/'.$safe_name.'.css';
+            wp_register_style( 'avia-dynamic', $avia_dyn_stylesheet_url, array(), '1', 'screen' );
+            wp_enqueue_style( 'avia-dynamic');
         }
 
-        // Translators: used between list items, there is a space after the comma.
-        $tag_list = get_the_tag_list('', __(', ', 'twentythirteen'));
-        if ($tag_list) {
-            echo '<span class="tags-links">' . $tag_list . '</span>';
-        }
+		wp_enqueue_style( 'avia-custom');
 
-        // Post author
-        if ('post' == get_post_type()) {
-            printf('<span class="author vcard"><a class="url fn n" href="%1$s" title="%2$s" rel="author">%3$s</a></span>', esc_url(get_author_posts_url(get_the_author_meta('ID'))), esc_attr(sprintf(__('View all posts by %s', 'twentythirteen'), get_the_author())), get_the_author()
-            );
-        }
-    }
+	}
+}
 
-endif;
 
-if (!function_exists('twentythirteen_entry_date')) :
 
-    /**
-     * Prints HTML with date information for current post.
-     *
-     * Create your own twentythirteen_entry_date() to override in a child theme.
-     *
-     * @since Twenty Thirteen 1.0
-     *
-     * @param boolean $echo Whether to echo the date. Default true.
-     * @return string The HTML-formatted post date.
-     */
-    function twentythirteen_entry_date($echo = true) {
-        if (has_post_format(array('chat', 'status')))
-            $format_prefix = _x('%1$s on %2$s', '1: post format name. 2: date', 'twentythirteen');
-        else
-            $format_prefix = '%2$s';
 
-        $date = sprintf('<span class="date"><a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s">%4$s</time></a></span>', esc_url(get_permalink()), esc_attr(sprintf(__('Permalink to %s', 'twentythirteen'), the_title_attribute('echo=0'))), esc_attr(get_the_date('c')), esc_html(sprintf($format_prefix, get_post_format_string(get_post_format()), get_the_date()))
-        );
-
-        if ($echo)
-            echo $date;
-
-        return $date;
-    }
-
-endif;
-
-if (!function_exists('twentythirteen_the_attached_image')) :
-
-    /**
-     * Prints the attached image with a link to the next attached image.
-     *
-     * @since Twenty Thirteen 1.0
-     *
-     * @return void
-     */
-    function twentythirteen_the_attached_image() {
-        $post = get_post();
-        $attachment_size = apply_filters('twentythirteen_attachment_size', array(724, 724));
-        $next_attachment_url = wp_get_attachment_url();
-
-        /**
-         * Grab the IDs of all the image attachments in a gallery so we can get the URL
-         * of the next adjacent image in a gallery, or the first image (if we're
-         * looking at the last image in a gallery), or, in a gallery of one, just the
-         * link to that image file.
-         */
-        $attachment_ids = get_posts(array(
-            'post_parent' => $post->post_parent,
-            'fields' => 'ids',
-            'numberposts' => -1,
-            'post_status' => 'inherit',
-            'post_type' => 'attachment',
-            'post_mime_type' => 'image',
-            'order' => 'ASC',
-            'orderby' => 'menu_order ID'
-                ));
-
-        // If there is more than 1 attachment in a gallery...
-        if (count($attachment_ids) > 1) {
-            foreach ($attachment_ids as $attachment_id) {
-                if ($attachment_id == $post->ID) {
-                    $next_id = current($attachment_ids);
-                    break;
-                }
-            }
-
-            // get the URL of the next image attachment...
-            if ($next_id)
-                $next_attachment_url = get_attachment_link($next_id);
-
-            // or get the URL of the first image attachment.
-            else
-                $next_attachment_url = get_attachment_link(array_shift($attachment_ids));
-        }
-
-        printf('<a href="%1$s" title="%2$s" rel="attachment">%3$s</a>', esc_url($next_attachment_url), the_title_attribute(array('echo' => false)), wp_get_attachment_image($post->ID, $attachment_size)
-        );
-    }
-
-endif;
-
-/**
- * Returns the URL from the post.
- *
- * @uses get_url_in_content() to get the URL in the post meta (if it exists) or
- * the first link found in the post content.
- *
- * Falls back to the post permalink if no URL is found in the post.
- *
- * @since Twenty Thirteen 1.0
- *
- * @return string The Link format URL.
+/*
+ * Activate native wordpress navigation menu and register a menu location
  */
-function twentythirteen_get_link_url() {
-    $content = get_the_content();
-    $has_url = get_url_in_content($content);
+if(!function_exists('avia_nav_menus'))
+{
+	function avia_nav_menus()
+	{
+		global $avia_config;
 
-    return ( $has_url ) ? $has_url : apply_filters('the_permalink', get_permalink());
+		add_theme_support('nav_menus');
+		foreach($avia_config['nav_menus'] as $key => $value){ register_nav_menu($key, THEMENAME.' '.$value); }
+	}
+
+	$avia_config['nav_menus'] = array(	'avia' => 'Main Menu' ,
+										'avia2' => 'Secondary Menu <br/><small>(Will be displayed if you selected a header layout that supports a submenu <a target="_blank" href="'.admin_url('?page=avia#goto_header').'">here</a>)</small>',
+										'avia3' => 'Footer Menu <br/><small>(no dropdowns)</small>'
+									);
+	avia_nav_menus(); //call the function immediatly to activate
 }
 
-/**
- * Extends the default WordPress body classes.
- *
- * Adds body classes to denote:
- * 1. Single or multiple authors.
- * 2. Active widgets in the sidebar to change the layout and spacing.
- * 3. When avatars are disabled in discussion settings.
- *
- * @since Twenty Thirteen 1.0
- *
- * @param array $classes A list of existing body class values.
- * @return array The filtered body class list.
+
+
+
+
+
+
+
+
+/*
+ *  load some frontend functions in folder include:
  */
-function twentythirteen_body_class($classes) {
-    if (!is_multi_author())
-        $classes[] = 'single-author';
 
-    if (is_active_sidebar('sidebar-2') && !is_attachment() && !is_404())
-        $classes[] = 'sidebar';
+require_once( 'includes/admin/register-portfolio.php' );		// register custom post types for portfolio entries
+require_once( 'includes/admin/register-widget-area.php' );		// register sidebar widgets for the sidebar and footer
+require_once( 'includes/loop-comments.php' );					// necessary to display the comments properly
+require_once( 'includes/helper-template-logic.php' ); 			// holds the template logic so the theme knows which tempaltes to use
+require_once( 'includes/helper-social-media.php' ); 			// holds some helper functions necessary for twitter and facebook buttons
+require_once( 'includes/helper-post-format.php' ); 				// holds actions and filter necessary for post formats
+require_once( 'includes/admin/register-plugins.php');			// register the plugins we need
+require_once( 'includes/helper-responsive-megamenu.php' ); 		// holds the walker for the responsive mega menu
 
-    if (!get_option('show_avatars'))
-        $classes[] = 'no-avatars';
+//adds the plugin initalization scripts that add styles and functions
+require_once( 'config-bbpress/config.php' );					//compatibility with  bbpress forum plugin
+require_once( 'config-layerslider/config.php' );				//layerslider plugin
+require_once( 'config-templatebuilder/config.php' );			//templatebuilder plugin
+require_once( 'config-gravityforms/config.php' );				//compatibility with gravityforms plugin 
+require_once( 'config-woocommerce/config.php' );				//compatibility with woocommerce plugin
 
-    return $classes;
-}
 
-add_filter('body_class', 'twentythirteen_body_class');
 
-/**
- * Adjusts content_width value for video post formats and attachment templates.
- *
- * @since Twenty Thirteen 1.0
- *
- * @return void
+/*
+ *  dynamic styles for front and backend
  */
-function twentythirteen_content_width() {
-    global $content_width;
+if(!function_exists('avia_custom_styles'))
+{
+	function avia_custom_styles()
+	{
+		require_once( 'includes/admin/register-dynamic-styles.php' );	// register the styles for dynamic frontend styling
+		avia_prepare_dynamic_styles();
+	}
 
-    if (is_attachment())
-        $content_width = 724;
-    elseif (has_post_format('audio'))
-        $content_width = 484;
+	add_action('init', 'avia_custom_styles', 20);
+	add_action('admin_init', 'avia_custom_styles', 20);
 }
 
-add_action('template_redirect', 'twentythirteen_content_width');
 
-/**
- * Add postMessage support for site title and description for the Customizer.
- *
- * @since Twenty Thirteen 1.0
- *
- * @param WP_Customize_Manager $wp_customize Customizer object.
- * @return void
+
+
+/*
+ *  activate framework widgets
  */
-function twentythirteen_customize_register($wp_customize) {
-    $wp_customize->get_setting('blogname')->transport = 'postMessage';
-    $wp_customize->get_setting('blogdescription')->transport = 'postMessage';
-    $wp_customize->get_setting('header_textcolor')->transport = 'postMessage';
+if(!function_exists('avia_register_avia_widgets'))
+{
+	function avia_register_avia_widgets()
+	{
+		// register_widget( 'avia_tweetbox'); //<-- removed since the twitter api is shutting down.
+		register_widget( 'avia_newsbox' );
+		register_widget( 'avia_portfoliobox' );
+		register_widget( 'avia_socialcount' );
+		register_widget( 'avia_combo_widget' );
+		register_widget( 'avia_partner_widget' );
+		register_widget( 'avia_google_maps' );
+	}
+
+	avia_register_avia_widgets(); //call the function immediatly to activate
 }
 
-add_action('customize_register', 'twentythirteen_customize_register');
 
-/**
- * Binds JavaScript handlers to make Customizer preview reload changes
- * asynchronously.
- *
- * @since Twenty Thirteen 1.0
+
+
+
+/*
+ *  add post format options
  */
-function twentythirteen_customize_preview_js() {
-    wp_enqueue_script('twentythirteen-customizer', get_template_directory_uri() . '/js/theme-customizer.js', array('customize-preview'), '20130226', true);
-}
+add_theme_support( 'post-formats', array('link', 'quote', 'gallery','video','image' ) );
 
-add_action('customize_preview_init', 'twentythirteen_customize_preview_js');
 
-function redirect_user_on_role() {
-    global $wpdb;
-    //retrieve current user info 
-    global $current_user;
-    get_currentuserinfo();
-    //If login user role is Subscriber
-    $human_user=get_user_meta($current_user->ID, 'wp_human_user');
-    if ($current_user->user_level == 0) {
-        if ( $human_user == '1') {// con esta condicional sabes si existe el user meta
-            wp_redirect('http://'.$_SERVER['HTTP_HOST'].'/confirmar-datos/');
-            exit;
-        } else {
-            wp_redirect('http://'.$_SERVER['HTTP_HOST'].'/datos-medicos/');exit;
-        }
-    }
 
-}
-add_action('admin_init', 'redirect_user_on_role');
+/*
+ *  Remove the default shortcode function, we got new ones that are better ;)
+ */
+add_theme_support( 'avia-disable-default-shortcodes', true);
+
+
+/*
+ * compat mode for easier theme switching from one avia framework theme to another
+ */
+add_theme_support( 'avia_post_meta_compat');
+
+
+
+
+/*
+ *  register custom functions that are not related to the framework but necessary for the theme to run
+ */
+
+
 /*
 Plugin Name: Allow Email Login
 Plugin URI: http://en.bainternet.info
@@ -587,3 +407,22 @@ function addEmailToLogin( $translated_text, $text, $domain ) {
         $translated_text .= __( ' Or Email');
     return $translated_text;
 }
+function redirect_user_on_role() {
+    global $wpdb;
+    //retrieve current user info 
+    global $current_user;
+    get_currentuserinfo();
+    //If login user role is Subscriber
+    $human_user=get_user_meta($current_user->ID, 'wp_human_user');
+    if ($current_user->user_level == 0) {
+        if ( $human_user == '1') {// con esta condicional sabes si existe el user meta
+            wp_redirect('http://'.$_SERVER['HTTP_HOST'].'/confirmar-datos/');
+            exit;
+        } else {
+            wp_redirect('http://'.$_SERVER['HTTP_HOST'].'/datos-medicos/');exit;
+        }
+    }
+
+}
+//add_action('admin_init', 'redirect_user_on_role');
+require_once( 'functions-enfold.php');

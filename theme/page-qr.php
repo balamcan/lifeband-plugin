@@ -5,7 +5,7 @@
 global $avia_config;
 
 function edad($edad) {
-    if (!isset($edad)) {
+    if (!empty($edad)) {
         list($anio, $mes, $dia) = explode("-", $edad);
         $anio_dif = date("Y") - $anio;
         $mes_dif = date("m") - $mes;
@@ -14,13 +14,14 @@ function edad($edad) {
             $anio_dif--;
         return $anio_dif;
     }else {
-        return false;
+        return '';
     }
 }
-function link_telefono($telefono=''){
-    if($telefono !== ''){
-        return '<a href=tel://"'.$telefono.'">'.$telefono.'</a>';
-    }else{
+
+function link_telefono($telefono = '') {
+    if ($telefono !== '') {
+        return '<a href=tel://"' . $telefono . '">' . $telefono . '</a>';
+    } else {
         return false;
     }
 }
@@ -146,12 +147,23 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                             <p><label>Nombre:</label><span><?php echo$basicos->nombre; ?></span></p>
                             <p><label>Nombre del encargado de emergencia:</label><span><?php echo$basicos->encargado_emergencia; ?></span></p>
                             <p><label>Telefono de emergencia:</label><span><?php echo link_telefono($basicos->tel_emergencia); ?></span></p>
+                            <p><label>Nombre encargado de emergencia adicional:</label><span><?php echo$basicos->encargado_emergencia2; ?></span></p>
+                            <p><label>Telefono de emergencia encargado adicional:</label><span><?php echo link_telefono($basicos->tel_emergencia2); ?></span></p>
+                            <p><label>Nombre encargado de emergencia adicional 2:</label><span><?php echo$basicos->encargado_emergencia3; ?></span></p>
+                            <p><label>Telefono de emergencia encargado adicional 2:</label><span><?php echo link_telefono($basicos->tel_emergencia3); ?></span></p>
                             <p><label>Correo de emergencia:</label><span><?php echo$basicos->correo_emergencia; ?></span></p>
                             <p><label>Nombre del medico:</label><span><?php echo$basicos->nom_medico; ?></span></p>
                             <p><label>Telefono del medico:</label><span><?php echo link_telefono($basicos->tel_medico); ?></span></p>
-                            <p><label>Edad:</label><span><?php 
-                            echo edad($basicos->fecha_nac)?' a&ntilde;os':'';
-                            ?></span></p>
+                            
+                            <p><label>Nombre medico adiconal:</label><span><?php echo$basicos->nom_medico2; ?></span></p>
+                            <p><label>Telefono medico adicional:</label><span><?php echo link_telefono($basicos->tel_medico2); ?></span></p>
+                            
+                            <p><label>Nombre medico adiconal 2:</label><span><?php echo$basicos->nom_medico3; ?></span></p>
+                            <p><label>Telefono medico adicional 2:</label><span><?php echo link_telefono($basicos->tel_medico3); ?></span></p>
+                            
+                            <p><label>Numero de pasaporte:</label><span><?php echo$basicos->no_pasaporte; ?></span></p>
+
+                            <p><label>Edad:</label><span><?php echo edad($basicos->fecha_nac); ?></span></p>
                             <p><label>Peso:</label><span><?php echo$basicos->peso . ' Kilogramos'; ?></span></p>
                             <p><label>Estatura:</label><span><?php echo$basicos->estatura . ' Metros'; ?></span></p>
                             <p><label>Sexo:</label><span><?php echo$basicos->sexo; ?></span></p>
@@ -165,6 +177,7 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                             <p><label>Donador de organos:</label><span><?php echo(($medicos->donador_organos == 1) ? 'Si' : 'No' ); ?></span></p>
 
                             <p><label>Servicio medico:</label><span><?php echo$medicos->servicio_medico; ?></span></p>
+                            <p><label>Segundo servicio medico:</label><span><?php echo$medicos->servicio_medico2; ?></span></p>
                             <p><label>Numero de poliza:</label><span><?php echo$medicos->numero_poliza; ?></span></p>
                             <p><label>Embarazada:</label><span><?php echo(($medicos->embarazada == 1) ? 'Si' : 'No' ); ?></span></p>
 
@@ -175,17 +188,36 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                             <p><label>Otras consideraciones:</label><span><?php echo$medicos->otras_consideraciones; ?></span></p>
 
                             <h3>Discapacidades y/o dispositivos</h3>
-
-                            <p><label>Discapacidad auditiva:</label><span><?php echo$medicos->d_auditiva; ?></span></p>
-                            <p><label>Discapacidad mental:</label><span><?php echo$medicos->d_mental; ?></span></p>
-                            <p><label>Discapacidad motora:</label><span><?php echo$medicos->d_motora; ?></span></p>
-                            <p><label>Discapacidad visual:</label><span><?php echo$medicos->d_visual; ?></span></p>
-                            <p><label>Dispositivo de soporte vital marcapasos:</label><span><?php echo$medicos->marcapasos; ?></span></p>
-                            <p><label>Lentes de contacto:</label><span><?php echo$medicos->lentes_contacto; ?></span></p>
-                            <p><label>Protesis dentales:</label><span><?php echo$medicos->p_dentales; ?></span></p>
-                            <p><label>Medicamentos de origen natural:</label><span><?php echo$medicos->med_natural; ?></span></p>
+                            <?php
+                            if(!empty($medicos->d_auditiva))
+                            echo'<p><label>Discapacidad auditiva:</label><span>'.$medicos->d_auditiva.'</span></p>';
+                            
+                            if(!empty($medicos->d_mental))
+                            echo'<p><label>Discapacidad mental:</label><span>'.$medicos->d_mental.'</span></p>';
+                            
+                            if(!empty($medicos->d_motora))
+                            echo'<p><label>Discapacidad motora:</label><span>'.$medicos->d_motora.'</span></p>';
+                            
+                            if(!empty($medicos->d_visual))
+                            echo'<p><label>Discapacidad visual:</label><span>'.$medicos->d_visual.'</span></p>';
+                            
+                            if(!empty($medicos->marcapasos))
+                            echo'<p><label>Dispositivo de soporte vital marcapasos:</label><span>'.$medicos->marcapasos.'</span></p>';
+                            
+                            if(!empty($medicos->lentes_contancto))
+                            echo'<p><label>Lentes de contacto:</label><span>'.$medicos->lentes_contacto.'</span></p>';
+                            
+                            if(!empty($medicos->p_dentales))
+                            echo'<p><label>Protesis dentales:</label><span>'.$medicos->p_dentales.'</span></p>';
+                            
+                            if(!empty($medicos->med_natural))
+                            echo'<p><label>Medicamentos de origen natural:</label><span>'.$medicos->med_natural.'</span></p>';
+                            
+                            if(!empty($medicos->vacunas))
+                            echo "<p><label>Vacunas aplicadas:</label><span>".$medicos->vacunas." </span></p>";
+                            ?>
                             <div class="qr">
-    <!--                                <form action="<?php //permalink_link()      ?>">
+    <!--                                <form action="<?php //permalink_link()         ?>">
                                     <input type="submit" value="Enviar correo al medico">
                                     <input type="hidden" name="submitted" value="1">
                                 </form>-->
@@ -202,7 +234,7 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
 
                 </article><!-- #post -->
 
-            <?php endwhile; // end of the loop.        ?>
+            <?php endwhile; // end of the loop.         ?>
 
         </div><!-- #content -->
         <?php

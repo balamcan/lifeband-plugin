@@ -80,6 +80,7 @@ if (!empty($_POST['submitted'])) {
                     'enfermedades' => mysql_real_escape_string($_POST['enfermedades_fs']),
                     'cirugias' => mysql_real_escape_string($_POST['cirugias_fs']),
                     'servicio_medico' => mysql_real_escape_string($_POST['servicio_medico_fs']),
+                    'servicio_medico2' => mysql_real_escape_string($_POST['servicio_medico2_fs']),
                     'numero_poliza' => mysql_real_escape_string($_POST['numero_poliza_fs']),
                     'embarazada' => mysql_real_escape_string($_POST['embarazada_fs']),
                     'otras_consideraciones' => mysql_real_escape_string($_POST['otras_consideraciones_fs']),
@@ -91,7 +92,8 @@ if (!empty($_POST['submitted'])) {
                     'lentes_contacto' => mysql_real_escape_string($_POST['lentes_contacto_fs']),
                     'p_dentales' => mysql_real_escape_string($_POST['protesis_dentales_fs']),
                     'p_oculares' => mysql_real_escape_string($_POST['protesis_oculares_fs']),
-                    'med_natural' => mysql_real_escape_string($_POST['med_naturales_fs'])
+                    'med_natural' => mysql_real_escape_string($_POST['med_naturales_fs']),
+                    'vacunas' => mysql_real_escape_string($_POST['vacunas_fs'])
                         )
                 ) == FALSE) {
             my_contact_form_generate_response("error", $mensaje['noguardado']);
@@ -111,6 +113,7 @@ if (!empty($_POST['submitted'])) {
                     'enfermedades' => mysql_real_escape_string($_POST['enfermedades_fs']),
                     'cirugias' => mysql_real_escape_string($_POST['cirugias_fs']),
                     'servicio_medico' => mysql_real_escape_string($_POST['servicio_medico_fs']),
+                    'servicio_medico2' => mysql_real_escape_string($_POST['servicio_medico2_fs']),
                     'numero_poliza' => mysql_real_escape_string($_POST['numero_poliza_fs']),
                     'embarazada' => mysql_real_escape_string($_POST['embarazada_fs']),
                     'otras_consideraciones' => mysql_real_escape_string($_POST['otras_consideraciones_fs']),
@@ -122,7 +125,8 @@ if (!empty($_POST['submitted'])) {
                     'lentes_contacto' => mysql_real_escape_string($_POST['lentes_contacto_fs']),
                     'p_dentales' => mysql_real_escape_string($_POST['protesis_dentales_fs']),
                     'p_oculares' => mysql_real_escape_string($_POST['protesis_oculares_fs']),
-                    'med_natural' => mysql_real_escape_string($_POST['med_naturales_fs'])
+                    'med_natural' => mysql_real_escape_string($_POST['med_naturales_fs']),
+                    'vacunas' => mysql_real_escape_string($_POST['vacunas_fs'])
                         ), array('wp_users_id' => mysql_real_escape_string($current_user->ID))
                 ) == FALSE)
             my_contact_form_generate_response("error", $mensaje['noguardado']);
@@ -157,6 +161,7 @@ if (!empty($user)) {
     $_POST['enfermedades_fs'] = $user->enfermedades;
     $_POST['cirugias_fs'] = $user->cirugias;
     $_POST['servicio_medico_fs'] = $user->servicio_medico;
+    $_POST['servicio_medico2_fs'] = $user->servicio_medico2;
     $_POST['numero_poliza_fs'] = $user->numero_poliza;
     $_POST['embarazada_fs'] = $user->embarazada;
     $_POST['otras_consideraciones_fs'] = $user->otras_consideraciones;
@@ -169,9 +174,7 @@ if (!empty($user)) {
     $_POST['protesis_dentales_fs'] = $user->p_dentales;
     $_POST['protesis_oculares_fs'] = $user->p_oculares;
     $_POST['med_naturales_fs'] = $user->med_natural;
-    $_POST['protesis_dentales_fs'] = $user->p_dentales;
-    $_POST['protesis_oculares_fs'] = $user->p_oculares;
-    $_POST['med_naturales_fs'] = $user->med_natural;
+    $_POST['vacunas_fs'] = $user->vacunas;
 }
 
 
@@ -232,6 +235,11 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                             #respond form .one-line label, #respond form .one-line input{
                                 display: inline-block;
                             }
+                            .consejo{
+                                display: inline-block;
+                                margin-left: 10px;
+                                font-style: italic;
+                            }
                         </style>
 
                         <div id="respond">
@@ -241,7 +249,8 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                 ?>
                                 <form action="<?php the_permalink(); ?>" method="post">
 
-                                    <p><label for="tipo_sangre">Tipo de Sangre: <span>*</span> <br>
+                                    <p><label for="tipo_sangre">Tipo de Sangre: <span>*</span>
+                                            <br>
                                             <select name="tipo_sangre_fs">
                                                 <option value="">No s&eacute;</option>
                                                 <?php
@@ -256,8 +265,6 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                             </select></label></p>
                                     <p><label for="tipo_diabetes">Tipo de diabetes: <span>*</span> <br>
                                             <select name="tipo_diabetes_fs">
-
-
                                                 <?php
                                                 foreach ($tipo_diabetes as $ts) {
                                                     if (esc_attr($_POST['tipo_diabetes_fs']) == $ts->id)
@@ -269,55 +276,100 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                                 <?php //echo esc_attr($_POST['tipo_diabetes_fs']); ?>
                                             </select>
                                         </label></p>
-                                    <p><label for="presion_diastolica">Presi&oacute;n arterial diastolica:  <br>
-                                            <input type="number" name="presion_diastolica_fs" value="<?php echo esc_attr($_POST['presion_diastolica_fs']); ?>"></label></p>
-                                    <p><label for="presion_sistolica">Presi&oacute;n arterial sistolica:  <br>
+                                    <p><label for="presion_sistolica">Presi&oacute;n arterial sistolica: 
+                                            <span class="consejo">Primer parametro de presi&oacute;n</span>
+                                            <br>
                                             <input type="number" name="presion_sistolica_fs" value="<?php echo esc_attr($_POST['presion_sistolica_fs']); ?>"></label></p>
-                                    <p><label for="donador_organos">Donador de organos:  <br>
+                                    <p><label for="presion_diastolica">Presi&oacute;n arterial diastolica:  
+                                            <span class="consejo">Segundo parametro de presi&oacute;n</span>
+                                            <br>
+                                            <input type="number" name="presion_diastolica_fs" value="<?php echo esc_attr($_POST['presion_diastolica_fs']); ?>"></label></p>
+                                    <p><label for="donador_organos">Donador de organos:  
+                                            <span class="consejo">En caso de muerte</span>
+                                            <br>
                                             <input type="checkbox" id="donador_organos" name="donador_organos_fs" value="1" <?php echo (($_POST['donador_organos_fs'] === 1) ? 'checked' : ''); ?>>SI</label></p>
-
-                                    <p><label for="servicio_medico">Servicio medico:  <br>
+                                    <p><label for="servicio_medico">Servicio medico:  
+                                            <span class="consejo">Ejemplo: IMSS</span>
+                                            <br>
                                             <input type="text" name="servicio_medico_fs" value="<?php echo esc_attr($_POST['servicio_medico_fs']); ?>"></label></p>
-                                    <p><label for="numero_poliza">N&uacute;mero de poliza:  <br>
+                                    <p><label for="numero_poliza">N&uacute;mero de poliza: 
+                                            <br>
                                             <input type="text" name="numero_poliza_fs" value="<?php echo esc_attr($_POST['numero_poliza_fs']); ?>"></label></p>
+                                    <p><label for="servicio_medico2">Servicio medico adicioanl:  
+                                            <span class="consejo">Ejemplo: Seguro Popular</span>
+                                            <br>
+                                            <input type="text" name="servicio_medico2_fs" value="<?php echo esc_attr($_POST['servicio_medico2_fs']); ?>"></label></p>
                                     <p><label for="embarazada">Embarazada:  <br>
                                             <input type="checkbox" id="embarazada" name="embarazada_fs" value="1" <?php echo (($_POST['embarazada_fs'] === 1) ? 'checked' : ''); ?>>SI</label></p>
 
-                                    <p><label for="nombre">Alergias:  <br>
+                                    <p><label for="nombre">Alergias: 
+                                            <span class="consejo">Para evitar reacciones alergicas de algun tratamiento</span>
+                                            <br>
                                             <textarea name="alergias_fs" ><?php echo esc_attr($_POST['alergias_fs']); ?> </textarea></label></p>
-                                    <p><label for="medicamentos">Medicamentos:  <br>
+                                    <p><label for="medicamentos">Medicamentos:  
+                                            <span class="consejo">Medicamentos que tome actualmente</span>
+                                            <br>
                                             <textarea name="medicamentos_fs"><?php echo esc_attr($_POST['medicamentos_fs']); ?></textarea></label></p>
-                                    <p><label for="enfermedades">Enfermedades:  <br>
+                                    <p><label for="enfermedades">Enfermedades:  
+                                            <span class="consejo">Cronicas, permanentes o alguna que sea de relevancia mencionar</span>
+                                            <br>
                                             <textarea name="enfermedades_fs"> <?php echo esc_attr($_POST['enfermedades_fs']); ?></textarea></label></p>
-                                    <p><label for="cirugias">Cirug&iacute;as:  <br>
+                                    <p><label for="cirugias">Cirug&iacute;as:  
+                                            <span class="consejo">Mencionar cuales</span>
+                                            <br>
                                             <textarea name="cirugias_fs"> <?php echo esc_attr($_POST['cirugias_fs']); ?></textarea></label></p>
-                                    <p><label for="otras_consideraciones">Otras consideraciones:  <br>
+                                    <p><label for="otras_consideraciones">Otras consideraciones:  
+                                            <span class="consejo">Escribir algun detalle relevante no mencionado anteriormente</span>
+                                            <br>
                                             <textarea name="otras_consideraciones_fs"><?php echo esc_attr($_POST['otras_consideraciones_fs']); ?></textarea></label></p>
 
                                     <h3>Discapacidades y/o dispositivos</h3>
-                                    <p><label for="auditiva">Discapacidad auditiva:  <br>
+                                    <p><span class="consejo">Si no tiene que mencionarlo o algun conocimiento puede dejarlo en blanco</span></p>
+                                    <p><label for="auditiva">Discapacidad auditiva:  
+                                            <span class="consejo">Especifique si la tiene y en cual oido o en ambos</span>
+                                            <br>
                                             <textarea name="auditiva_fs" ><?php echo esc_attr($_POST['auditiva_fs']); ?></textarea></label></p>
-                                    <p><label for="mental">Discapacidad mental:  <br>
+                                    <p><label for="mental">Discapacidad mental:  
+                                            <span class="consejo">Mencione cual o cuales</span>
+                                            <br>
                                             <textarea name="mental_fs" ><?php echo esc_attr($_POST['mental_fs']); ?></textarea></label></p>
-                                    <p><label for="motora">Discapacidad motora:  <br>
+                                    <p><label for="motora">Discapacidad motora:  
+                                            <span class="consejo">Especifique cual</span>
+                                            <br>
                                             <textarea name="motora_fs" ><?php echo esc_attr($_POST['motora_fs']); ?></textarea></label></p>
-                                    <p><label for="visual">Discapacidad visual:  <br>
+                                    <p><label for="visual">Discapacidad visual:  
+                                            <span class="consejo">Mencione cual enfermedad</span>
+                                            <br>
                                             <textarea name="visual_fs" ><?php echo esc_attr($_POST['visual_fs']); ?></textarea></label></p>
-                                    <p><label for="marcapasos">Dispositivo de soporte vital marcapasos:  <br>
+                                    <p><label for="marcapasos">Dispositivo de soporte vital marcapasos:  
+                                            <span class="consejo">Mencione si tiene y desde cuando</span>
+                                            <br>
                                             <textarea name="marcapasos_fs" ><?php echo esc_attr($_POST['marcapasos_fs']); ?></textarea></label></p>
-                                    <p><label for="lentes_contacto">Lentes de contacto:  <br>
+                                    <p><label for="lentes_contacto">Lentes de contacto:  
+                                            <span class="consejo">Especifique si usa regularmente</span>
+                                            <br>
                                             <textarea name="lentes_contacto_fs" ><?php echo esc_attr($_POST['lentes_contacto_fs']); ?></textarea></label></p>
-                                    <p><label for="protesis_dentales">Protesis dentales:  <br>
+                                    <p><label for="protesis_dentales">Protesis dentales:  
+                                            <span class="consejo">Desde placa completa dental o algun diente</span>
+                                            <br>
                                             <textarea name="protesis_dentales_fs" ><?php echo esc_attr($_POST['protesis_dentales_fs']); ?></textarea></label></p>
-                                    <p><label for="protesis_oculares">Protesis oculares:  <br>
+                                    <p><label for="protesis_oculares">Protesis oculares:  
+                                            <span class="consejo">Mencione cual ojo</span>
+                                            <br>
                                             <textarea name="protesis_oculares_fs" ><?php echo esc_attr($_POST['protesis_oculares_fs']); ?></textarea></label></p>
-                                    <p><label for="med_naturales">Medicamentos de origen natural:  <br>
+                                    <p><label for="med_naturales">Medicamentos de origen natural:  
+                                            <span class="consejo">Tambien incluye herbolaria</span>
+                                            <br>
                                             <textarea name="med_naturales_fs" ><?php echo esc_attr($_POST['med_naturales_fs']); ?></textarea></label></p>
+                                    <p><label for="vacunas">Vacunas aplicadas: 
+                                            <span class="consejo">Mencione cuales y en que fecha aproximadamente</span>
+                                            <br>
+                                            <textarea name="vacunas_fs" ><?php echo esc_attr($_POST['vacunas_fs']); ?></textarea></label></p>
                                     <!--<p><label for="message_human">Verificaci&oacute;n:  <br><input type="text" style="width: 60px;" name="message_human"> + 3 = 5</label></p>-->      
 
-                                                        <!--                  <p><label for="name">Name: <span>*</span> <br><input type="text" name="message_name" value="<?php // echo esc_attr($_POST['message_name']);        ?>"></label></p>
-                                                        <p><label for="message_email">Email: <span>*</span> <br><input type="text" name="message_email" value="<?php //echo esc_attr($_POST['message_email']);        ?>"></label></p>
-                                                        <p><label for="message_text">Message: <span>*</span> <br><textarea type="text" name="message_text"><?php //echo esc_textarea($_POST['message_text']);        ?></textarea></label></p>
+                                                                                        <!--                  <p><label for="name">Name: <span>*</span> <br><input type="text" name="message_name" value="<?php // echo esc_attr($_POST['message_name']);            ?>"></label></p>
+                                                                                        <p><label for="message_email">Email: <span>*</span> <br><input type="text" name="message_email" value="<?php //echo esc_attr($_POST['message_email']);            ?>"></label></p>
+                                                                                        <p><label for="message_text">Message: <span>*</span> <br><textarea type="text" name="message_text"><?php //echo esc_textarea($_POST['message_text']);            ?></textarea></label></p>
                                     -->
                                     <input type="hidden" name="submitted" value="1">
                                     <p><input type="submit" value="Guardar y continuar"></p>
