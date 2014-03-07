@@ -83,7 +83,6 @@ class generateUsers {
     function canti($cant = 50) {
         $qrFactory = new qr();
         global $wpdb;
-        
         While ($this->i <= $cant) {
             $this->lastId = $wpdb->get_var("SELECT id from " . $wpdb->prefix . "users order by id desc limit 1",0,0);
             $this->lastId = $this->lastId + 1;
