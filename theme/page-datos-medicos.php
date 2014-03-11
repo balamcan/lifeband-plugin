@@ -52,6 +52,8 @@ $human = $_POST['message_human'];
 $current_user = wp_get_current_user();
 $q_user = 'select * from ' . $wpdb->prefix . 'datos_medicos where ' . $wpdb->prefix . 'users_id = ' . $current_user->ID;
 $user = $wpdb->get_row($q_user, OBJECT);
+$q_basicos = 'select sexo from ' . $wpdb->prefix . 'datos_basicos where ' . $wpdb->prefix . 'users_id = ' . $current_user->ID;
+$basicos = $wpdb->get_row($q_basicos, OBJECT);
 
 //if (!$human == 0) {
 //    if ($human != 2)
@@ -145,7 +147,7 @@ if (!empty($_POST['submitted'])) {
 //$medicos = $wpdb->get_row($q_medicos, OBJECT);
 //var_dump($user);
 
-if (!empty($user)) {
+if (!empty($user) && empty($_POST)) {
 //
 //    echo $user->servicio_medico .
 //    $user->numero_poliza .
@@ -287,7 +289,7 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                     <p><label for="donador_organos">Donador de &oacute;rganos:  
                                             <span class="consejo">En caso de muerte</span>
                                             <br>
-                                            <input type="checkbox" id="donador_organos" name="donador_organos_fs" value="1" <?php echo (($_POST['donador_organos_fs'] === 1) ? 'checked' : ''); ?>>SI</label></p>
+                                            <input type="checkbox" id="donador_organos" name="donador_organos_fs" value="1" <?php echo (($_POST['donador_organos_fs'] == '1') ? 'checked' : ''); ?>>SI</label></p>
                                     <p><label for="servicio_medico">Servicio m&eacute;dico:  
                                             <span class="consejo">Ejemplo: IMSS</span>
                                             <br>
@@ -299,9 +301,9 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                             <span class="consejo">Ejemplo: Seguro Popular</span>
                                             <br>
                                             <input type="text" name="servicio_medico2_fs" value="<?php echo esc_attr($_POST['servicio_medico2_fs']); ?>"></label></p>
-                                    <p><label for="embarazada">Embarazada:  <br>
-                                            <input type="checkbox" id="embarazada" name="embarazada_fs" value="1" <?php echo (($_POST['embarazada_fs'] === 1) ? 'checked' : ''); ?>>SI</label></p>
-
+                                            <?php if($basicos->sexo == 'F'){
+                                                echo'<p><label for="embarazada">Embarazada:  <br><input type="checkbox" id="embarazada" name="embarazada_fs" value="1"' .(($_POST['embarazada_fs'] === 1) ? 'checked' : '').'>SI</label></p>';
+                                            }?>
                                     <p><label for="nombre">Alergias: 
                                             <span class="consejo">Para evitar reacciones al&eacute;gicas de algun tratamiento</span>
                                             <br>

@@ -164,7 +164,7 @@ if (!empty($_POST['submitted'])) {
 //    my_contact_form_generate_response("error", $missing_content);
 
 
-if (!empty($user)) {
+if (!empty($user) && empty($_POST)) {
     $_POST['nombre_fs'] = $user->nombre;
     $_POST['ap_paterno_fs'] = $user->ap_paterno;
     $_POST['ap_materno_fs'] = $user->ap_materno;
