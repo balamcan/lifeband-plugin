@@ -88,7 +88,7 @@ class generateUsers {
             $this->lastId = $this->lastId + 1;
             $this->passusr = wp_generate_password(8, false);
             $this->pass = wp_hash_password($this->passusr);
-            $this->nombreUsuario = $this->lastId . $this->generateRandomString(4); 
+            $this->nombreUsuario = $this->lastId .'-'. $this->generateRandomString(4); 
             $this->correo = $this->nombreUsuario . '@lifeband.com';
             $usersTb = array(
                 'user_login' => $this->nombreUsuario,
