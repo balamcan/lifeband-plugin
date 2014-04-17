@@ -7,6 +7,28 @@ include_once(ABSPATH  . '/wp-load.php');
 include_once(ABSPATH . '/wp-includes/wp-db.php');
 include_once ('param2.php');
 
+function wp2_generate_password( $length = 12, $special_chars = true, $extra_special_chars = false ) {
+	$chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ123456789';
+	if ( $special_chars )
+		$chars .= '!@#$%^&*()';
+	if ( $extra_special_chars )
+		$chars .= '-_ []{}<>~`+=,.;:/?|';
+
+	$password = '';
+	for ( $i = 0; $i < $length; $i++ ) {
+		$password .= substr($chars, wp_rand(0, strlen($chars) - 1), 1);
+	}
+
+	/**
+	 * Filter the randomly-generated password.
+	 *
+	 * @since 3.0.0
+	 *
+	 * @param string $password The generated password.
+	 */
+	return apply_filters( 'random_password', $password );
+}
+
 class generateUsers {
    
     var $i = 0;
@@ -86,7 +108,7 @@ class generateUsers {
         While ($this->i <= $cant) {
             $this->lastId = $wpdb->get_var("SELECT id from " . $wpdb->prefix . "users order by id desc limit 1",0,0);
             $this->lastId = $this->lastId + 1;
-            $this->passusr = wp_generate_password(8, false);
+            $this->passusr = wp2_generate_password(8, false);
             $this->pass = wp_hash_password($this->passusr);
             $this->nombreUsuario = $this->lastId .'-'. $this->generateRandomString(4); 
             $this->correo = $this->nombreUsuario . '@lifeband.com';

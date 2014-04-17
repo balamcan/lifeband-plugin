@@ -230,12 +230,12 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
 
                             if (!empty($medicos->tipo_diabetes))
                                 echo'<p><label>Tipo de diabetes:</label><span>' . $medicos->tipo_diabetes . '</span></p>';
-
-                            if (!empty($medicos->presion_arterial_diastolica))
-                                echo'<p><label>Presi&oacute;n arterial diastolica:</label><span>' . $medicos->presion_arterial_diastolica . '</span></p>';
-
+                            
                             if (!empty($medicos->presion_arterial_sistolica))
                                 echo'<p><label>Presi&oacute;n arterial sistolica:</label><span>' . $medicos->presion_arterial_sistolica . '</span></p>';
+                            
+                            if (!empty($medicos->presion_arterial_diastolica))
+                                echo'<p><label>Presi&oacute;n arterial diastolica:</label><span>' . $medicos->presion_arterial_diastolica . '</span></p>';
 
                             if (!empty($medicos->donador_organos))
                                 echo'<p><label>Donador de &oacute;rganos:</label><span>' . (($medicos->donador_organos == 1) ? 'Si' : 'No' ) . '</span></p>';

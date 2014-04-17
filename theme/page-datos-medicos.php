@@ -19,9 +19,9 @@ function my_contact_form_generate_response($type, $message) {
     $url_redirect = 'http://' . $_SERVER['HTTP_HOST'] . '/qr/';
     if ($type == "success") {
         $response = "<div class='success'>{$message}
-        <a href='{$url_redirect}'>Para ver tus datos cuando se accese por el QR haz click aqui</a>
+        <a href='{$url_redirect}'>Para ver tus datos cuando se acceda por el QR haz click aqui</a>
         </div>";
-    }else
+    } else
         $response = "<div class='error'>{$message}</div>";
 }
 
@@ -278,14 +278,15 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                                 <?php //echo esc_attr($_POST['tipo_diabetes_fs']); ?>
                                             </select>
                                         </label></p>
-                                    <p><label for="presion_sistolica">Presi&oacute;n arterial sist&oacute;lica: 
+                                    <p><label for="presion_diastolica">Presi&oacute;n arterial diast&oacute;lica:  
                                             <span class="consejo">Primer par&aacute;metro de presi&oacute;n</span>
                                             <br>
-                                            <input type="number" name="presion_sistolica_fs" value="<?php echo esc_attr($_POST['presion_sistolica_fs']); ?>"></label></p>
-                                    <p><label for="presion_diastolica">Presi&oacute;n arterial diast&oacute;lica:  
+                                            <input type="number" name="presion_diastolica_fs" value="<?php echo esc_attr($_POST['presion_diastolica_fs']); ?>"></label></p>
+
+                                    <p><label for="presion_sistolica">Presi&oacute;n arterial sist&oacute;lica: 
                                             <span class="consejo">Segundo par&aacute;metro de presi&oacute;n</span>
                                             <br>
-                                            <input type="number" name="presion_diastolica_fs" value="<?php echo esc_attr($_POST['presion_diastolica_fs']); ?>"></label></p>
+                                            <input type="number" name="presion_sistolica_fs" value="<?php echo esc_attr($_POST['presion_sistolica_fs']); ?>"></label></p>
                                     <p><label for="donador_organos">Donador de &oacute;rganos:  
                                             <span class="consejo">En caso de muerte</span>
                                             <br>
@@ -301,9 +302,11 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                             <span class="consejo">Ejemplo: Seguro Popular</span>
                                             <br>
                                             <input type="text" name="servicio_medico2_fs" value="<?php echo esc_attr($_POST['servicio_medico2_fs']); ?>"></label></p>
-                                            <?php if($basicos->sexo == 'F'){
-                                                echo'<p><label for="embarazada">Embarazada:  <br><input type="checkbox" id="embarazada" name="embarazada_fs" value="1"' .(($_POST['embarazada_fs'] === 1) ? 'checked' : '').'>SI</label></p>';
-                                            }?>
+                                    <?php
+                                    if ($basicos->sexo == 'F') {
+                                        echo'<p><label for="embarazada">Embarazada:  <br><input type="checkbox" id="embarazada" name="embarazada_fs" value="1"' . (($_POST['embarazada_fs'] === 1) ? 'checked' : '') . '>SI</label></p>';
+                                    }
+                                    ?>
                                     <p><label for="nombre">Alergias: 
                                             <span class="consejo">Para evitar reacciones al&eacute;gicas de algun tratamiento</span>
                                             <br>
@@ -369,9 +372,9 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                             <textarea name="vacunas_fs" ><?php echo esc_attr($_POST['vacunas_fs']); ?></textarea></label></p>
                                     <!--<p><label for="message_human">Verificaci&oacute;n:  <br><input type="text" style="width: 60px;" name="message_human"> + 3 = 5</label></p>-->      
 
-                                                                                        <!--                  <p><label for="name">Name: <span>*</span> <br><input type="text" name="message_name" value="<?php // echo esc_attr($_POST['message_name']);            ?>"></label></p>
-                                                                                        <p><label for="message_email">Email: <span>*</span> <br><input type="text" name="message_email" value="<?php //echo esc_attr($_POST['message_email']);            ?>"></label></p>
-                                                                                        <p><label for="message_text">Message: <span>*</span> <br><textarea type="text" name="message_text"><?php //echo esc_textarea($_POST['message_text']);            ?></textarea></label></p>
+                                                                                                <!--                  <p><label for="name">Name: <span>*</span> <br><input type="text" name="message_name" value="<?php // echo esc_attr($_POST['message_name']);             ?>"></label></p>
+                                                                                                <p><label for="message_email">Email: <span>*</span> <br><input type="text" name="message_email" value="<?php //echo esc_attr($_POST['message_email']);             ?>"></label></p>
+                                                                                                <p><label for="message_text">Message: <span>*</span> <br><textarea type="text" name="message_text"><?php //echo esc_textarea($_POST['message_text']);             ?></textarea></label></p>
                                     -->
                                     <input type="hidden" name="submitted" value="1">
                                     <p><input type="submit" value="Guardar y continuar"></p>
@@ -380,10 +383,10 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
 
 
                         </div><!-- .entry-content -->
-                    <?php endif; // end of the loop.     ?>
+                <?php endif; // end of the loop.      ?>
                 </article><!-- #post -->
 
-            <?php endwhile; // end of the loop.     ?>
+        <?php endwhile; // end of the loop.      ?>
 
         </div><!-- #content -->
         <?php
@@ -393,5 +396,5 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
         ?>
     </div><!-- #primary -->
 
-    <?php get_sidebar(); ?>
-    <?php get_footer(); ?>
+<?php get_sidebar(); ?>
+<?php get_footer(); ?>
