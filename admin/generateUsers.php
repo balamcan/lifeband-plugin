@@ -100,7 +100,7 @@ class generateUsers {
         $randomString .= $characters[rand(0, strlen($characters) - 1)];
     }
     return $randomString;
-}
+}   
     
     function canti($cant = 50) {
         $qrFactory = new qr();
