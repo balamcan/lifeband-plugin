@@ -93,7 +93,7 @@ class generateUsers {
         $wpdb->insert($wpdb->prefix . 'usermeta', $user_meta);           
     }
     
-       function generateRandomString($length = 10) {
+    function generateRandomString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $randomString = '';
     for ($i = 0; $i < $length; $i++) {
@@ -127,7 +127,12 @@ class generateUsers {
             $this->i++;
         }
     }
-
+    
+    function deleteUserByEvent($eventId)
+    {
+        $wpdb->delete($wpdb->prefix . 'users', array( 'ID' => 1 ));
+        
+    }
 }
 
 ?>

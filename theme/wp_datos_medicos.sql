@@ -30,6 +30,7 @@ CREATE TABLE `wp_datos_basicos` (
   `correo_emergencia` varchar(70) DEFAULT NULL,
   `nom_medico` varchar(70) DEFAULT NULL,
   `tel_medico` varchar(45) DEFAULT NULL,
+  `numero_celular` varchar(45) DEFAULT NULL,
   `fecha_nac` date DEFAULT NULL,
   `peso` decimal(2,0) DEFAULT NULL,
   `estatura` decimal(4,2) DEFAULT NULL,

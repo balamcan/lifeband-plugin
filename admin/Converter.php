@@ -18,7 +18,7 @@
     
         return $kg * 2.20462262;
     }
-    ///Con esta funcion conviertes de kg. a libras
+    ///Con esta funcion conviertes de libras. a kg
     ///<param Name="ound">Peso en pound.<param>
     function pound_to_kg($pound){
     
