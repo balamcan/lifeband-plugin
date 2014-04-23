@@ -280,7 +280,7 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
 
                                 </p>
 
-                                <form action="<?php the_permalink(); ?>" method="post">
+                                <form name="inputForm"action="<?php the_permalink(); ?>" method="post">
                                     <!--<h3>Datos basicos</h3>-->
                                     <input type="hidden" id="foto" name="foto_fs" value="<?php echo esc_attr($_POST['foto_fs']); ?>">
                                     <p><label for="nombre">Nombre / Name: <span>*</span>
@@ -398,10 +398,12 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                                     <span class="consejo">Ex: 65.5</span>
                                                     <br>
                                                     <input type="text" size="5" name="peso_fs" value="<?php echo esc_attr($_POST['peso_fs']); ?>"></label></p>
-                                            <p><label for="estatura">Estatura en Metros / Height in Meters :
-                                                    <span class="consejo">Ex: 1.60</span>
+                                            <p><label for="estatura">Estatura en Metros o Pies / Height in Meters  or Feet :
+                                                    <span class="consejo">Ex: 1.60 or 6'2 inches</span>
                                                     <br>
                                                     <input type="text" size="5" name="estatura_fs" value="<?php echo esc_attr($_POST['estatura_fs']); ?>"></label></p>
+                                                    <br>
+                                                    <input type="text" size="5" name="estatura_feet_fs" value="<?php echo esc_attr($_POST['estatura_fs']); ?>"></label></p>
                                             <p class="one-line"><label for="sexo">Sexo / Genre: </label> <br>
                                                 <input type="radio" name="sexo_fs" id="sexo_m" value="M" <?php
                                         if ($_POST['sexo_fs'] == 'M') {
