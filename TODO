@@ -1,6 +1,6 @@
  LIFEBAND 2.1
 
-A $100,agregar campo y catalogo de eventos a la tabla de usuarios
+*A $100,agregar campo y catalogo de eventos a la tabla de usuarios
 A $100,traducir a ingles las paginas personalizadas
 A $100,crear convertidor de medidas ingles a decimal en peso y estatura
 B $200,personalizar foto: recortar y rotar
@@ -10,7 +10,7 @@ Administracion de usuarios
 B $100,agregar evento, asignar evento de usuarios creados, determinar el numero de usuarios a crear
 A $100,eliminar evento
 A $100,eliminar usuarios, eliminar usuarios por evento
-  $100,guardar correos por evento antes de borrar
+B $100,guardar correos por evento antes de borrar
 A $50,agregar campo "num de celular"
 B $50,paginacion de usuarios
 B $100,mejorar de interfaz UX

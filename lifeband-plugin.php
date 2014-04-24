@@ -2,8 +2,8 @@
 
 /*
   Plugin Name: Life Band Plugin
-  Description: A brief description of the Plugin.
-  Version: 1.0
+  Description: Custom plugin for administrate custom tables and page QR support.
+  Version: 2.0
   Author: Balam Palma
   License: GPL2
  */
@@ -22,12 +22,12 @@ function lifeband_plugin_install() {
     $f_functions=null;
     /* creating calatogos */
     
-    $wpdb->query("DROP TABLE IF EXISTS `wp_cat_tipo_diabetes`;");
+    //$wpdb->query("DROP TABLE IF EXISTS `wp_cat_tipo_diabetes`;");
     $wpdb->query("CREATE TABLE IF NOT EXISTS `wp_cat_tipo_diabetes` (`id` int(11) NOT NULL AUTO_INCREMENT, `nombre` varchar(20) NOT NULL, PRIMARY KEY (`id`))DEFAULT CHARSET=utf8 ;");
-    $wpdb->query("INSERT INTO `wp_cat_tipo_diabetes` (`id`, `nombre`) VALUES (1, 'Ninguna'), (2, 'Tipo 1'), (3, 'Tipo 3'), (4, 'Gestacional');");
-    $wpdb->query("DROP TABLE IF EXISTS `wp_cat_tipo_sangre`;");
+    //$wpdb->query("INSERT INTO `wp_cat_tipo_diabetes` (`id`, `nombre`) VALUES (1, 'Ninguna'), (2, 'Tipo 1'), (3, 'Tipo 3'), (4, 'Gestacional');");
+    //$wpdb->query("DROP TABLE IF EXISTS `wp_cat_tipo_sangre`;");
     $wpdb->query("CREATE TABLE IF NOT EXISTS `wp_cat_tipo_sangre` (`id` int(11) NOT NULL AUTO_INCREMENT, `nombre` varchar(3) NOT NULL, PRIMARY KEY (`id`) )  DEFAULT CHARSET=utf8 ;");
-    $wpdb->query("INSERT INTO `wp_cat_tipo_sangre` (`id`, `nombre`) VALUES (1, 'O-'), (2, 'O+'), (3, 'A-'), (4, 'A+'), (5, 'B-'), (6, 'B+'), (7, 'AB-'), (8, 'AB+');");
+    //$wpdb->query("INSERT INTO `wp_cat_tipo_sangre` (`id`, `nombre`) VALUES (1, 'O-'), (2, 'O+'), (3, 'A-'), (4, 'A+'), (5, 'B-'), (6, 'B+'), (7, 'AB-'), (8, 'AB+');");
     //the others tables
     $wpdb->query("CREATE TABLE IF NOT EXISTS `wp_pass_qr` (`id` int(11) NOT NULL AUTO_INCREMENT, `pass` varchar(10) NOT NULL, `id_user` bigint(20) DEFAULT NULL, PRIMARY KEY (`id`) ) DEFAULT CHARSET=utf8;");
     $wpdb->query("CREATE TABLE IF NOT EXISTS `wp_datos_medicos` (`id` int(11) NOT NULL AUTO_INCREMENT, `wp_users_id` int(11) NOT NULL, `wp_cat_tipo_sangre_id` int(11), `wp_cat_tipo_diabetes_id` int(11) NOT NULL, `presion_arterial_diastolica` int(11) DEFAULT NULL, `presion_arterial_sistolica` int(11) DEFAULT NULL, `donador_organos` tinyint(1) DEFAULT NULL, `alergias` text, `medicamentos` text, `enfermedades` text, `cirugias` text, `otras_consideraciones` text, `d_auditiva` text, `d_mental` text, `d_motora` text, `d_visual` text, `marcapasos` text, `lentes_contacto` text, `p_dentales` text, `p_oculares` text, `med_natural` text, PRIMARY KEY (`id`), KEY `fk_wp_dat_med_wp_users1_idx` (`wp_users_id`), KEY `fk_wp_dat_med_wp_cat_tipo_san_idx` (`wp_cat_tipo_sangre_id`), KEY `fk_wp_datos_medicos_wp_cat_tipo_diab_idx` (`wp_cat_tipo_diabetes_id`) ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;");
@@ -72,8 +72,9 @@ function run_sub_process() {
 //1
 function lifeband_plugin_menu() {
     add_options_page('Life Band Plugin Options', 'Life Band Plugin', 'manage_options', 'lifeband-plugin-menu', 'lifeband_plugin_options');
-   
-    
+}
+function lifeband_event_plugin_menu() {
+    add_options_page('Life Band Events Plugin Options', 'Life Band Event Plugin', 'manage_options', 'lifeband-plugin-menu', 'lifeband_plugin_event_options');
 }
 
 
@@ -86,15 +87,17 @@ function register_mysettings() {
 
 //2
 add_action('admin_menu', 'lifeband_plugin_menu');
+add_action('admin_menu', 'lifeband_plugin_event_menu');
 
 //3
 function lifeband_plugin_options() {
     include('admin/lifeband-plugin-admin.php');
     include('admin/usuarios-generados.php');
-
+}
+function lifeband_plugin_event_options() {
+    include('admin/eventos-admin.php');
 }
 function life_band_users_factory(){
     include('admin/lifeband-generate-users.php');
-    
 }
 ?>
