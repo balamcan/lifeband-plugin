@@ -308,7 +308,7 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                     }
                                     ?>
                                     <p><label for="nombre">Alergias / Allergies: 
-                                            <span class="consejo">Para evitar reacciones al&eacute;gicas de algun tratamiento</span>
+                                            <span class="consejo">Para evitar reacciones al&eacute;gicas de algun tratamiento / To avoid allergic reactions of any treatment</span>
                                             <br>
                                             <textarea name="alergias_fs" ><?php echo esc_attr($_POST['alergias_fs']); ?> </textarea></label></p>
                                     <p><label for="medicamentos">Medicamentos / Drugs :  

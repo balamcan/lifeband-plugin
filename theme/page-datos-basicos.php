@@ -134,7 +134,7 @@ if (!empty($_POST['submitted'])) {
                         'encargado_emergencia3' => mysql_real_escape_string($_POST['nom_emergencia3_fs']),
                         'tel_emergencia3' => mysql_real_escape_string($_POST['tel_emergencia3_fs']),
                         'correo_emergencia' => mysql_real_escape_string($_POST['correo_emergencia_fs']),
-                        'numero_celular' => mysql_real_escape_string($_POST['correo_emergencia_fs']),
+                        'celular' => mysql_real_escape_string($_POST['numero_celular_fs']),
                         'nom_medico' => mysql_real_escape_string($_POST['nom_medico_fs']),
                         'tel_medico' => mysql_real_escape_string($_POST['tel_medico_fs']),
                         'nom_medico2' => mysql_real_escape_string($_POST['nom_medico2_fs']),
@@ -176,7 +176,7 @@ if (!empty($user) && empty($_POST)) {
     $_POST['nom_emergencia3_fs'] = $user->encargado_emergencia3;
     $_POST['tel_emergencia3_fs'] = $user->tel_emergencia3;
     $_POST['correo_emergencia_fs'] = $user->correo_emergencia;
-     $_POST['numero_celular_fs'] = $user->numero_celular;
+     $_POST['numero_celular_fs'] = $user->celular;
     $_POST['nom_medico_fs'] = $user->nom_medico;
     $_POST['tel_medico_fs'] = $user->tel_medico;
     $_POST['nom_medico2_fs'] = $user->nom_medico2;
