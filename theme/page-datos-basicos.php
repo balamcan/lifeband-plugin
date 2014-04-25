@@ -397,14 +397,14 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                             <p><label for="peso">Peso en Kilogramos / Weight in Kilograms: 
                                                     <span class="consejo">Ex: 65.5</span>
                                                     <br>
-                                                    <input type="text" size="5" name="peso_fs" id="peso" value="<?php echo esc_attr($_POST['peso_fs']); ?>"></label></p>
-                                                    <input type="text" size="5" name="peso_lbs_fs" id="peso_lbs" value=""></label></p>
+                                                    Kg.<input type="text" size="5" name="peso_fs" id="peso" value="<?php echo esc_attr($_POST['peso_fs']); ?>"></label> 
+                                                    Lbs.<input type="text" size="5" name="peso_lbs_fs" id="peso_lbs" value=""></label></p>
                                             <p><label for="estatura">Estatura en Metros o Pies / Height in Meters  or Feet :
                                                     <span class="consejo">Ex: 1.60 or 6'2 inches</span>
                                                     <br>
-                                                    <input type="text" size="5" name="estatura_fs"  id="estatura" value="<?php echo esc_attr($_POST['estatura_fs']); ?>"></label></p>
+                                                    Metros.<input type="text" size="5" name="estatura_fs"  id="estatura" value="<?php echo esc_attr($_POST['estatura_fs']); ?>"></label>
                                                     <br>
-                                                    <input type="text" size="5" name="estatura_feet_fs"  id="estatura_feet" value="<?php echo esc_attr($_POST['estatura_fs']); ?>"></label></p>
+                                                    Height<input type="text" size="5" name="estatura_feet_fs"  id="estatura_feet" value="<?php echo esc_attr($_POST['estatura_fs']); ?>"></label></p>
                                             <p class="one-line"><label for="sexo">Sexo / Genre: </label> <br>
                                                 <input type="radio" name="sexo_fs" id="sexo_m" value="M" <?php
                                         if ($_POST['sexo_fs'] == 'M') {
@@ -538,5 +538,5 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                     }
 
     </script>
-     <script type="text/javascript" src="Converter.js"></script>
+     <script type="text/javascript" src="http://lifeband.com.mx/wp-content/themes/enfold/js/Converter.js"></script>
     <?php get_footer(); ?>

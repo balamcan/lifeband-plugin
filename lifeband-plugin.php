@@ -1,5 +1,4 @@
 <?php
-
 /*
   Plugin Name: Life Band Plugin
   Description: A brief description of the Plugin.

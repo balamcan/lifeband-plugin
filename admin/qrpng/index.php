@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Crea una lista de archivos con respecto al archivo donde fue llamada la funcion.
  * @param String Puede ser "." o ".." o tambien cualquier directorio o ruta

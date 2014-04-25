@@ -1,6 +1,4 @@
 <?php
-
-
 require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 include_once(ABSPATH  . '/wp-config.php');
 include_once(ABSPATH  . '/wp-load.php');
@@ -134,5 +132,4 @@ class generateUsers {
         
     }
 }
-
 ?>
