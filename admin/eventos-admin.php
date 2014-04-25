@@ -10,7 +10,10 @@ if (!empty($_POST['campo_fs'])) {
 }
 ?>
 
+<style type="text/css">
+    /*ESTILO FELIZ*/
 
+</style>
 <div class="wrap">
     <h2>Life Band Plugin</h2>
     <h3>Administracion de evenots</h3>
@@ -20,7 +23,7 @@ if (!empty($_POST['campo_fs'])) {
     <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
             <!-- Si el evento ya existe mostrar el siguiente div-->
         <div class="row">
-            <label for="nombre">Id del evento:</label>
+            <label for="div-id_evento">Id del evento:</label>
             <div id="div-id_evento"></div>
         </div>
         <div class="row">
@@ -52,6 +55,10 @@ if (!empty($_POST['campo_fs'])) {
             <text type="text" name="descripcion_fs" id="descripcion">
         </div>
         <div class="row">
+            <label for="activo">Activo:</label>
+            <text type="text" name="activo_fs" id="activo">
+        </div>
+        <div class="row">
             <input type="submit" name="submit" value="Guardar evento">
             <input type="hidden" name="id_evento_fs" id="id_evento">
             <!-- Si el evento es nuevo, poner el boton crear evento nuevo-->
@@ -67,10 +74,12 @@ if (!empty($_POST['campo_fs'])) {
                 <th>ID</th> <th>Nombre</th> <th>F Inicio</th> <th>H Inicio</th> <th>F Termino</th> <th>H termino</th> <th>Descripcion</th> <th>Lugar</th>
                 <th><a href="<?php echo $_SERVER['REQUEST_URI'] . "editar_fs=" . $id; ?>">Editar</a></th> 
                 <th><a href="<?php echo $_SERVER['REQUEST_URI'] . "borrar_fs=" . $id; ?>">Borrar</a></th> 
+                <th><a href="<?php echo $_SERVER['REQUEST_URI'] . "activo_fs=" . $id; ?>">Activo</a></th> 
             </tr>
         </thead>
         <tbody>
             <tr> 
+                <td></td> 
                 <td></td> 
                 <td></td> 
                 <td></td> 
