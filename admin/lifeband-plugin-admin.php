@@ -10,7 +10,7 @@ if (!empty($_POST['cantidad_fs'])) {
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     ##se necesitan los usuairos asignados aa un evento como parametro en generateUsers con el id del evento definido
     $userFactory = new generateUsers();
-    $userFactory->canti($cantidad);
+    $userFactory->canti($cantidad,$evento);
     echo "<b>{$cantidad}</b> Usuarios Generados";
 }
 $eventos = $wpdb->get_results('select id, nombre from wp_evento as e where activo = 1', OBJECT);

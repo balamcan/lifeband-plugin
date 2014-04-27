@@ -100,7 +100,7 @@ class generateUsers {
     return $randomString;
 }   
     
-    function canti($cant = 50) {
+    function canti($cant = 50,$event='') {
         $qrFactory = new qr();
         global $wpdb;
         While ($this->i <= $cant) {
@@ -117,7 +117,11 @@ class generateUsers {
                 'user_registered' => gmdate('Y-m-d H:i:s'),
                 'user_status' => 0
             );
-            $userPassTb = array('pass' => $this->passusr,'id_user' => $this->lastId,);
+            if(!empty($event)){
+                $userPassTb = array('pass' => $this->passusr,'id_user' => $this->lastId,);
+            }else{
+                $userPassTb = array('pass' => $this->passusr,'id_user' => $this->lastId,'id_evento' => $event,);
+            }
             $wpdb->insert($wpdb->prefix . 'users', $usersTb);
             $this->usersMetaInsert($this->lastId, $this->nombreUsuario);
             $wpdb->insert($wpdb->prefix . 'pass_qr', $userPassTb);
