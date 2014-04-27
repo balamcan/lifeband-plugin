@@ -200,7 +200,7 @@ time(f_termino) as h_termino, lugar, descripcion, activo from wp_evento as e', O
                 <th>H termino</th>
                 <th>Descripcion</th>
                 <th>Lugar</th>
-                <th>Estado</th>
+                <th>Activo</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -217,9 +217,9 @@ time(f_termino) as h_termino, lugar, descripcion, activo from wp_evento as e', O
                 <td>' . $e->h_inicio . '</td> 
                 <td>' . $e->f_termino . '</td> 
                 <td>' . $e->h_termino . '</td> 
-                <td>' . $e->lugar . '</td> 
                 <td>' . $e->descripcion . '</td> 
-                <td>' . $e->activo . '</td> 
+                <td>' . $e->lugar . '</td> 
+                <td>' . (($e->activo == 1)?'Si':'No') . '</td> 
                 <td>
                     <a href="http://lifeband.com.mx/wp-admin/admin.php?page=lifeband-plugin-event-menu&editar_fs= ' . $e->id . '">Editar</a> 
                     |

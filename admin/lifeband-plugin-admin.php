@@ -1,17 +1,19 @@
 <?php
+include_once(ABSPATH . '/wp-includes/wp-db.php');
+global $wpdb;
 if (!empty($_POST['cantidad_fs'])) {
     $cantidad=$_POST['cantidad_fs'];
     if (!empty($_POST['evento_fs'])) {
         $evento=$_POST['evento_fs'];
     }
     require_once('generateUsers.php');
-    include_once(ABSPATH . '/wp-includes/wp-db.php');
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     ##se necesitan los usuairos asignados aa un evento como parametro en generateUsers con el id del evento definido
     $userFactory = new generateUsers();
     $userFactory->canti($cantidad);
     echo "<b>{$cantidad}</b> Usuarios Generados";
 }
+$eventos = $wpdb->get_results('select id, nombre from wp_evento as e where activo = 1', OBJECT);
 ?>
 
 <style type="text/css">
@@ -45,6 +47,11 @@ if (!empty($_POST['cantidad_fs'])) {
 
             <select type="text" name="evento_fs" id="evento" value="50">
                 <option value="">Ninguno</option>
+                <?php 
+                    foreach ($eventos as $e) {
+                        echo'<option value="'.$e->id.'">'.$e->nombre.'</option>';
+                    }
+                 ?>
             </select>
         </div>
         <div class="row">
