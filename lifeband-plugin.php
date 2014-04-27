@@ -70,10 +70,10 @@ function run_sub_process() {
 
 //1
 function lifeband_plugin_menu() {
-    add_options_page('Life Band Plugin Options', 'Life Band Plugin', 'manage_options', 'lifeband-plugin-menu', 'lifeband_plugin_options');
+    add_menu_page('Life Band Plugin Options', 'Life Band Plugin', 'manage_options', 'lifeband-plugin-menu', 'lifeband_plugin_options');
 }
 function lifeband_event_plugin_menu() {
-    add_options_page('Life Band Events Plugin Options', 'Life Band Event Plugin', 'manage_options', 'lifeband-plugin-menu', 'lifeband_plugin_event_options');
+    add_menu_page('Life Band Events Plugin Options', 'Life Band Event Plugin', 'manage_options', 'lifeband-plugin-event-menu', 'lifeband_plugin_event_options');
 }
 
 
@@ -86,7 +86,7 @@ function register_mysettings() {
 
 //2
 add_action('admin_menu', 'lifeband_plugin_menu');
-add_action('admin_menu', 'lifeband_plugin_event_menu');
+add_action('admin_menu', 'lifeband_event_plugin_menu');
 
 //3
 function lifeband_plugin_options() {
@@ -98,5 +98,4 @@ function lifeband_plugin_event_options() {
 }
 function life_band_users_factory(){
     include('admin/lifeband-generate-users.php');
-}
-?>
+}?>
