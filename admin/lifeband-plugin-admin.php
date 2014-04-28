@@ -2,6 +2,7 @@
 include_once(ABSPATH . '/wp-includes/wp-db.php');
 global $wpdb;
 if (!empty($_POST['cantidad_fs'])) {
+    $evento='';
     $cantidad=$_POST['cantidad_fs'];
     if (!empty($_POST['evento_fs'])) {
         $evento=$_POST['evento_fs'];

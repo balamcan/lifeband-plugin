@@ -103,7 +103,7 @@ class generateUsers {
     function canti($cant = 50,$event='') {
         $qrFactory = new qr();
         global $wpdb;
-        While ($this->i <= $cant) {
+        While ($this->i < $cant) {
             $this->lastId = $wpdb->get_var("SELECT id from " . $wpdb->prefix . "users order by id desc limit 1",0,0);
             $this->lastId = $this->lastId + 1;
             $this->passusr = wp2_generate_password(8, false);
@@ -117,7 +117,7 @@ class generateUsers {
                 'user_registered' => gmdate('Y-m-d H:i:s'),
                 'user_status' => 0
             );
-            if(!empty($event)){
+            if(empty($event)){
                 $userPassTb = array('pass' => $this->passusr,'id_user' => $this->lastId,);
             }else{
                 $userPassTb = array('pass' => $this->passusr,'id_user' => $this->lastId,'id_evento' => $event,);
