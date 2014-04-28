@@ -2,17 +2,12 @@
 /*
  * Template Name: printqr
  */
-
 include_once(ABSPATH . '/wp-includes/wp-db.php');
 global $wpdb;
 
-
 global $avia_config;
 
-
-
 $usuarios = $wpdb->get_results('select u.ID, u.user_login as username, p.pass from wp_users as u RIGHT JOIN wp_pass_qr as p on u.id = p.id_user where id_evento =1', OBJECT);
-var_dump($usuarios);
 ?>
 <!doctype html>
 <html lang="en">
