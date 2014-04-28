@@ -140,5 +140,11 @@ class generateUsers {
         $wpdb->query('CALL `deleteUserById` ('.$userId.')');
         
     }
+    function deleteEventById($eventId)
+    {
+        $wpdb->query('CALL `deleteEventById` ('.$eventId.')');
+        
+    }
+    
 }
 ?>
