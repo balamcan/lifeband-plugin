@@ -1,6 +1,7 @@
 <?php
 include_once(ABSPATH . '/wp-includes/wp-db.php');
 global $wpdb;
+
 if (!empty($_POST['cantidad_fs'])) {
     $evento='';
     $cantidad=$_POST['cantidad_fs'];
@@ -14,6 +15,12 @@ if (!empty($_POST['cantidad_fs'])) {
     $userFactory->canti($cantidad,$evento);
     echo "<b>{$cantidad}</b> Usuarios Generados";
 }
+if(!empty($_POST['evento_a_borrar_fs']))
+    {
+         $eventoQueSeraBorrado =$_POST['evento_a_borrar_fs'];
+         $userFactory->deleteUserByEvent($eventoQueSeraBorrado);
+    
+    }
 $eventos = $wpdb->get_results('select id, nombre from wp_evento as e where activo = 1', OBJECT);
 ?>
 
@@ -57,6 +64,26 @@ $eventos = $wpdb->get_results('select id, nombre from wp_evento as e where activ
         </div>
         <div class="row">
             <input type="submit" name="submit" value="Generar usuarios">
+        </div>
+    </form>
+    <h3>Borrar Usuarios</h3>
+    <label for="evento">Borrar Usuario por evento:</label>
+    <form method="post" action="<?php echo  $_SERVER['REQUEST_URI']; ?>">
+        
+        <div class="row">
+           <label for="evento">Seleccione Evento:</label>
+
+            <select type="text" name="evento_a_borrar_fs" id="evento" value="50">
+                
+                <?php 
+                    foreach ($eventos as $e) {
+                        echo'<option value="'.$e->id.'">'.$e->nombre.'</option>';
+                    }
+                 ?>
+            </select>
+        </div>
+        <div class="row">
+            <input type="submit" name="submit" value="Borrar Usuarios">
         </div>
     </form>
 </div>
