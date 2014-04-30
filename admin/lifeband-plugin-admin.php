@@ -1,22 +1,24 @@
 <?php
 include_once(ABSPATH . '/wp-includes/wp-db.php');
 global $wpdb;
-
+require_once('generateUsers.php');
+$userFactory = new generateUsers();
 if (!empty($_POST['cantidad_fs'])) {
     $evento='';
     $cantidad=$_POST['cantidad_fs'];
     if (!empty($_POST['evento_fs'])) {
         $evento=$_POST['evento_fs'];
     }
-    require_once('generateUsers.php');
+    
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     ##se necesitan los usuairos asignados aa un evento como parametro en generateUsers con el id del evento definido
-    $userFactory = new generateUsers();
+    
     $userFactory->canti($cantidad,$evento);
     echo "<b>{$cantidad}</b> Usuarios Generados";
 }
 if(!empty($_POST['evento_a_borrar_fs']))
     {
+        
          $eventoQueSeraBorrado =$_POST['evento_a_borrar_fs'];
          $userFactory->deleteUserByEvent($eventoQueSeraBorrado);
     
