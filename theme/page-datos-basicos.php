@@ -296,7 +296,7 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                             <br>
                                             <input type="text" name="nom_emergencia_fs" value="<?php echo esc_attr($_POST['nom_emergencia_fs']); ?>"></label></p>
                                     <p><label for="tel_emergencia">Tel&eacute;fono de emergencia / Emergency Number: 
-                                            <span class="consejo">Numero de la persona a informarle con lada / Number with lada </span>
+                                            <span class="consejo">Numero de la persona a informarle con LADA / Number with LADA </span>
                                             <br>
                                             <input type="text" name="tel_emergencia_fs" value="<?php echo esc_attr($_POST['tel_emergencia_fs']); ?>"></label></p>
                                     <p><label for="nom_emergencia2">Nombre del encargado de emergencia adicional / Name of the family member or close friend to call 2: 
@@ -307,7 +307,7 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                             <span class="consejo">Numero de la persona adicional / Person to call</span>
                                             <br>
                                             <input type="text" name="tel_emergencia2_fs" value="<?php echo esc_attr($_POST['tel_emergencia2_fs']); ?>"></label></p>
-                                    <p><label for="nom_emergencia3">Nombre del encargado de emergencia adiconal 2 / Name of the family member or close friend to call 2:
+                                    <p><label for="nom_emergencia3">Nombre del encargado de emergencia adicional 2 / Name of the family member or close friend to call 2:
                                             <span class="consejo">Segunda persona adicional para informar / Person to call</span>
                                             <br>
                                             <input type="text" name="nom_emergencia3_fs" value="<?php echo esc_attr($_POST['nom_emergencia3_fs']); ?>"></label></p>
