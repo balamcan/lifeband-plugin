@@ -16,11 +16,12 @@ if (!empty($_POST['cantidad_fs'])) {
     $userFactory->canti($cantidad,$evento);
     echo "<b>{$cantidad}</b> Usuarios Generados";
 }
-if(!empty($_POST['evento_a_borrar_fs']))
+if(!empty($_POST['evento_a_borrar1_fs']))
     {
         
-         $eventoQueSeraBorrado =$_POST['evento_a_borrar_fs'];
-         $userFactory->deleteUserByEvent($eventoQueSeraBorrado);
+         $eventoQueSeraBorrado =$_POST['evento_a_borrar1_fs'];
+         
+         $userFactory->BackUpUserByEventId($eventoQueSeraBorrado);
     
     }
 $eventos = $wpdb->get_results('select id, nombre from wp_evento as e where activo = 1', OBJECT);
@@ -75,7 +76,7 @@ $eventos = $wpdb->get_results('select id, nombre from wp_evento as e where activ
         <div class="row">
            <label for="evento">Seleccione Evento:</label>
 
-            <select type="text" name="evento_a_borrar_fs" id="evento">
+            <select type="text" name="evento_a_borrar1_fs" id="evento">
                 
                 <?php 
                     foreach ($eventos as $e) {
