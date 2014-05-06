@@ -55,7 +55,7 @@ $eventos = $wpdb->get_results('select id, nombre from wp_evento as e where activ
         <div class="row">
            <label for="evento">Asignados al evento temporalmente:</label>
 
-            <select type="text" name="evento_fs" id="evento" value="50">
+            <select  name="evento_fs" id="evento">
                 <option value="">Ninguno</option>
                 <?php 
                     foreach ($eventos as $e) {
@@ -75,7 +75,7 @@ $eventos = $wpdb->get_results('select id, nombre from wp_evento as e where activ
         <div class="row">
            <label for="evento">Seleccione Evento:</label>
 
-            <select type="text" name="evento_a_borrar_fs" id="evento" value="50">
+            <select  name="evento_a_borrar_fs" id="evento_a_borrar">
                 
                 <?php 
                     foreach ($eventos as $e) {
