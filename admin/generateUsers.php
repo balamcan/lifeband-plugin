@@ -132,19 +132,32 @@ class generateUsers {
     
     function deleteUserByEvent($eventId)
     {
+        global $wpdb;
         $wpdb->query('CALL `deleteUserByEventId` ('.$eventId.')');
         
     }
     function deleteUserById($userId)
     {
+        global $wpdb;
         $wpdb->query('CALL `deleteUserById` ('.$userId.')');
         
     }
     function deleteEventById($eventId)
     {
+        global $wpdb;
         $wpdb->query('CALL `deleteEventById` ('.$eventId.')');
         
     }
-    
+    function BackUpUserByEventId($eventId)
+    {
+        global $wpdb;
+       $usersInEvent = $wpdb->get_var("Select s.ID from wp_users s
+  join wp_pass_qr n on s.ID = n.id_user
+  Where n.id_evento =".$eventId,0,0);
+        foreach ($usersInEvent as $e) {
+                        $wpdb->query('Call backUpUserById('.$e.','.$event_id.')');
+                    }
+        
+    }
 }
 ?>
