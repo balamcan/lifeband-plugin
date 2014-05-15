@@ -20,7 +20,7 @@ if(!empty($_POST['evento_a_borrar_fs']))
     {
         
          $eventoQueSeraBorrado =$_POST['evento_a_borrar_fs'];
-         $userFactory->deleteUserByEvent($eventoQueSeraBorrado);
+   #      $userFactory->deleteUserByEvent($eventoQueSeraBorrado);
     
     }
 $eventos = $wpdb->get_results('select id, nombre from wp_evento as e where activo = 1', OBJECT);
