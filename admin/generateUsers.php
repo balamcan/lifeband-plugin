@@ -146,6 +146,14 @@ class generateUsers {
         $wpdb->query('CALL `deleteEventById` (' . $eventId . ')');
     }
 
+    function BackUpUserByEventId($eventId) {
+        global $wpdb;
+        $usersInEvent = $wpdb->get_results("Select s.ID from wp_users s
+        join wp_pass_qr n on s.ID = n.id_user where n.id_evento =" . $eventId, OBJECT);
+        foreach ($usersInEvent as $e) {
+            $wpdb->query('Call `backUpUserById` (' . $e->ID . ',' . $eventId . ')');
+        }
+    }
 }
 
 ?>
