@@ -1,6 +1,6 @@
  LIFEBAND 2.1
 
-A $100,agregar campo y catalogo de eventos a la tabla de ws_pass_qr
+B $100,agregar campo y catalogo de eventos a la tabla de ws_pass_qr
 A $100,traducir a ingles las paginas personalizadas
 A $100,crear convertidor de medidas ingles a decimal en peso y estatura
 B $200,personalizar foto: recortar y rotar
@@ -8,13 +8,16 @@ B $200,personalizar foto: recortar y rotar
 Administracion de usuarios
 
 B $100,agregar evento, asignar evento de usuarios creados, determinar el numero de usuarios a crear
-A $100,eliminar evento
+B $100,eliminar evento
 A $100,eliminar usuarios, eliminar usuarios por evento
-  $100,guardar correos por evento antes de borrar
+A $100,guardar correos por evento antes de borrar
 A $50,agregar campo "num de celular"
 B $50,paginacion de usuarios
 B $100,mejorar de interfaz UX
 
+
+B $200,Reparacion emergente de un detalle dentro de la plantilla
+B $300,Despliegue de QRs listos para imprimir y personalizado por evento.
 ptf 
 host: lifeband.com.mx
 usr: balam
