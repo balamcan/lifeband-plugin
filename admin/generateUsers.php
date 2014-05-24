@@ -155,7 +155,7 @@ class generateUsers {
   join wp_pass_qr n on s.ID = n.id_user
   Where n.id_evento =".$eventId,0,0);
         foreach ($usersInEvent as $e) {
-                        $wpdb->query('Call backUpUserById('.$e.','.$event_id.')');
+                        $wpdb->query('Call backUpUserById('.$e->ID.','.$event_id.')');
                     }
         
     }
