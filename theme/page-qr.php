@@ -156,145 +156,145 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                             <h3>Datos b&aacute;sicos</h3>
                             <?php
                             if (!empty($basicos->foto))
-                                echo'<p><label>Foto:</label><span> <img id="archivo" src="' . 'http://lifeband.com.mx/fotos/' . $basicos->foto . '"></span></p>';
+                                echo'<p><label>Foto /Picture:</label><span> <img id="archivo" src="' . 'http://lifeband.com.mx/fotos/' . $basicos->foto . '"></span></p>';
 
                             if (!empty($basicos->ap_paterno))
-                                echo'<p><label>Apellido paterno:</label><span>' . $basicos->ap_paterno . '</span></p>';
+                                echo'<p><label>Apellido paterno / Last Name:</label><span>' . $basicos->ap_paterno . '</span></p>';
 
                             if (!empty($basicos->ap_materno))
-                                echo'<p><label>Apellido materno:</label><span>' . $basicos->ap_materno . '</span></p>';
+                                echo'<p><label>Apellido materno / Maternal Surname:</label><span>' . $basicos->ap_materno . '</span></p>';
 
                             if (!empty($basicos->nombre))
-                                echo'<p><label>Nombre:</label><span>' . $basicos->nombre . '</span></p>';
+                                echo'<p><label>Nombre / Name:</label><span>' . $basicos->nombre . '</span></p>';
 
                             if (!empty($basicos->encargado_emergencia))
-                                echo'<p><label>Nombre del encargado de emergencia:</label><span>' . $basicos->encargado_emergencia . '</span></p>';
+                                echo'<p><label>Nombre del encargado de emergencia / Emergency Manager Name:</label><span>' . $basicos->encargado_emergencia . '</span></p>';
 
                             if (!empty($basicos->tel_emergencia))
-                                echo'<p><label>Tel&eacute;fono de emergencia:</label><span>' . link_telefono($basicos->tel_emergencia) . '</span></p>';
+                                echo'<p><label>Tel&eacute;fono de emergencia / Emergency Phone:</label><span>' . link_telefono($basicos->tel_emergencia) . '</span></p>';
 
                             if (!empty($basicos->encargado_emergencia2))
-                                echo'<p><label>Nombre encargado de emergencia adicional:</label><span>' . $basicos->encargado_emergencia2 . '</span></p>';
+                                echo'<p><label>Nombre encargado de emergencia adicional / Additional emergency manager name:</label><span>' . $basicos->encargado_emergencia2 . '</span></p>';
 
                             if (!empty($basicos->tel_emergencia2))
-                                echo'<p><label>Tel&eacute;fono de emergencia encargado adicional:</label><span>' . link_telefono($basicos->tel_emergencia2) . '</span></p>';
+                                echo'<p><label>Tel&eacute;fono de emergencia encargado adicional /  Additional Emergency Phone:</label><span>' . link_telefono($basicos->tel_emergencia2) . '</span></p>';
 
                             if (!empty($basicos->encargado_emergencia3))
-                                echo'<p><label>Nombre encargado de emergencia adicional 2:</label><span>' . $basicos->encargado_emergencia3 . '</span></p>';
+                                echo'<p><label>Nombre encargado de emergencia adicional 2 / Additional Emergency Phone:</label><span>' . $basicos->encargado_emergencia3 . '</span></p>';
 
                             if (!empty($basicos->tel_emergencia3))
-                                echo'<p><label>Tel&eacute;fono de emergencia encargado adicional 2:</label><span>' . link_telefono($basicos->tel_emergencia3) . '</span></p>';
+                                echo'<p><label>Tel&eacute;fono de emergencia encargado adicional 2 / Additional Emergency Phone:</label><span>' . link_telefono($basicos->tel_emergencia3) . '</span></p>';
 
                             if (!empty($basicos->correo_emergencia))
-                                echo'<p><label>Correo de emergencia:</label><span>' . $basicos->correo_emergencia . '</span></p>';
+                                echo'<p><label>Correo de emergencia / Emergency mail:</label><span>' . $basicos->correo_emergencia . '</span></p>';
 
                             if (!empty($basicos->nom_medico))
-                                echo'<p><label>Nombre del m&eacute;dico:</label><span>' . $basicos->nom_medico . '</span></p>';
+                                echo'<p><label>Nombre del m&eacute;dico / Name of doctor:</label><span>' . $basicos->nom_medico . '</span></p>';
 
                             if (!empty($basicos->tel_medico))
-                                echo'<p><label>Tel&eacute;fono del m&eacute;dico:</label><span>' . link_telefono($basicos->tel_medico) . '</span></p>';
+                                echo'<p><label>Tel&eacute;fono del m&eacute;dico / Phone Numberr:</label><span>' . link_telefono($basicos->tel_medico) . '</span></p>';
 
                             if (!empty($basicos->nom_medico2))
-                                echo'<p><label>Nombre m&eacute;dico adiconal:</label><span>' . $basicos->nom_medico2 . '</span></p>';
+                                echo'<p><label>Nombre m&eacute;dico adiconal / Additional Doctor:</label><span>' . $basicos->nom_medico2 . '</span></p>';
 
                             if (!empty($basicos->tel_medico2))
-                                echo'<p><label>Tel&eacute;fono m&eacute;dico adicional:</label><span>' . link_telefono($basicos->tel_medico2) . '</span></p>';
+                                echo'<p><label>Tel&eacute;fono m&eacute;dico adicional / Additional Phone Number:</label><span>' . link_telefono($basicos->tel_medico2) . '</span></p>';
 
                             if (!empty($basicos->nom_medico3))
-                                echo'<p><label>Nombre m&eacute;dico adicional 2:</label><span>' . $basicos->nom_medico3 . '</span></p>';
+                                echo'<p><label>Nombre m&eacute;dico adicional 2 / Name of Doctor 2:</label><span>' . $basicos->nom_medico3 . '</span></p>';
 
                             if (!empty($basicos->tel_medico3))
-                                echo'<p><label>Tel&eacute;fono m&eacute;dico adicional 2:</label><span>' . link_telefono($basicos->tel_medico3) . '</span></p>';
+                                echo'<p><label>Tel&eacute;fono m&eacute;dico adicional 2 / Phone Number from the Additional Doctor:</label><span>' . link_telefono($basicos->tel_medico3) . '</span></p>';
 
                             if (!empty($basicos->no_pasaporte))
-                                echo'<p><label>Numero de pasaporte:</label><span>' . $basicos->no_pasaporte . '</span></p>';
+                                echo'<p><label>Numero de pasaporte / Number of passport:</label><span>' . $basicos->no_pasaporte . '</span></p>';
 
                             if (!empty($basicos->fecha_nac))
-                                echo'<p><label>Edad:</label><span>' . edad($basicos->fecha_nac) . '</span></p>';
+                                echo'<p><label>Edad / Age :</label><span>' . edad($basicos->fecha_nac) . '</span></p>';
 
                             if (!empty($basicos->peso))
-                                echo'<p><label>Peso:</label><span>' . $basicos->peso . ' Kilogramos' . '</span></p>';
+                                echo'<p><label>Peso / Weight:</label><span>' . $basicos->peso . ' Kilogramos' . '</span></p>';
 
                             if (!empty($basicos->estatura))
-                                echo'<p><label>Estatura:</label><span>' . $basicos->estatura . ' Metros' . '</span></p>';
+                                echo'<p><label>Estatura / Height:</label><span>' . $basicos->estatura . ' Metros' . '</span></p>';
 
                             if (!empty($basicos->sexo))
-                                echo'<p><label>Sexo:</label><span>' . $basicos->sexo . '</span></p>';
+                                echo'<p><label>Sexo / Genre :</label><span>' . $basicos->sexo . '</span></p>';
                             ?>    
 
                             <h3>Datos m&eacute;dicos</h3>
 
                             <?php
                             if (!empty($medicos->tipo_sangre))
-                                echo'<p><label>Tipo de sangre:</label><span>' . $medicos->tipo_sangre . '</span></p>';
+                                echo'<p><label>Tipo de sangre / Blood Type:</label><span>' . $medicos->tipo_sangre . '</span></p>';
 
                             if (!empty($medicos->tipo_diabetes))
-                                echo'<p><label>Tipo de diabetes:</label><span>' . $medicos->tipo_diabetes . '</span></p>';
+                                echo'<p><label>Tipo de diabetes / Type of Diabetes:</label><span>' . $medicos->tipo_diabetes . '</span></p>';
                             
                             if (!empty($medicos->presion_arterial_sistolica))
-                                echo'<p><label>Presi&oacute;n arterial sistolica:</label><span>' . $medicos->presion_arterial_sistolica . '</span></p>';
+                                echo'<p><label>Presi&oacute;n arterial sistolica / Systolic Blood Pressure:</label><span>' . $medicos->presion_arterial_sistolica . '</span></p>';
                             
                             if (!empty($medicos->presion_arterial_diastolica))
-                                echo'<p><label>Presi&oacute;n arterial diastolica:</label><span>' . $medicos->presion_arterial_diastolica . '</span></p>';
+                                echo'<p><label>Presi&oacute;n arterial diastolica / Diastolic blood pressure:</label><span>' . $medicos->presion_arterial_diastolica . '</span></p>';
 
                             if (!empty($medicos->donador_organos))
-                                echo'<p><label>Donador de &oacute;rganos:</label><span>' . (($medicos->donador_organos == 1) ? 'Si' : 'No' ) . '</span></p>';
+                                echo'<p><label>Donador de &oacute;rganos / Organ Donor:</label><span>' . (($medicos->donador_organos == 1) ? 'Si' : 'No' ) . '</span></p>';
 
                             if (!empty($medicos->servicio_medico))
-                                echo'<p><label>Servicio m&eacute;dico:</label><span>' . $medicos->servicio_medico . '</span></p>';
+                                echo'<p><label>Servicio m&eacute;dico /  Health Insurance:</label><span>' . $medicos->servicio_medico . '</span></p>';
 
                             if (!empty($medicos->servicio_medico2))
-                                echo'<p><label>Segundo servicio m&eacute;dico:</label><span>' . $medicos->servicio_medico2 . '</span></p>';
+                                echo'<p><label>Segundo servicio m&eacute;dico /  Health Insurance 2:</label><span>' . $medicos->servicio_medico2 . '</span></p>';
 
                             if (!empty($medicos->numero_poliza))
-                                echo'<p><label>Numero de poliza:</label><span>' . $medicos->numero_poliza . '</span></p>';
+                                echo'<p><label>Numero de poliza / Policy Number:</label><span>' . $medicos->numero_poliza . '</span></p>';
 
                             if (!empty($medicos->embarazada))
-                                echo'<p><label>Embarazada:</label><span>' . (($medicos->embarazada == 1) ? 'Si' : 'No' ) . '</span></p>';
+                                echo'<p><label>Embarazada / pregnant:</label><span>' . (($medicos->embarazada == 1) ? 'Si' : 'No' ) . '</span></p>';
 
                             if (!empty($medicos->alergias))
-                                echo'<p><label>Alergias:</label><span>' . $medicos->alergias . '</span></p>';
+                                echo'<p><label>Alergias / Allergies:</label><span>' . $medicos->alergias . '</span></p>';
 
                             if (!empty($medicos->medicamentos))
-                                echo'<p><label>Medicamentos:</label><span>' . $medicos->medicamentos . '</span></p>';
+                                echo'<p><label>Medicamentos / Medicament:</label><span>' . $medicos->medicamentos . '</span></p>';
 
                             if (!empty($medicos->enfermedades))
-                                echo'<p><label>Enfermedades:</label><span>' . $medicos->enfermedades . '</span></p>';
+                                echo'<p><label>Enfermedades / Diseases:</label><span>' . $medicos->enfermedades . '</span></p>';
 
                             if (!empty($medicos->cirugias))
-                                echo'<p><label>Cirug&iacute;as:</label><span>' . $medicos->cirugias . '</span></p>';
+                                echo'<p><label>Cirug&iacute;as / Surgeries:</label><span>' . $medicos->cirugias . '</span></p>';
 
                             if (!empty($medicos->otras_consideraciones))
-                                echo'<p><label>Otras consideraciones:</label><span>' . $medicos->otras_consideraciones . '</span></p>';
+                                echo'<p><label>Otras consideraciones / Other Considerations:</label><span>' . $medicos->otras_consideraciones . '</span></p>';
                             ?>
                             <h3>Discapacidades y/o dispositivos</h3>
                             <?php
                             if (!empty($medicos->d_auditiva))
-                                echo'<p><label>Discapacidad auditiva:</label><span>' . $medicos->d_auditiva . '</span></p>';
+                                echo'<p><label>Discapacidad auditiva / Hearing Impaired:</label><span>' . $medicos->d_auditiva . '</span></p>';
 
                             if (!empty($medicos->d_mental))
-                                echo'<p><label>Discapacidad mental:</label><span>' . $medicos->d_mental . '</span></p>';
+                                echo'<p><label>Discapacidad mental / Mental disability:</label><span>' . $medicos->d_mental . '</span></p>';
 
                             if (!empty($medicos->d_motora))
-                                echo'<p><label>Discapacidad motora:</label><span>' . $medicos->d_motora . '</span></p>';
+                                echo'<p><label>Discapacidad motora / Physical disability:</label><span>' . $medicos->d_motora . '</span></p>';
 
                             if (!empty($medicos->d_visual))
-                                echo'<p><label>Discapacidad visual:</label><span>' . $medicos->d_visual . '</span></p>';
+                                echo'<p><label>Discapacidad visual / visual impairment:</label><span>' . $medicos->d_visual . '</span></p>';
 
                             if (!empty($medicos->marcapasos))
-                                echo'<p><label>Dispositivo de soporte vital marcapasos:</label><span>' . $medicos->marcapasos . '</span></p>';
+                                echo'<p><label>Dispositivo de soporte vital marcapasos / Life support device pacemaker:</label><span>' . $medicos->marcapasos . '</span></p>';
 
                             if (!empty($medicos->lentes_contancto))
-                                echo'<p><label>Lentes de contacto:</label><span>' . $medicos->lentes_contacto . '</span></p>';
+                                echo'<p><label>Lentes de contacto / Contact Lenses:</label><span>' . $medicos->lentes_contacto . '</span></p>';
 
                             if (!empty($medicos->p_dentales))
-                                echo'<p><label>Pr&oacute;tesis dentales:</label><span>' . $medicos->p_dentales . '</span></p>';
+                                echo'<p><label>Pr&oacute;tesis dentales / Dentals prosthesis:</label><span>' . $medicos->p_dentales . '</span></p>';
 
                             if (!empty($medicos->med_natural))
-                                echo'<p><label>Medicamentos de origen natural:</label><span>' . $medicos->med_natural . '</span></p>';
+                                echo'<p><label>Medicamentos de origen natural / Drugs of natural origin:</label><span>' . $medicos->med_natural . '</span></p>';
 
                             if (!empty($medicos->vacunas))
-                                echo "<p><label>Vacunas aplicadas:</label><span>" . $medicos->vacunas . " </span></p>";
+                                echo "<p><label>Vacunas aplicadas / Vaccines Given:</label><span>" . $medicos->vacunas . " </span></p>";
                             ?>
                             <div class="qr">
     <!--                                <form action="<?php //permalink_link()            ?>">
