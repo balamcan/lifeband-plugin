@@ -6,8 +6,9 @@ include_once(ABSPATH . '/wp-includes/wp-db.php');
 global $wpdb;
 
 global $avia_config;
-
-$usuarios = $wpdb->get_results('select u.ID, u.user_login as username, p.pass from wp_users as u RIGHT JOIN wp_pass_qr as p on u.id = p.id_user where id_evento =3', OBJECT);
+$id=$_GET['id'];
+$evento=$wpdb->get_row('select nombre from wp_evento where id = '.  mysql_real_escape_string($id),OBJECT);
+$usuarios = $wpdb->get_results('select u.ID, u.user_login as username, p.pass from wp_users as u RIGHT JOIN wp_pass_qr as p on u.id = p.id_user where id_evento ='.  mysql_real_escape_string($id), OBJECT);
 ?>
 <!doctype html>
 <html lang="en">
@@ -54,6 +55,7 @@ $usuarios = $wpdb->get_results('select u.ID, u.user_login as username, p.pass fr
     </style>
 </head>
 <body>
+    <h1><?php echo $evento->nombre;?></h1>
 <?php 
     foreach ($usuarios as $u) {
         echo'<div class="etiqueta">

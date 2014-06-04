@@ -202,6 +202,7 @@ time(f_termino) as h_termino, lugar, descripcion, activo from wp_evento as e', O
                 <th>Lugar</th>
                 <th>Activo</th>
                 <th>Acciones</th>
+                <th>Imprimir QRs</th>
             </tr>
         </thead>
         <tbody>
@@ -225,6 +226,8 @@ time(f_termino) as h_termino, lugar, descripcion, activo from wp_evento as e', O
                     |
                     <a href="http://lifeband.com.mx/wp-admin/admin.php?page=lifeband-plugin-event-menu&editar_fs= '.$e->id.'&activar_fs= '.(($e->activo=='1')?'0':'1'). '">Activo</a> 
                 </td> 
+                
+                <td><a href="http://lifeband.com.mx/printqr/?id= ' . $e->id . '">QRs</a></td> 
             </tr>';
             }
             ?>
