@@ -257,6 +257,11 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                 background-color: #ccc;
                                 float:right;
                             }
+                            #output{
+                                background-color: #ccc !important;
+                                /*color:#fff !important;*/
+
+                            }
                         </style>
 
                         <div id="respond">
@@ -270,11 +275,17 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                     <label for="foto">Foto: 
                                         <br>
                                         <img alt="Foto" id="archivo" src="<?php echo $fotosrc; ?>">
-                                        <div id="output"></div>
+
+                                        <input type="hidden" name="x_fs" id="x">
+                                        <input type="hidden" name="y_fs" id="y">
+                                        <input type="hidden" name="angulo_fs" id="angulo">
+
                                         <input type="hidden" name="rsu_fs" value="<?php echo $current_user->user_login; ?>">
                                         <input name="archivo" id="imageInput" type="file" />
+                                        <input type="button" id="rotar" value="ROTAR">
                                         <input type="submit"  id="submit-btn" value="Subir" />
                                         <img src="http://lifeband.com.mx/wp-content/themes/enfold/images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Cargando..."/>
+                                        <div id="output"></div>
                                     </label>
                                 </form>
 
@@ -444,21 +455,35 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
     </div><!-- #primary -->
 
     <script type='text/javascript' src='http://lifeband.com.mx/wp-content/themes/enfold/js/jquery.form.min.js'></script>
+    <script type='text/javascript' src='http://lifeband.com.mx/wp-content/themes/enfold/js/jQueryRotate.js'></script>
     <script type="text/javascript">
         var json={};
+        var angulo = 0; 
         $(document).ready(function() { 
             var options = { 
                 target:   json,   // target element(s) to be updated with server response 
                 beforeSubmit:  beforeSubmit,  // pre-submit callback 
                 success:       afterSuccess,  // post-submit callback 
                 resetForm: true        // reset the form after successful submit 
-            }; 
-		
+            };
             $('#MyUploadForm').submit(function() { 
                 $(this).ajaxSubmit(options);  			
                 // always return false to prevent standard browser submit and page navigation 
                 return false; 
             }); 
+             $('#rotar').on('click',function(){
+                console.log('rotar');
+                if(angulo == 360){
+                    angulo=0;
+                }
+                angulo+=90;
+                $('#archivo').rotate(angulo);
+                //$('.jcrop-holder').rotate({animateTo:angulo,easing: $.easing.easeInOutElastic});
+                // $('.jcrop-holder').rotate(angulo);
+                 $('#angulo').val(angulo);
+                // jCropApi.setoptions({rotate : 90});
+
+             });
         }); 
 
         function afterSuccess(data)
@@ -470,6 +495,8 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
             switch(json.status){
                 case "ok":
                     
+                    $('#archivo').rotate(0);
+                    angulo = 0;
                     $('#archivo').attr('src','http://lifeband.com.mx/fotos/'+json.data);
                     $('#foto').val(json.data);
                     $('#output').html('Cargada la foto con exito!');

@@ -8,6 +8,10 @@ if( !isset($_FILES['archivo']) ){
   
 //  echo '<a href="index.html">Subir archivo</a>';
 }else{
+  //agregando rotacion de la imagen
+  //require 'http://lifeband.com.mx/watimage.php';
+  $rotate=-1*($_POST['angulo_fs']);
+
   $nombre = $_FILES['archivo']['name'];
   $nombre_tmp = $_FILES['archivo']['tmp_name'];
   $tipo = $_FILES['archivo']['type'];
@@ -16,6 +20,9 @@ if( !isset($_FILES['archivo']) ){
   $partes_nombre = explode('.', $nombre);
   $extension = end( $partes_nombre );
   $ext_correcta = in_array($extension, $ext_permitidas);
+
+
+    
 
 
   $nombreNuevo=$_POST["rsu_fs"] .".".$extension;
@@ -47,17 +54,34 @@ if( !isset($_FILES['archivo']) ){
       } 
       $obj->data=$nombreNuevo;
       $obj->status='ok';
-
+      $obj->rotate_fs=$rotate;
       
       //copiando a la carpteta destino y con el nombre predefinido
         move_uploaded_file($nombre_tmp,
           $target);
+
+    $img_r = imagecreatefromjpeg($target);
+    // $dst_r = ImageCreateTrueColor( $targ_w, $targ_h );
+    //copia una porción rectangular de una imagen a otra imagen,
+    //interpolando de manera suave los valores de los píxeles por 
+    //lo que, particularmete, al reducir el tamaño de una imagen, 
+    //ésta todavía conserva mucha nitidez. 
+      // $imagen=imagecopyresampled($dst_r,$img_r,0,0,$_POST['x'],$_POST['y'],
+      // $targ_w,$targ_h,$_POST['w'],$_POST['h']);
+    if(!empty($rotate)){
+        $dst_r = imagerotate($img_r, $rotate, 0);
+
+        $obj->dorotateandsave=true;
+        imagejpeg($dst_r, $target);
+          
+    }
+
+
  
         //echo "<br/>Guardado en: " . "archivos/" . $nombre;
     }
   }else{
-      $obj->data=
-     'Archivo inv&aacute;lido';
+      $obj->data='Archivo inv&aacute;lido';
       $obj->status='error';
   }
 }
