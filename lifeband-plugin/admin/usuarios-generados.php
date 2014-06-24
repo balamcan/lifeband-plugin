@@ -16,7 +16,7 @@ $url = urlencode($_SERVER['HTTP_HOST'] . '/qr?code=');
     <div>
         <form 
 </div>
-<div class="wrap">
+<!-- <div class="wrap">
     <h3>Borrar usuarios por evento</h3>
 <div class="row">
     <label for="borrar_usuarios_evento">Selecciona el evento:</label>
@@ -24,7 +24,7 @@ $url = urlencode($_SERVER['HTTP_HOST'] . '/qr?code=');
         <option value="">Ninguno</option>
     </select>
 </div>
-</div>
+</div> -->
 <div class="paginacion">
 
 </div>

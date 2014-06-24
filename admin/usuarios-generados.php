@@ -69,7 +69,7 @@ var_dump($registros);*/
     </div>
     <table>
         <thead>
-            <tr><th>ID<th>Nombre usuario</th><th>Contrase&ntilde;a</th><th>Accesar al QR</th><th>Evento</th></tr>
+            <tr><th>ID<th>Nombre usuario</th><th>Contrase&ntilde;a</th><th>Acceder al QR</th><th>Evento</th></tr>
         </thead>
         <tbody>
 <?php
