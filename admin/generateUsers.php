@@ -133,6 +133,8 @@ class generateUsers {
 
     function deleteUserByEvent($eventId) {
         global $wpdb;
+        $this->backUpUserByEventId($eventId);
+        $this->deleteQRsEventById($eventId);
         $wpdb->query('CALL `deleteUserByEventId` (' . $eventId . ')');
     }
 
@@ -143,10 +145,21 @@ class generateUsers {
 
     function deleteEventById($eventId) {
         global $wpdb;
+        
         $wpdb->query('CALL `deleteEventById` (' . $eventId . ')');
     }
-
-    function BackUpUserByEventId($eventId) {
+    function deleteQRsEventById($eventId){
+        global $wpdb;
+        $usuarios = $wpdb->get_results('select user_login from wp_users as u 
+            RIGHT JOIN wp_pass_qr as p on u.id = p.id_user 
+            LEFT JOIN wp_evento as e on e.id = p.id_evento where id_evento=\''.$eventId.'\'');
+        foreach ($usuarios as $u) {
+            if($u->user_login !== 'NULL'){
+                unlink(ABSPATH.'/qrphp/img/'.$u->user_login.'.png');
+            }
+        }
+    }
+    function backUpUserByEventId($eventId) {
         global $wpdb;
         $usersInEvent = $wpdb->get_results("Select s.ID from wp_users s
         join wp_pass_qr n on s.ID = n.id_user where n.id_evento =" . $eventId, OBJECT);

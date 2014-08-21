@@ -48,22 +48,12 @@ var_dump($total_registros);
 var_dump($registros);*/
 ?>
 <div class="wrap">
-    <h3>Usuarios generados</h3>
+    <h3>QRs de usuarios generados</h3>
     <!--<a href="<?php // echo'http://'.$_SERVER['HTTP_HOST'].'/qrphp/param2.php?'.$a_build.'&'.'url='.$url;  ?>">Generar los QRs de los usuarios</a>-->
     <a href="<?php echo'http://' . $_SERVER['HTTP_HOST'] . '/qrphp/img/index.php'; ?>">Ver los archivos QRs generados</a>
 </div>
 <div class="wrap">
-    <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
-        <h3>Borrar usuarios por evento</h3>
-        <div class="row">
-            <label for="borrar_usuarios_evento">Borrar usuarios vinculados del evento:</label>
-            <select name="borrar_usuarios_evento_fs" id="borrar_usuarios_evento">
-                <option value="">Ninguno</option>
-            </select>
-        </div>
-    </form>
-</div>
-<div class="wrap">
+    <h3>Tabla de usuarios generados</h3>
     <div class="paginacion">
 <?php  echo implode(" | ", $paginacion)?>
     </div>
