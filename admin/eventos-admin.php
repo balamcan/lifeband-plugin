@@ -91,6 +91,10 @@ if (!empty($_POST['f_termino_fs']) || !empty($_POST['h_termino_fs'])) {
 }
 $eventos = $wpdb->get_results('select id, nombre, date(f_inicio) as f_inicio, time(f_inicio) as h_inicio, date(f_termino) as f_termino,
 time(f_termino) as h_termino, lugar, descripcion, activo from wp_evento as e', OBJECT);
+
+$correos = $wpdb->get_results('SELECT c.*, e.nombre as evento FROM wp_correos_evento as c '
+        . 'LEFT JOIN wp_evento as e on c.id_wp_evento = e.id', ARRAY_A);
+
 ?>
 
 <style type="text/css">
@@ -236,5 +240,46 @@ time(f_termino) as h_termino, lugar, descripcion, activo from wp_evento as e', O
     </table>
     <div class="paginacion">
 
+    </div>
+</div>
+<div class="wrap">
+    <div class="paginacion-correos">
+        <?php ?>
+    </div>
+    <h3>
+        Lista de correos de usuarios temporales borrados
+    </h3>
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Paterno</th>
+            <th>Materno</th>
+            <th>F. Nacimiento</th>
+            <th>Corrreo</th>
+            <th>Evento</th>
+        </tr>
+        </thead>
+        <tbody>
+            <?php 
+               foreach ($correos as $row) {
+            echo"<tr>
+                <td>".$row['id']."</td>
+                <td>".$row['nombre']."</td>
+                <td>".$row['ap_paterno']."</td>
+                <td>".$row['ap_materno']."</td>
+                <td>".$row['fecha_nac']."</td>
+                <td>".$row['correo']."</td>
+                <td>".$row['evento']."</td>
+            </tr>";
+            
+            }
+            
+            ?>
+        </tbody>
+    </table>
+    <div class="paginacion-correos">
+        <?php ?>
     </div>
 </div>
