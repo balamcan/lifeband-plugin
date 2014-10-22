@@ -2,18 +2,31 @@
 
 include_once(ABSPATH . '/wp-includes/wp-db.php');
 echo '<link rel="stylesheet" type="text/css" href="style_pe.css" media="screen" />';
-$result = $wpdb->get_results('SELECT * FROM wp_correos_evento', ARRAY_A);
-
+if (!empty($_GET['pagina'])) {
+    $inicio = $_GET['pagina'];
+}
+else{
+	$inicio = 1;
+} 
+$fin = 3;
+$result = $wpdb->get_results('SELECT * FROM wp_correos_eventolimit ' . $inicio . ','.$fin, ARRAY_A);
+$qNumberOfRows = $wpdb->get_results('SELECT Count(*) as number FROM wp_correos_evento', ARRAY_A);
+foreach($qNumberOfRows as $row){
+    $numberOfRows = $row[0];
+}
+$numberOfRows = ceil($numberOfRows / $fin);
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Title of the document</title>
+<title>Correos Plantilla</title>
 </head>
 
 <body>
 <?php
-echo "<table border='1'>
+$paginator = paginator($numberOfRows);
+echo implode(" | ", $paginator);
+echo "<table>
 <tr>
 <th>Nombre(s)</th>
 <th>Apellido Paterno</th>
@@ -33,7 +46,21 @@ foreach($result as $row){
 }
 
 echo "</table>";
+echo implode(" | ", $paginator);
+function paginator($total_paginas,$pagina=1)
+{	
 
+	if ($total_paginas > 1) {
+		for ($i = 1; $i  <= $total_paginas; $i++) {
+			if ($pagina == $i) {
+				$paginacion[]= $pagina . ' ';
+			} else {
+				$paginacion[]= '<a href="http://lifeband.com.mx/wp-admin/admin.php?page=lifeband-plugin-menu&pagina=' . $i . '">' . $i . '</a>';
+			}
+		}
+	}
+	return $paginacion;
+}
 
 
 
