@@ -1,11 +1,6 @@
 <?php  
-$servername = "localhost";
-$username = "root";
-$password = "1122334455";
-$dbname = "wordpress2";
+
 include_once(ABSPATH . '/wp-includes/wp-db.php');
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
 echo '<link rel="stylesheet" type="text/css" href="style_pe.css" media="screen" />';
 $result = $wpdb->get_results('SELECT * FROM wp_correos_evento', ARRAY_A);
 
