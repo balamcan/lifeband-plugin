@@ -14,6 +14,19 @@ $mensaje = '';
             </h2>';
         }
     }
+    function paginator($total_paginas,$pagina=1)
+    {	
+        if ($total_paginas > 1) {
+                for ($i = 1; $i  <= $total_paginas; $i++) {
+                        if ($pagina == $i) {
+                                $paginacion[]= $pagina . ' ';
+                        } else {
+                                $paginacion[]= '<a href="http://lifeband.com.mx/wp-admin/admin.php?page=lifeband-plugin-menu&pagina=' . $i . '">' . $i . '</a>';
+                        }
+                }
+        }
+        return $paginacion;
+    }
 if(!empty($_GET['editar_fs']) ){
 
 
@@ -95,6 +108,21 @@ time(f_termino) as h_termino, lugar, descripcion, activo from wp_evento as e', O
 $correos = $wpdb->get_results('SELECT c.*, e.nombre as evento FROM wp_correos_evento as c '
         . 'LEFT JOIN wp_evento as e on c.id_wp_evento = e.id', ARRAY_A);
 
+
+if (!empty($_GET['pagina'])) {
+    $inicio = $_GET['pagina'];
+}
+else{
+	$inicio = 1;
+} 
+$fin = 3;
+$result = $wpdb->get_results('SELECT c.*, e.nombre as evento FROM wp_correos_evento as c '
+        . 'LEFT JOIN wp_evento as e on c.id_wp_evento = e.id limit ' . $inicio . ','.$fin, ARRAY_A);
+$qNumberOfRows = $wpdb->get_row('SELECT Count(*) as number FROM wp_correos_evento', ARRAY_A);
+
+$numberOfRows = ceil($qNumberOfRows->number / $fin);
+//$numberOfRows = $numberOfRows ;
+$paginator = paginator($numberOfRows);
 ?>
 
 <style type="text/css">
@@ -239,12 +267,14 @@ $correos = $wpdb->get_results('SELECT c.*, e.nombre as evento FROM wp_correos_ev
         </tbody>
     </table>
     <div class="paginacion">
-
     </div>
 </div>
 <div class="wrap">
     <div class="paginacion-correos">
-        <?php ?>
+        <?php 
+        if(!empty($paginator))
+        echo implode(" | ", $paginator);
+        ?>
     </div>
     <h3>
         Lista de correos de usuarios temporales borrados
@@ -280,6 +310,6 @@ $correos = $wpdb->get_results('SELECT c.*, e.nombre as evento FROM wp_correos_ev
         </tbody>
     </table>
     <div class="paginacion-correos">
-        <?php ?>
+        <?php if(!empty($paginator)) echo implode(" | ", $paginator);?>
     </div>
 </div>
