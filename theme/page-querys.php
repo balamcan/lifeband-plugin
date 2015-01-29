@@ -15,9 +15,9 @@ function lifeband_plugin_update() {
     //the others tables
 
     IF ($wpdb->query("DROP PROCEDURE IF EXISTS deleteUserById;
-CREATE PROCEDURE `deleteUserById`(userID BIGINT) BEGIN Delete from wp_usermeta where wp_usermeta.user_id = userID;
-Delete from wp_users where wp_users.ID = userID;
-Delete from wp_pass_qr where id_user = userID;
+CREATE PROCEDURE `deleteUserById`(userID BIGINT) BEGIN Delete from ".$wpdb->prefix ."usermeta where ".$wpdb->prefix ."usermeta.user_id = userID;
+Delete from ".$wpdb->prefix ."users where ".$wpdb->prefix ."users.ID = userID;
+Delete from ".$wpdb->prefix ."pass_qr where id_user = userID;
 END;") === FALSE) {
         wp_die(__('Crap! well that’s screwed up: ' . $wpdb->last_error));
     }

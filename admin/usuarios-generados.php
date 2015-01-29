@@ -23,14 +23,14 @@ if (!empty($_GET['pagina'])) {
     $pagina = $_GET['pagina'];
     $inicio = ($pagina - 1 ) * $registros_pagina;
 }
-$registros = $wpdb->get_row('select count(u.ID) as total from '.$wpdb->prefix.'users as u RIGHT JOIN wp_pass_qr as p on u.id = p.id_user', OBJECT);
+$registros = $wpdb->get_row('select count(u.ID) as total from '.$wpdb->prefix.'users as u RIGHT JOIN '.$wpdb->prefix.'pass_qr as p on u.id = p.id_user', OBJECT);
 #$c_total_registros="select count(*) from %tabla%";
 $total_registros = intval($registros->total);
 $total_paginas = ceil($total_registros / $registros_pagina);
 
-#print_r('select u.ID, u.user_login as username, p.pass from '.$wpdb->prefix.'users as u RIGHT JOIN wp_pass_qr as p on u.id = p.id_user limit ' . $inicio . ',' . $registros_pagina);
+#print_r('select u.ID, u.user_login as username, p.pass from '.$wpdb->prefix.'users as u RIGHT JOIN '.$wpdb->prefix.'pass_qr as p on u.id = p.id_user limit ' . $inicio . ',' . $registros_pagina);
 #$c_consulta= 'select * from %tabla% limit '.$inicio.','.$registros_pagina;
-$usuarios = $wpdb->get_results('select u.ID, u.user_login as username, p.pass, if(e.nombre is null, "N/A",e.nombre) as evento from '.$wpdb->prefix.'users as u RIGHT JOIN wp_pass_qr as p on u.id = p.id_user LEFT JOIN wp_evento as e on e.id = p.id_evento limit ' . $inicio . ',' . $registros_pagina, OBJECT);
+$usuarios = $wpdb->get_results('select u.ID, u.user_login as username, p.pass, if(e.nombre is null, "N/A",e.nombre) as evento from '.$wpdb->prefix.'users as u RIGHT JOIN '.$wpdb->prefix.'pass_qr as p on u.id = p.id_user LEFT JOIN '.$wpdb->prefix.'evento as e on e.id = p.id_evento limit ' . $inicio . ',' . $registros_pagina, OBJECT);
 #$r_consulta=mysql_query(query);
 ####################CODIGO PARA MOSTRAR LA PAGINACION#######
 
@@ -64,7 +64,7 @@ var_dump($registros);*/
         </thead>
         <tbody>
 <?php
-#$usuarios = $wpdb->get_results('select u.ID, u.user_login as username, p.pass from '.$wpdb->prefix.'users as u RIGHT JOIN wp_pass_qr as p on u.id = p.id_user', OBJECT);
+#$usuarios = $wpdb->get_results('select u.ID, u.user_login as username, p.pass from '.$wpdb->prefix.'users as u RIGHT JOIN '.$wpdb->prefix.'pass_qr as p on u.id = p.id_user', OBJECT);
 foreach ($usuarios as $u) {
 //        $qrFactory = new qr();
 //        $qrFactory->crearQrUsuario($u->username);
