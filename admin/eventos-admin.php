@@ -91,6 +91,28 @@ if (!empty($_POST['f_termino_fs']) || !empty($_POST['h_termino_fs'])) {
 }
 $eventos = $wpdb->get_results('select id, nombre, date(f_inicio) as f_inicio, time(f_inicio) as h_inicio, date(f_termino) as f_termino,
 time(f_termino) as h_termino, lugar, descripcion, activo from wp_evento as e', OBJECT);
+<<<<<<< Updated upstream
+=======
+
+$correos = $wpdb->get_results('SELECT c.*, e.nombre as evento FROM wp_correos_evento as c '
+        . 'LEFT JOIN wp_evento as e on c.id_wp_evento = e.id', ARRAY_A);
+
+
+if (!empty($_GET['pagina'])) {
+    $inicio = $_GET['pagina'];
+}
+else{
+	$inicio = 1;
+} 
+$fin = 2;
+$result = $wpdb->get_results('SELECT c.*, e.nombre as evento FROM wp_correos_evento as c '
+        . 'LEFT JOIN wp_evento as e on c.id_wp_evento = e.id limit ' . $inicio . ','.$fin, ARRAY_A);
+$qNumberOfRows = $wpdb->get_row('SELECT Count(*) as number FROM wp_correos_evento', ARRAY_A);
+
+$numberOfRows = ceil($qNumberOfRows->number / $fin);
+//$numberOfRows = $numberOfRows ;
+$paginator = paginator($numberOfRows, $inicio);
+>>>>>>> Stashed changes
 ?>
 
 <style type="text/css">
