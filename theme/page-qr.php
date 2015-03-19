@@ -46,10 +46,10 @@ if (!empty($codigo)) {
 }
 if (!empty($user)) {
 
-    $q_basicos = 'select * from ' . $wpdb->prefix . 'datos_basicos where ' . $wpdb->prefix . 'users_id = ' . $user->ID;
+    $q_basicos = 'select * from ' . $wpdb->prefix . 'datos_basicos where ' . 'wp_users_id = ' . $user->ID;
     $basicos = $wpdb->get_row($q_basicos, OBJECT);
 
-    $q_medicos = 'select * from ' . $wpdb->prefix . 'datos_medicos where ' . $wpdb->prefix . 'users_id = ' . $user->ID;
+    $q_medicos = 'select * from ' . $wpdb->prefix . 'datos_medicos where ' .  'wp_users_id = ' . $user->ID;
     $medicos = $wpdb->get_row($q_medicos, OBJECT);
 
     if (!empty($medicos)) {
@@ -156,7 +156,8 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                             <h3>Datos b&aacute;sicos</h3>
                             <?php
                             if (!empty($basicos->foto))
-                                echo'<p><label>Foto /Picture:</label><span> <img id="archivo" src="' . 'http://lifeband.com.mx/fotos/' . $basicos->foto . '"></span></p>';
+
+                                echo'<p><label>Foto /Picture:</label><span> <img id="archivo" src="' . content_url().'/fotos/' . $basicos->foto . '"></span></p>';
 
                             if (!empty($basicos->ap_paterno))
                                 echo'<p><label>Apellido paterno / Last Name:</label><span>' . $basicos->ap_paterno . '</span></p>';

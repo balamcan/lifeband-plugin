@@ -1,5 +1,5 @@
 <?php
-
+// header('Content-type: application/json');
   $obj=new stdClass();
 if( !isset($_FILES['archivo']) ){
   $obj->data=

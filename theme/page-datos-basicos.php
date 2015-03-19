@@ -19,9 +19,15 @@ function my_contact_form_generate_response($type, $message) {
     global $response;
     $url_redirect = 'http://' . $_SERVER['HTTP_HOST'] . '/datos-medicos/';
     if ($type == "success") {
-        $response = "<div class='success'>{$message}
-        <a href='{$url_redirect}'>Para continuar con tu registro haz click aqui / to continue with your register click here</a>    
-        </div>";
+        if($message == 'sincambios'){
+            $response = "<div class='success'>{$message}
+            <a href='{$url_redirect}'>Para continuar con tu registro haz click aqui / to continue with your register click here</a>
+            </div>";
+        }else{
+            $response = "<div class='success'>{$message}
+            <a href='{$url_redirect}'>Para continuar con tu registro haz click aqui / to continue with your register click here</a>    
+            </div>";
+        }
     }else
         $response = "<div class='error'>{$message}</div>";
 }
@@ -42,6 +48,7 @@ $mensaje = array(
     'fechanac' => 'La fecha de nacimiento es invalida / your birthday is invalid',
     'guardado' => 'Fue guardado con exito / successfully saved',
     'noguardado' => 'No se pudo guardar / It could not be saved ',
+    'sincambios' => "No hubo cambios.",
 );
 
 ////user posted variables
@@ -56,10 +63,11 @@ $mensaje = array(
 //        'Reply-To: ' . $email . "\r\n";
 
 $current_user = wp_get_current_user();
-$q_user = 'select * from ' . $wpdb->prefix . 'datos_basicos where ' . $wpdb->prefix . 'users_id = ' . $current_user->ID;
+$q_user = 'select * from ' . $wpdb->prefix . 'datos_basicos where ' . 'wp_users_id = ' . $current_user->ID;
 $user = $wpdb->get_row($q_user, OBJECT);
 if(isset($user->foto)){
-    $fotosrc='http://lifeband.com.mx/fotos/'.$user->foto;
+    $fotosrc=  content_url().'/fotos/'.$user->foto;
+    // $fotosrc= ABSPATH.'/fotos/'.$user->foto;
 }
 //if (!$human == 0) {
 //    if ($human != 2)
@@ -102,6 +110,7 @@ if (!empty($_POST['submitted'])) {
                         'tel_emergencia2' => mysql_real_escape_string($_POST['tel_emergencia2_fs']),
                         'tel_emergencia3' => mysql_real_escape_string($_POST['tel_emergencia3_fs']),
                         'correo_emergencia' => mysql_real_escape_string($_POST['correo_emergencia_fs']),
+                        'numero_celular' => mysql_real_escape_string($_POST['numero_celular_fs']),
                         'nom_medico' => mysql_real_escape_string($_POST['nom_medico_fs']),
                         'tel_medico' => mysql_real_escape_string($_POST['tel_medico_fs']),
                         'nom_medico2' => mysql_real_escape_string($_POST['nom_medico2_fs']),
@@ -121,35 +130,38 @@ if (!empty($_POST['submitted'])) {
                 my_contact_form_generate_response("success", $mensaje['guardado']);
             }
         } else {
+
             if ($wpdb->update(
                             $wpdb->prefix . 'datos_basicos', array(
-                        'wp_users_id' => mysql_real_escape_string($current_user->ID),
-                        'nombre' => mysql_real_escape_string($_POST['nombre_fs']),
-                        'ap_paterno' => mysql_real_escape_string($_POST['ap_paterno_fs']),
-                        'ap_materno' => mysql_real_escape_string($_POST['ap_materno_fs']),
-                        'encargado_emergencia' => mysql_real_escape_string($_POST['nom_emergencia_fs']),
-                        'tel_emergencia' => mysql_real_escape_string($_POST['tel_emergencia_fs']),
-                        'encargado_emergencia2' => mysql_real_escape_string($_POST['nom_emergencia2_fs']),
-                        'tel_emergencia2' => mysql_real_escape_string($_POST['tel_emergencia2_fs']),
-                        'encargado_emergencia3' => mysql_real_escape_string($_POST['nom_emergencia3_fs']),
-                        'tel_emergencia3' => mysql_real_escape_string($_POST['tel_emergencia3_fs']),
-                        'correo_emergencia' => mysql_real_escape_string($_POST['correo_emergencia_fs']),
-                        'celular' => mysql_real_escape_string($_POST['numero_celular_fs']),
-                        'nom_medico' => mysql_real_escape_string($_POST['nom_medico_fs']),
-                        'tel_medico' => mysql_real_escape_string($_POST['tel_medico_fs']),
-                        'nom_medico2' => mysql_real_escape_string($_POST['nom_medico2_fs']),
-                        'tel_medico2' => mysql_real_escape_string($_POST['tel_medico2_fs']),
-                        'nom_medico3' => mysql_real_escape_string($_POST['nom_medico3_fs']),
-                        'tel_medico3' => mysql_real_escape_string($_POST['tel_medico3_fs']),
-                        'no_pasaporte' => mysql_real_escape_string($_POST['pasaporte_fs']),
-                        'fecha_nac' => $fecha,
-                        'peso' => mysql_real_escape_string($_POST['peso_fs']),
-                        'estatura' => mysql_real_escape_string($_POST['estatura_fs']),
-                        'sexo' => mysql_real_escape_string($_POST['sexo_fs']),
+                        'wp_users_id' => mysql_real_escape_string($current_user->ID),   
+                        'nombre' => mysql_real_escape_string($_POST['nombre_fs']),  
+                        'ap_paterno' => mysql_real_escape_string($_POST['ap_paterno_fs']),  
+                        'ap_materno' => mysql_real_escape_string($_POST['ap_materno_fs']),  
+                        'encargado_emergencia' => mysql_real_escape_string($_POST['nom_emergencia_fs']),    
+                        'tel_emergencia' => mysql_real_escape_string($_POST['tel_emergencia_fs']),  
+                        'encargado_emergencia2' => mysql_real_escape_string($_POST['nom_emergencia2_fs']),  
+                        'tel_emergencia2' => mysql_real_escape_string($_POST['tel_emergencia2_fs']),    
+                        'encargado_emergencia3' => mysql_real_escape_string($_POST['nom_emergencia3_fs']),  
+                        'tel_emergencia3' => mysql_real_escape_string($_POST['tel_emergencia3_fs']),    
+                        'correo_emergencia' => mysql_real_escape_string($_POST['correo_emergencia_fs']),    
+                        'numero_celular' => mysql_real_escape_string($_POST['numero_celular_fs']), 
+                        'nom_medico' => mysql_real_escape_string($_POST['nom_medico_fs']),  
+                        'tel_medico' => mysql_real_escape_string($_POST['tel_medico_fs']),  
+                        'nom_medico2' => mysql_real_escape_string($_POST['nom_medico2_fs']),    
+                        'tel_medico2' => mysql_real_escape_string($_POST['tel_medico2_fs']),    
+                        'nom_medico3' => mysql_real_escape_string($_POST['nom_medico3_fs']),    
+                        'tel_medico3' => mysql_real_escape_string($_POST['tel_medico3_fs']),    
+                        'no_pasaporte' => mysql_real_escape_string($_POST['pasaporte_fs']), 
+                        'fecha_nac' => $fecha,  
+                        'peso' => mysql_real_escape_string($_POST['peso_fs']),  
+                        'estatura' => mysql_real_escape_string($_POST['estatura_fs']),  
+                        'sexo' => mysql_real_escape_string($_POST['sexo_fs']),  
                         'foto' => mysql_real_escape_string($_POST['foto_fs'])
                             ), array('wp_users_id' => mysql_real_escape_string($current_user->ID))
-                    ) == FALSE)
-                my_contact_form_generate_response("error", $mensaje['noguardado']);
+                    ) == FALSE){
+                // exit( var_dump( $wpdb->last_query ) );
+                my_contact_form_generate_response("success", $mensaje['sincambios']);
+            }
             else
                 my_contact_form_generate_response("success", $mensaje['guardado']);
         }
@@ -218,10 +230,9 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                     <header class="entry-header">
                         <h1 class="entry-title"><?php the_title(); ?></h1>
                     </header>
-
+        
                     <div class="entry-content">
                         <?php the_content(); ?>
-
                         <style type="text/css">
                             .error{
                                 padding: 5px 9px;
@@ -271,7 +282,7 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                 ?>
                                 <p>
                                     <span class="label label-default">Tipo de imagen permitida: Jpeg, Jpg, Png y Gif. | Tama&ntilde;o maximo 0.5 MB</span>
-                                <form action="http://lifeband.com.mx/subir.php" method="post" enctype="multipart/form-data" id="MyUploadForm">
+                                <form action="<?php echo  content_url(); ?>/subir.php" method="post" enctype="multipart/form-data" id="MyUploadForm">
                                     <label for="foto">Foto: 
                                         <br>
                                         <img alt="Foto" id="archivo" src="<?php echo $fotosrc; ?>">
@@ -284,7 +295,7 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                                         <input name="archivo" id="imageInput" type="file" />
                                         <input type="button" id="rotar" value="ROTAR">
                                         <input type="submit"  id="submit-btn" value="Subir" />
-                                        <img src="http://lifeband.com.mx/wp-content/themes/enfold/images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Cargando..."/>
+                                        <!-- <img src="http://www.lifeband.com.mx/wp-content/themes/enfold/images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Cargando..."/> -->
                                         <div id="output"></div>
                                     </label>
                                 </form>
@@ -293,6 +304,7 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
 
                                 <form name="inputForm"action="<?php the_permalink(); ?>" method="post">
                                     <!--<h3>Datos basicos</h3>-->
+                                    <!-- <?php  ?> -->
                                     <input type="hidden" id="foto" name="foto_fs" value="<?php echo esc_attr($_POST['foto_fs']); ?>">
                                     <p><label for="nombre">Nombre / Name: <span>*</span>
                                             <br>
@@ -454,8 +466,9 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
         ?>
     </div><!-- #primary -->
 
-    <script type='text/javascript' src='http://lifeband.com.mx/wp-content/themes/enfold/js/jquery.form.min.js'></script>
-    <script type='text/javascript' src='http://lifeband.com.mx/wp-content/themes/enfold/js/jQueryRotate.js'></script>
+    <script type='text/javascript' src='http://www.lifeband.com.mx/wp-content/plugins/lifeband-plugin/js/jquery-1.10.2.js'></script>
+    <script type='text/javascript' src='http://www.lifeband.com.mx/wp-content/plugins/lifeband-plugin/js/jquery.form.js'></script>
+    <script type='text/javascript' src='http://www.lifeband.com.mx/wp-content/plugins/lifeband-plugin/js/jQueryRotate.js'></script>
     <script type="text/javascript">
         var json={};
         var angulo = 0; 
@@ -497,7 +510,8 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                     
                     $('#archivo').rotate(0);
                     angulo = 0;
-                    $('#archivo').attr('src','http://lifeband.com.mx/fotos/'+json.data);
+                    $('#archivo').attr('src','<?php echo content_url();?>/fotos/'+json.data);
+                    // $('#archivo').attr('src','http://www.lifeband.com.mx/fotos/'+json.data);
                     $('#foto').val(json.data);
                     $('#output').html('Cargada la foto con exito!');
                     //html('<img alt="Foto" src="'+json.data+'">');
@@ -565,5 +579,5 @@ if (get_post_meta(get_the_ID(), 'header', true) != 'no')
                     }
 
     </script>
-     <script type="text/javascript" src="http://lifeband.com.mx/wp-content/themes/enfold/js/Converter.js"></script>
+     <script type="text/javascript" src="http://www.lifeband.com.mx/wp-content/plugins/lifeband-plugin/js/Converter.js"></script>
     <?php get_footer(); ?>
