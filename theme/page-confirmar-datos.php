@@ -3,7 +3,6 @@
  * Template Name: Datos basicos
  */
 global $avia_config;
-
 $current_user = wp_get_current_user();
 $human_user = get_user_meta($current_user->ID, 'wp_human_user');
 

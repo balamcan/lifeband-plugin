@@ -63,6 +63,9 @@ $mensaje = array(
 //        'Reply-To: ' . $email . "\r\n";
 
 $current_user = wp_get_current_user();
+
+        
+
 $q_user = 'select * from ' . $wpdb->prefix . 'datos_basicos where ' . 'wp_users_id = ' . $current_user->ID;
 $user = $wpdb->get_row($q_user, OBJECT);
 if(isset($user->foto)){
@@ -206,6 +209,21 @@ if (!empty($user) && empty($_POST)) {
     $_POST['mes_fs'] = $fecha_c[1];
     $_POST['anio_fs'] = $fecha_c[0];
 }
+
+global $current_user;
+    get_currentuserinfo();
+    
+    print_r($current_user->user_level);
+
+
+$email_user = $current_user->user_email;
+echo $email_user;
+
+
+if (strpos($email_user, 'lifeband') !== false)
+        echo 'funka';
+    else
+        echo 'NEL COMPA';
 ?>
 
 <?php

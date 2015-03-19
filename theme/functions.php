@@ -13,7 +13,8 @@ global $avia_config;
  * This is only recommended for advanced users
  */
 
-if(isset($avia_config['use_child_theme_functions_only'])) return;
+if (isset($avia_config['use_child_theme_functions_only']))
+    return;
 
 /*
  * create a global var which stores the ids of all posts which are displayed on the current page. It will help us to filter duplicate posts
@@ -38,19 +39,19 @@ require_once( 'config-wpml/config.php' );
 
 
 $avia_config['color_sets'] = array(
-    'header_color'      => 'Logo Area',
-    'main_color'        => 'Main Content',
-    'alternate_color'   => 'Alternate Content',
-    'footer_color'      => 'Footer',
-    'socket_color'      => 'Socket'
- );
- 
- 
+    'header_color' => 'Logo Area',
+    'main_color' => 'Main Content',
+    'alternate_color' => 'Alternate Content',
+    'footer_color' => 'Footer',
+    'socket_color' => 'Socket'
+);
+
+
 
 /*
  * add support for responsive mega menus
  */
- 
+
 add_theme_support('avia_mega_menu');
 
 
@@ -59,26 +60,22 @@ add_theme_support('avia_mega_menu');
 /*
  * deactivates the default mega menu and allows us to pass individual menu walkers when calling a menu
  */
- 
+
 add_filter('avia_mega_menu_walker', '__return_false');
 
 
 /*
  * adds support for the new avia sidebar manager
  */
- 
+
 add_theme_support('avia_sidebar_manager');
 
 /*
  * Filters for post formats etc
  */
 //add_theme_support('avia_queryfilter');
-
-
-
 ##################################################################
 # AVIA FRAMEWORK by Kriesi
-
 # this include calls a file that automatically includes all
 # the files within the folder framework and therefore makes
 # all functions and classes available for later use
@@ -96,36 +93,36 @@ require_once( 'framework/avia_framework.php' );
  * or use the thumbnail regeneration plugin: http://wordpress.org/extend/plugins/regenerate-thumbnails/
  */
 
-$avia_config['imgSize']['widget'] 			 	= array('width'=>36,  'height'=>36);						// small preview pics eg sidebar news
-$avia_config['imgSize']['square'] 		 	    = array('width'=>180, 'height'=>180);		                 // small image for blogs
-$avia_config['imgSize']['featured'] 		 	= array('width'=>1500, 'height'=>430 );						// images for fullsize pages and fullsize slider
-$avia_config['imgSize']['featured_large'] 		= array('width'=>1500, 'height'=>630 );						// images for fullsize pages and fullsize slider
-$avia_config['imgSize']['extra_large'] 		 	= array('width'=>1500, 'height'=>1500 , 'crop' => false);	// images for fullscrren slider
-$avia_config['imgSize']['portfolio'] 		 	= array('width'=>495, 'height'=>400 );						// images for portfolio entries (2,3 column)
-$avia_config['imgSize']['portfolio_small'] 		= array('width'=>260, 'height'=>185 );						// images for portfolio 4 columns
-$avia_config['imgSize']['gallery'] 		 		= array('width'=>845, 'height'=>684 );						// images for portfolio entries (2,3 column)
-$avia_config['imgSize']['magazine'] 		 	= array('width'=>710, 'height'=>375 );						// images for magazines
-$avia_config['imgSize']['masonry'] 		 		= array('width'=>705, 'height'=>705 , 'crop' => false);		// images for fullscreen masonry
-$avia_config['imgSize']['entry_with_sidebar'] 	= array('width'=>845, 'height'=>321);		            	// big images for blog and page entries
-$avia_config['imgSize']['entry_without_sidebar']= array('width'=>1210, 'height'=>423 );						// images for fullsize pages and fullsize slider
+$avia_config['imgSize']['widget'] = array('width' => 36, 'height' => 36);      // small preview pics eg sidebar news
+$avia_config['imgSize']['square'] = array('width' => 180, 'height' => 180);                   // small image for blogs
+$avia_config['imgSize']['featured'] = array('width' => 1500, 'height' => 430);      // images for fullsize pages and fullsize slider
+$avia_config['imgSize']['featured_large'] = array('width' => 1500, 'height' => 630);      // images for fullsize pages and fullsize slider
+$avia_config['imgSize']['extra_large'] = array('width' => 1500, 'height' => 1500, 'crop' => false); // images for fullscrren slider
+$avia_config['imgSize']['portfolio'] = array('width' => 495, 'height' => 400);      // images for portfolio entries (2,3 column)
+$avia_config['imgSize']['portfolio_small'] = array('width' => 260, 'height' => 185);      // images for portfolio 4 columns
+$avia_config['imgSize']['gallery'] = array('width' => 845, 'height' => 684);      // images for portfolio entries (2,3 column)
+$avia_config['imgSize']['magazine'] = array('width' => 710, 'height' => 375);      // images for magazines
+$avia_config['imgSize']['masonry'] = array('width' => 705, 'height' => 705, 'crop' => false);  // images for fullscreen masonry
+$avia_config['imgSize']['entry_with_sidebar'] = array('width' => 845, 'height' => 321);               // big images for blog and page entries
+$avia_config['imgSize']['entry_without_sidebar'] = array('width' => 1210, 'height' => 423);      // images for fullsize pages and fullsize slider
 
 
 
 $avia_config['selectableImgSize'] = array(
-	'square' 				=> __('Square','avia_framework'),
-	'featured'  			=> __('Featured Thin','avia_framework'),
-	'featured_large'  		=> __('Featured Large','avia_framework'),
-	'portfolio' 			=> __('Portfolio','avia_framework'),
-	'gallery' 				=> __('Gallery','avia_framework'),
-	'entry_with_sidebar' 	=> __('Entry with Sidebar','avia_framework'),
-	'entry_without_sidebar'	=> __('Entry without Sidebar','avia_framework'),
-	'extra_large' 			=> __('Fullscreen Sections/Sliders','avia_framework'),
-	
+    'square' => __('Square', 'avia_framework'),
+    'featured' => __('Featured Thin', 'avia_framework'),
+    'featured_large' => __('Featured Large', 'avia_framework'),
+    'portfolio' => __('Portfolio', 'avia_framework'),
+    'gallery' => __('Gallery', 'avia_framework'),
+    'entry_with_sidebar' => __('Entry with Sidebar', 'avia_framework'),
+    'entry_without_sidebar' => __('Entry without Sidebar', 'avia_framework'),
+    'extra_large' => __('Fullscreen Sections/Sliders', 'avia_framework'),
 );
 
 avia_backend_add_thumbnail_size($avia_config);
 
-if ( ! isset( $content_width ) ) $content_width = $avia_config['imgSize']['featured']['width'];
+if (!isset($content_width))
+    $content_width = $avia_config['imgSize']['featured']['width'];
 
 
 
@@ -135,9 +132,9 @@ if ( ! isset( $content_width ) ) $content_width = $avia_config['imgSize']['featu
  *
  */
 
-$avia_config['layout']['fullsize'] 		= array('content' => 'av-content-full alpha', 'sidebar' => 'hidden', 	  	  'meta' => '','entry' => '');
-$avia_config['layout']['sidebar_left'] 	= array('content' => 'av-content-small', 	  'sidebar' => 'alpha' ,'meta' => 'alpha', 'entry' => '');
-$avia_config['layout']['sidebar_right'] = array('content' => 'av-content-small alpha','sidebar' => 'alpha', 'meta' => 'alpha', 'entry' => 'alpha');
+$avia_config['layout']['fullsize'] = array('content' => 'av-content-full alpha', 'sidebar' => 'hidden', 'meta' => '', 'entry' => '');
+$avia_config['layout']['sidebar_left'] = array('content' => 'av-content-small', 'sidebar' => 'alpha', 'meta' => 'alpha', 'entry' => '');
+$avia_config['layout']['sidebar_right'] = array('content' => 'av-content-small alpha', 'sidebar' => 'alpha', 'meta' => 'alpha', 'entry' => 'alpha');
 
 
 
@@ -147,90 +144,81 @@ $avia_config['layout']['sidebar_right'] = array('content' => 'av-content-small a
  * These are some of the font icons used in the theme, defined by the entypo icon font. the font files are included by the new aviaBuilder
  * common icons are stored here for easy retrieval
  */
- 
- $avia_config['font_icons'] = apply_filters('avf_default_icons', array(
- 
+
+$avia_config['font_icons'] = apply_filters('avf_default_icons', array(
     //post formats +  types
-    'standard' 		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue836'),
-    'link'    		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue822'),
-    'image'    		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue80f'),
-    'audio'    		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue801'),
-    'quote'   		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue833'),
-    'gallery'   	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue80e'),
-    'video'   		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue80d'),
-    'portfolio'   	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue849'),
-    'product'   	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue859'),
-    				
+    'standard' => array('font' => 'entypo-fontello', 'icon' => 'ue836'),
+    'link' => array('font' => 'entypo-fontello', 'icon' => 'ue822'),
+    'image' => array('font' => 'entypo-fontello', 'icon' => 'ue80f'),
+    'audio' => array('font' => 'entypo-fontello', 'icon' => 'ue801'),
+    'quote' => array('font' => 'entypo-fontello', 'icon' => 'ue833'),
+    'gallery' => array('font' => 'entypo-fontello', 'icon' => 'ue80e'),
+    'video' => array('font' => 'entypo-fontello', 'icon' => 'ue80d'),
+    'portfolio' => array('font' => 'entypo-fontello', 'icon' => 'ue849'),
+    'product' => array('font' => 'entypo-fontello', 'icon' => 'ue859'),
     //social		
-    'behance' 		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue915'),
-	'dribbble' 		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue8fe'),
-	'facebook' 		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue8f3'),
-	'flickr' 		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue8ed'),
-	'gplus' 		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue8f6'),
-	'linkedin' 		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue8fc'),
-	'instagram' 	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue909'),
-	'pinterest' 	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue8f8'),
-	'skype' 		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue90d'),
-	'tumblr' 		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue8fa'),
-	'twitter' 		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue8f1'),
-	'vimeo' 		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue8ef'),
-	'rss' 			=> array( 'font' =>'entypo-fontello', 'icon' => 'ue853'),  
-	'youtube'		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue921'),  
-	'xing'			=> array( 'font' =>'entypo-fontello', 'icon' => 'ue923'),  
-	'soundcloud'	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue913'),  
-	'five_100_px'	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue91d'),  
-	'vk'			=> array( 'font' =>'entypo-fontello', 'icon' => 'ue926'),  
-	'reddit'		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue927'),  
-	'digg'			=> array( 'font' =>'entypo-fontello', 'icon' => 'ue928'),  
-	'delicious'		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue929'),  
-	'mail' 			=> array( 'font' =>'entypo-fontello', 'icon' => 'ue805'),
-					
-	//woocomemrce    
-	'cart' 			=> array( 'font' =>'entypo-fontello', 'icon' => 'ue859'),
-	'details'		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue84b'),
-
-	//bbpress    
-	'supersticky'	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue808'),
-	'sticky'		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue809'),
-	'one_voice'		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue83b'),
-	'multi_voice'	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue83c'),
-	'closed'		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue824'),
-	'sticky_closed' => array( 'font' =>'entypo-fontello', 'icon' => 'ue808\ue824'),
-	'supersticky_closed' => array( 'font' =>'entypo-fontello', 'icon' => 'ue809\ue824'),
-					
-	//navigation, slider & controls
-	'play' 			=> array( 'font' =>'entypo-fontello', 'icon' => 'ue897'),
-	'pause'			=> array( 'font' =>'entypo-fontello', 'icon' => 'ue899'),
-	'next'    		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue879'),
-    'prev'    		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue878'),
-    'next_big'  	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue87d'),
-    'prev_big'  	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue87c'),
-	'close'			=> array( 'font' =>'entypo-fontello', 'icon' => 'ue814'),
-	'reload'		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue891'),
-	'mobile_menu'	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue8a5'),
-					
-	//image hover overlays		
-    'ov_external'	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue832'),
-    'ov_image'		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue869'),
-    'ov_video'		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue897'),
-    
-					
-	//misc			
-    'search'  		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue803'),
-    'info'    		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue81e'),
-	'clipboard' 	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue8d1'),
-	'scrolltop' 	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue876'),
-	'scrolldown' 	=> array( 'font' =>'entypo-fontello', 'icon' => 'ue877'),
-	'bitcoin' 		=> array( 'font' =>'entypo-fontello', 'icon' => 'ue92a'),
-
-));
+    'behance' => array('font' => 'entypo-fontello', 'icon' => 'ue915'),
+    'dribbble' => array('font' => 'entypo-fontello', 'icon' => 'ue8fe'),
+    'facebook' => array('font' => 'entypo-fontello', 'icon' => 'ue8f3'),
+    'flickr' => array('font' => 'entypo-fontello', 'icon' => 'ue8ed'),
+    'gplus' => array('font' => 'entypo-fontello', 'icon' => 'ue8f6'),
+    'linkedin' => array('font' => 'entypo-fontello', 'icon' => 'ue8fc'),
+    'instagram' => array('font' => 'entypo-fontello', 'icon' => 'ue909'),
+    'pinterest' => array('font' => 'entypo-fontello', 'icon' => 'ue8f8'),
+    'skype' => array('font' => 'entypo-fontello', 'icon' => 'ue90d'),
+    'tumblr' => array('font' => 'entypo-fontello', 'icon' => 'ue8fa'),
+    'twitter' => array('font' => 'entypo-fontello', 'icon' => 'ue8f1'),
+    'vimeo' => array('font' => 'entypo-fontello', 'icon' => 'ue8ef'),
+    'rss' => array('font' => 'entypo-fontello', 'icon' => 'ue853'),
+    'youtube' => array('font' => 'entypo-fontello', 'icon' => 'ue921'),
+    'xing' => array('font' => 'entypo-fontello', 'icon' => 'ue923'),
+    'soundcloud' => array('font' => 'entypo-fontello', 'icon' => 'ue913'),
+    'five_100_px' => array('font' => 'entypo-fontello', 'icon' => 'ue91d'),
+    'vk' => array('font' => 'entypo-fontello', 'icon' => 'ue926'),
+    'reddit' => array('font' => 'entypo-fontello', 'icon' => 'ue927'),
+    'digg' => array('font' => 'entypo-fontello', 'icon' => 'ue928'),
+    'delicious' => array('font' => 'entypo-fontello', 'icon' => 'ue929'),
+    'mail' => array('font' => 'entypo-fontello', 'icon' => 'ue805'),
+    //woocomemrce    
+    'cart' => array('font' => 'entypo-fontello', 'icon' => 'ue859'),
+    'details' => array('font' => 'entypo-fontello', 'icon' => 'ue84b'),
+    //bbpress    
+    'supersticky' => array('font' => 'entypo-fontello', 'icon' => 'ue808'),
+    'sticky' => array('font' => 'entypo-fontello', 'icon' => 'ue809'),
+    'one_voice' => array('font' => 'entypo-fontello', 'icon' => 'ue83b'),
+    'multi_voice' => array('font' => 'entypo-fontello', 'icon' => 'ue83c'),
+    'closed' => array('font' => 'entypo-fontello', 'icon' => 'ue824'),
+    'sticky_closed' => array('font' => 'entypo-fontello', 'icon' => 'ue808\ue824'),
+    'supersticky_closed' => array('font' => 'entypo-fontello', 'icon' => 'ue809\ue824'),
+    //navigation, slider & controls
+    'play' => array('font' => 'entypo-fontello', 'icon' => 'ue897'),
+    'pause' => array('font' => 'entypo-fontello', 'icon' => 'ue899'),
+    'next' => array('font' => 'entypo-fontello', 'icon' => 'ue879'),
+    'prev' => array('font' => 'entypo-fontello', 'icon' => 'ue878'),
+    'next_big' => array('font' => 'entypo-fontello', 'icon' => 'ue87d'),
+    'prev_big' => array('font' => 'entypo-fontello', 'icon' => 'ue87c'),
+    'close' => array('font' => 'entypo-fontello', 'icon' => 'ue814'),
+    'reload' => array('font' => 'entypo-fontello', 'icon' => 'ue891'),
+    'mobile_menu' => array('font' => 'entypo-fontello', 'icon' => 'ue8a5'),
+    //image hover overlays		
+    'ov_external' => array('font' => 'entypo-fontello', 'icon' => 'ue832'),
+    'ov_image' => array('font' => 'entypo-fontello', 'icon' => 'ue869'),
+    'ov_video' => array('font' => 'entypo-fontello', 'icon' => 'ue897'),
+    //misc			
+    'search' => array('font' => 'entypo-fontello', 'icon' => 'ue803'),
+    'info' => array('font' => 'entypo-fontello', 'icon' => 'ue81e'),
+    'clipboard' => array('font' => 'entypo-fontello', 'icon' => 'ue8d1'),
+    'scrolltop' => array('font' => 'entypo-fontello', 'icon' => 'ue876'),
+    'scrolldown' => array('font' => 'entypo-fontello', 'icon' => 'ue877'),
+    'bitcoin' => array('font' => 'entypo-fontello', 'icon' => 'ue92a'),
+        ));
 
 
 
 
 
 
-add_theme_support( 'automatic-feed-links' );
+add_theme_support('automatic-feed-links');
 
 ##################################################################
 # Frontend Stuff necessary for the theme:
@@ -238,102 +226,101 @@ add_theme_support( 'automatic-feed-links' );
 /*
  * Register theme text domain
  */
-if(!function_exists('avia_lang_setup'))
-{
-	add_action('after_setup_theme', 'avia_lang_setup');
-	function avia_lang_setup()
-	{
-		$lang = apply_filters('ava_theme_textdomain_path', get_template_directory()  . '/lang');
-		load_theme_textdomain('avia_framework', $lang);
-	}
+if (!function_exists('avia_lang_setup')) {
+    add_action('after_setup_theme', 'avia_lang_setup');
+
+    function avia_lang_setup() {
+        $lang = apply_filters('ava_theme_textdomain_path', get_template_directory() . '/lang');
+        load_theme_textdomain('avia_framework', $lang);
+    }
+
 }
 
 
 /*
  * Register frontend javascripts:
  */
-if(!function_exists('avia_register_frontend_scripts'))
-{
-	if(!is_admin()){
-		add_action('wp_enqueue_scripts', 'avia_register_frontend_scripts');
-	}
+if (!function_exists('avia_register_frontend_scripts')) {
+    if (!is_admin()) {
+        add_action('wp_enqueue_scripts', 'avia_register_frontend_scripts');
+    }
 
-	function avia_register_frontend_scripts()
-	{
-		$template_url = get_template_directory_uri();
-		$child_theme_url = get_stylesheet_directory_uri();
+    function avia_register_frontend_scripts() {
+        $template_url = get_template_directory_uri();
+        $child_theme_url = get_stylesheet_directory_uri();
 
-		//register js
-		wp_enqueue_script( 'avia-compat', $template_url.'/js/avia-compat.js', array('jquery'), 2, false ); //needs to be loaded at the top to prevent bugs
-		wp_enqueue_script( 'avia-default', $template_url.'/js/avia.js', array('jquery'), 3, true );
-		wp_enqueue_script( 'avia-shortcodes', $template_url.'/js/shortcodes.js', array('jquery'), 3, true );
-		wp_enqueue_script( 'avia-popup',  $template_url.'/js/aviapopup/jquery.magnific-popup.min.js', array('jquery'), 2, true);
+        //register js
+        wp_enqueue_script('avia-compat', $template_url . '/js/avia-compat.js', array('jquery'), 2, false); //needs to be loaded at the top to prevent bugs
+        wp_enqueue_script('avia-default', $template_url . '/js/avia.js', array('jquery'), 3, true);
+        wp_enqueue_script('avia-shortcodes', $template_url . '/js/shortcodes.js', array('jquery'), 3, true);
+        wp_enqueue_script('avia-popup', $template_url . '/js/aviapopup/jquery.magnific-popup.min.js', array('jquery'), 2, true);
 
-		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'wp-mediaelement' );
+        wp_enqueue_script('jquery');
+        wp_enqueue_script('wp-mediaelement');
 
 
-		if ( is_singular() && get_option( 'thread_comments' ) ) { wp_enqueue_script( 'comment-reply' ); }
-
-
-		//register styles
-		wp_register_style( 'avia-style' ,  $child_theme_url."/style.css", array(), 		'2', 'all' ); //register default style.css file. only include in childthemes. has no purpose in main theme
-		wp_register_style( 'avia-custom',  $template_url."/css/custom.css", array(), 	'2', 'all' );
-																						 
-		wp_enqueue_style( 'avia-grid' ,   $template_url."/css/grid.css", array(), 		'2', 'all' );
-		wp_enqueue_style( 'avia-base' ,   $template_url."/css/base.css", array(), 		'2', 'all' );
-		wp_enqueue_style( 'avia-layout',  $template_url."/css/layout.css", array(), 	'2', 'all' );
-		wp_enqueue_style( 'avia-scs',     $template_url."/css/shortcodes.css", array(), '2', 'all' );
-		wp_enqueue_style( 'avia-popup-css', $template_url."/js/aviapopup/magnific-popup.css", array(), '1', 'screen' );
-		wp_enqueue_style( 'avia-media'  , $template_url."/js/mediaelement/skin-1/mediaelementplayer.css", array(), '1', 'screen' );
-		wp_enqueue_style( 'avia-print' ,  $template_url."/css/print.css", array(), '1', 'print' );
-		
-		
-		if ( is_rtl() ) {
-			wp_enqueue_style(  'avia-rtl',  $template_url."/css/rtl.css", array(), '1', 'all' );
-		}
-		
-
-        global $avia;
-		$safe_name = avia_backend_safe_string($avia->base_data['prefix']);
-
-        if( get_option('avia_stylesheet_exists'.$safe_name) == 'true' )
-        {
-            $avia_upload_dir = wp_upload_dir();
-            if(is_ssl()) $avia_upload_dir['baseurl'] = str_replace("http://", "https://", $avia_upload_dir['baseurl']);
-
-            $avia_dyn_stylesheet_url = $avia_upload_dir['baseurl'] . '/dynamic_avia/'.$safe_name.'.css';
-			$version_number = get_option('avia_stylesheet_dynamic_version'.$safe_name);
-			if(empty($version_number)) $version_number = '1';
-            
-            wp_enqueue_style( 'avia-dynamic', $avia_dyn_stylesheet_url, array(), $version_number, 'all' );
+        if (is_singular() && get_option('thread_comments')) {
+            wp_enqueue_script('comment-reply');
         }
 
-		wp_enqueue_style( 'avia-custom');
+
+        //register styles
+        wp_register_style('avia-style', $child_theme_url . "/style.css", array(), '2', 'all'); //register default style.css file. only include in childthemes. has no purpose in main theme
+        wp_register_style('avia-custom', $template_url . "/css/custom.css", array(), '2', 'all');
+
+        wp_enqueue_style('avia-grid', $template_url . "/css/grid.css", array(), '2', 'all');
+        wp_enqueue_style('avia-base', $template_url . "/css/base.css", array(), '2', 'all');
+        wp_enqueue_style('avia-layout', $template_url . "/css/layout.css", array(), '2', 'all');
+        wp_enqueue_style('avia-scs', $template_url . "/css/shortcodes.css", array(), '2', 'all');
+        wp_enqueue_style('avia-popup-css', $template_url . "/js/aviapopup/magnific-popup.css", array(), '1', 'screen');
+        wp_enqueue_style('avia-media', $template_url . "/js/mediaelement/skin-1/mediaelementplayer.css", array(), '1', 'screen');
+        wp_enqueue_style('avia-print', $template_url . "/css/print.css", array(), '1', 'print');
 
 
-		if($child_theme_url !=  $template_url)
-		{
-			wp_enqueue_style( 'avia-style');
-		}
+        if (is_rtl()) {
+            wp_enqueue_style('avia-rtl', $template_url . "/css/rtl.css", array(), '1', 'all');
+        }
 
-	}
+
+        global $avia;
+        $safe_name = avia_backend_safe_string($avia->base_data['prefix']);
+
+        if (get_option('avia_stylesheet_exists' . $safe_name) == 'true') {
+            $avia_upload_dir = wp_upload_dir();
+            if (is_ssl())
+                $avia_upload_dir['baseurl'] = str_replace("http://", "https://", $avia_upload_dir['baseurl']);
+
+            $avia_dyn_stylesheet_url = $avia_upload_dir['baseurl'] . '/dynamic_avia/' . $safe_name . '.css';
+            $version_number = get_option('avia_stylesheet_dynamic_version' . $safe_name);
+            if (empty($version_number))
+                $version_number = '1';
+
+            wp_enqueue_style('avia-dynamic', $avia_dyn_stylesheet_url, array(), $version_number, 'all');
+        }
+
+        wp_enqueue_style('avia-custom');
+
+
+        if ($child_theme_url != $template_url) {
+            wp_enqueue_style('avia-style');
+        }
+    }
+
 }
 
 
-if(!function_exists('avia_remove_default_video_styling'))
-{
-	if(!is_admin()){
-		add_action('wp_footer', 'avia_remove_default_video_styling', 1);
-	}
+if (!function_exists('avia_remove_default_video_styling')) {
+    if (!is_admin()) {
+        add_action('wp_footer', 'avia_remove_default_video_styling', 1);
+    }
 
-	function avia_remove_default_video_styling()
-	{
-		//remove default style for videos
-		wp_dequeue_style( 'mediaelement' );
-		// wp_dequeue_script( 'wp-mediaelement' );
-		// wp_dequeue_style( 'wp-mediaelement' );
-	}
+    function avia_remove_default_video_styling() {
+        //remove default style for videos
+        wp_dequeue_style('mediaelement');
+        // wp_dequeue_script( 'wp-mediaelement' );
+        // wp_dequeue_style( 'wp-mediaelement' );
+    }
+
 }
 
 
@@ -342,32 +329,30 @@ if(!function_exists('avia_remove_default_video_styling'))
 /*
  * Activate native wordpress navigation menu and register a menu location
  */
-if(!function_exists('avia_nav_menus'))
-{
-	function avia_nav_menus()
-	{
-		global $avia_config, $wp_customize;
+if (!function_exists('avia_nav_menus')) {
 
-		add_theme_support('nav_menus');
-		
-		foreach($avia_config['nav_menus'] as $key => $value)
-		{
-			//wp-admin\customize.php does not support html code in the menu description - thus we need to strip it
-			$name = (!empty($value['plain']) && !empty($wp_customize)) ? $value['plain'] : $value['html'];
-			register_nav_menu($key, THEMENAME.' '.$name);
-		}
-	}
+    function avia_nav_menus() {
+        global $avia_config, $wp_customize;
 
-	$avia_config['nav_menus'] = array(	'avia' => array('html' => __('Main Menu', 'avia_framework')),
-										'avia2' => array(
-													'html' => __('Secondary Menu <br/><small>(Will be displayed if you selected a header layout that supports a submenu <a target="_blank" href="'.admin_url('?page=avia#goto_header').'">here</a>)</small>', 'avia_framework'),
-													'plain'=> __('Secondary Menu - will be displayed if you selected a header layout that supports a submenu', 'avia_framework')),
-										'avia3' => array(
-													'html' => __('Footer Menu <br/><small>(no dropdowns)</small>', 'avia_framework'),
-													'plain'=> __('Footer Menu (no dropdowns)', 'avia_framework'))
-									);
+        add_theme_support('nav_menus');
 
-	avia_nav_menus(); //call the function immediatly to activate
+        foreach ($avia_config['nav_menus'] as $key => $value) {
+            //wp-admin\customize.php does not support html code in the menu description - thus we need to strip it
+            $name = (!empty($value['plain']) && !empty($wp_customize)) ? $value['plain'] : $value['html'];
+            register_nav_menu($key, THEMENAME . ' ' . $name);
+        }
+    }
+
+    $avia_config['nav_menus'] = array('avia' => array('html' => __('Main Menu', 'avia_framework')),
+        'avia2' => array(
+            'html' => __('Secondary Menu <br/><small>(Will be displayed if you selected a header layout that supports a submenu <a target="_blank" href="' . admin_url('?page=avia#goto_header') . '">here</a>)</small>', 'avia_framework'),
+            'plain' => __('Secondary Menu - will be displayed if you selected a header layout that supports a submenu', 'avia_framework')),
+        'avia3' => array(
+            'html' => __('Footer Menu <br/><small>(no dropdowns)</small>', 'avia_framework'),
+            'plain' => __('Footer Menu (no dropdowns)', 'avia_framework'))
+    );
+
+    avia_nav_menus(); //call the function immediatly to activate
 }
 
 
@@ -383,40 +368,35 @@ if(!function_exists('avia_nav_menus'))
  *  load some frontend functions in folder include:
  */
 
-require_once( 'includes/admin/register-portfolio.php' );		// register custom post types for portfolio entries
-require_once( 'includes/admin/register-widget-area.php' );		// register sidebar widgets for the sidebar and footer
-require_once( 'includes/loop-comments.php' );					// necessary to display the comments properly
-require_once( 'includes/helper-template-logic.php' ); 			// holds the template logic so the theme knows which tempaltes to use
-require_once( 'includes/helper-social-media.php' ); 			// holds some helper functions necessary for twitter and facebook buttons
-require_once( 'includes/helper-post-format.php' ); 				// holds actions and filter necessary for post formats
-require_once( 'includes/helper-markup.php' ); 					// holds the markup logic (schema.org and html5)
-require_once( 'includes/admin/register-plugins.php');			// register the plugins we need
+require_once( 'includes/admin/register-portfolio.php' );  // register custom post types for portfolio entries
+require_once( 'includes/admin/register-widget-area.php' );  // register sidebar widgets for the sidebar and footer
+require_once( 'includes/loop-comments.php' );     // necessary to display the comments properly
+require_once( 'includes/helper-template-logic.php' );    // holds the template logic so the theme knows which tempaltes to use
+require_once( 'includes/helper-social-media.php' );    // holds some helper functions necessary for twitter and facebook buttons
+require_once( 'includes/helper-post-format.php' );     // holds actions and filter necessary for post formats
+require_once( 'includes/helper-markup.php' );      // holds the markup logic (schema.org and html5)
+require_once( 'includes/admin/register-plugins.php');   // register the plugins we need
 
-if(current_theme_supports('avia_conditionals_for_mega_menu'))
-{
-	require_once( 'includes/helper-conditional-megamenu.php' );  // holds the walker for the responsive mega menu
+if (current_theme_supports('avia_conditionals_for_mega_menu')) {
+    require_once( 'includes/helper-conditional-megamenu.php' );  // holds the walker for the responsive mega menu
 }
 
-require_once( 'includes/helper-responsive-megamenu.php' ); 		// holds the walker for the responsive mega menu
-
-
-
-
+require_once( 'includes/helper-responsive-megamenu.php' );   // holds the walker for the responsive mega menu
 //adds the plugin initalization scripts that add styles and functions
 
-if(!current_theme_supports('deactivate_layerslider')) require_once( 'config-layerslider/config.php' );//layerslider plugin
+if (!current_theme_supports('deactivate_layerslider'))
+    require_once( 'config-layerslider/config.php' ); //layerslider plugin
 
-require_once( 'config-bbpress/config.php' );					//compatibility with  bbpress forum plugin
-require_once( 'config-templatebuilder/config.php' );			//templatebuilder plugin
-require_once( 'config-gravityforms/config.php' );				//compatibility with gravityforms plugin
-require_once( 'config-woocommerce/config.php' );				//compatibility with woocommerce plugin
-require_once( 'config-wordpress-seo/config.php' );				//compatibility with Yoast WordPress SEO plugin
-require_once( 'config-events-calendar/config.php' );			//compatibility with the Events Calendar plugin
+require_once( 'config-bbpress/config.php' );     //compatibility with  bbpress forum plugin
+require_once( 'config-templatebuilder/config.php' );   //templatebuilder plugin
+require_once( 'config-gravityforms/config.php' );    //compatibility with gravityforms plugin
+require_once( 'config-woocommerce/config.php' );    //compatibility with woocommerce plugin
+require_once( 'config-wordpress-seo/config.php' );    //compatibility with Yoast WordPress SEO plugin
+require_once( 'config-events-calendar/config.php' );   //compatibility with the Events Calendar plugin
 
 
-if(is_admin())
-{
-	require_once( 'includes/admin/helper-compat-update.php');	// include helper functions for new versions
+if (is_admin()) {
+    require_once( 'includes/admin/helper-compat-update.php'); // include helper functions for new versions
 }
 
 
@@ -425,16 +405,15 @@ if(is_admin())
 /*
  *  dynamic styles for front and backend
  */
-if(!function_exists('avia_custom_styles'))
-{
-	function avia_custom_styles()
-	{
-		require_once( 'includes/admin/register-dynamic-styles.php' );	// register the styles for dynamic frontend styling
-		avia_prepare_dynamic_styles();
-	}
+if (!function_exists('avia_custom_styles')) {
 
-	add_action('init', 'avia_custom_styles', 20);
-	add_action('admin_init', 'avia_custom_styles', 20);
+    function avia_custom_styles() {
+        require_once( 'includes/admin/register-dynamic-styles.php' ); // register the styles for dynamic frontend styling
+        avia_prepare_dynamic_styles();
+    }
+
+    add_action('init', 'avia_custom_styles', 20);
+    add_action('admin_init', 'avia_custom_styles', 20);
 }
 
 
@@ -443,22 +422,19 @@ if(!function_exists('avia_custom_styles'))
 /*
  *  activate framework widgets
  */
-if(!function_exists('avia_register_avia_widgets'))
-{
-	function avia_register_avia_widgets()
-	{
-		register_widget( 'avia_newsbox' );
-		register_widget( 'avia_portfoliobox' );
-		register_widget( 'avia_socialcount' );
-		register_widget( 'avia_combo_widget' );
-		register_widget( 'avia_partner_widget' );
-		register_widget( 'avia_google_maps' );
-		register_widget( 'avia_fb_likebox' );
-		
-		
-	}
+if (!function_exists('avia_register_avia_widgets')) {
 
-	avia_register_avia_widgets(); //call the function immediatly to activate
+    function avia_register_avia_widgets() {
+        register_widget('avia_newsbox');
+        register_widget('avia_portfoliobox');
+        register_widget('avia_socialcount');
+        register_widget('avia_combo_widget');
+        register_widget('avia_partner_widget');
+        register_widget('avia_google_maps');
+        register_widget('avia_fb_likebox');
+    }
+
+    avia_register_avia_widgets(); //call the function immediatly to activate
 }
 
 
@@ -466,20 +442,20 @@ if(!function_exists('avia_register_avia_widgets'))
 /*
  *  add post format options
  */
-add_theme_support( 'post-formats', array('link', 'quote', 'gallery','video','image','audio' ) );
+add_theme_support('post-formats', array('link', 'quote', 'gallery', 'video', 'image', 'audio'));
 
 
 
 /*
  *  Remove the default shortcode function, we got new ones that are better ;)
  */
-add_theme_support( 'avia-disable-default-shortcodes', true);
+add_theme_support('avia-disable-default-shortcodes', true);
 
 
 /*
  * compat mode for easier theme switching from one avia framework theme to another
  */
-add_theme_support( 'avia_post_meta_compat');
+add_theme_support('avia_post_meta_compat');
 
 
 /*
@@ -499,15 +475,16 @@ add_theme_support('force-post-thumbnails-in-widget');
 
 
 /*
-Plugin Name: Allow Email Login
-Plugin URI: http://en.bainternet.info
-Description: Username Allow Email LogIn
-Version: 1.0
-Author: Bainternet
-Author URI: http://en.bainternet.info
-*/
- 
+  Plugin Name: Allow Email Login
+  Plugin URI: http://en.bainternet.info
+  Description: Username Allow Email LogIn
+  Version: 1.0
+  Author: Bainternet
+  Author URI: http://en.bainternet.info
+ */
+
 add_filter('authenticate', 'bainternet_allow_email_login', 20, 3);
+
 /**
  * bainternet_allow_email_login filter to the authenticate filter hook, to fetch a username based on entered email
  * @param  obj $user
@@ -515,47 +492,108 @@ add_filter('authenticate', 'bainternet_allow_email_login', 20, 3);
  * @param  string $password [description]
  * @return boolean
  */
-function bainternet_allow_email_login( $user, $username, $password ) {
-    if ( is_email( $username ) ) {
-        $user = get_user_by_email( $username );
-        if ( $user ) $username = $user->user_login;
+function bainternet_allow_email_login($user, $username, $password) {
+    if (is_email($username)) {
+        $user = get_user_by_email($username);
+        if ($user)
+            $username = $user->user_login;
     }
-    return wp_authenticate_username_password(null, $username, $password );
+    return wp_authenticate_username_password(null, $username, $password);
 }
- 
-add_filter( 'gettext', 'addEmailToLogin', 20, 3 );
+
+add_filter('gettext', 'addEmailToLogin', 20, 3);
+
 /**
  * addEmailToLogin function to add email address to the username label
  * @param string $translated_text   translated text
  * @param string $text              original text
  * @param string $domain            text domain
  */
-function addEmailToLogin( $translated_text, $text, $domain ) {
-    if ( "Username" == $translated_text )
-        $translated_text .= __( ' Or Email');
+function addEmailToLogin($translated_text, $text, $domain) {
+    if ("Username" == $translated_text)
+        $translated_text .= __(' Or Email');
     return $translated_text;
 }
+
 // function redirect_user_on_role() {
 //     global $wpdb;
 //     //retrieve current user info 
 //     global $current_user;
 //     // if(isset(get_currentuserinfo())){
-// 	if ( is_user_logged_in() ) {
-// 	    get_currentuserinfo();
-// 	    //If login user role is Subscriber
-// 	    $human_user=get_user_meta($current_user->ID, 'wp_human_user');
-// 	    if ($current_user->user_level == 0) {
-// 	        if ( $human_user == '1') {// con esta condicional sabes si existe el user meta
-// 	            wp_redirect('http://'.$_SERVER['HTTP_HOST'].'/confirmar-datos/');
-// 	            exit;
-// 	        } else {
-// 	            wp_redirect('http://'.$_SERVER['HTTP_HOST'].'/datos-medicos/');exit;
-// 	        }
-// 	    }
+//     if (is_user_logged_in()) {
+//         get_currentuserinfo();
+//         //If login user role is Subscriber
+//         $human_user = get_user_meta($current_user->ID, 'wp_human_user');
+//         if ($current_user->user_level == 0) {
+//             if ($human_user == '1') {// con esta condicional sabes si existe el user meta
+//                 wp_redirect('http://' . $_SERVER['HTTP_HOST'] . '/confirmar-datos/');
+//                 exit;
+//             } else {
+//                 wp_redirect('http://' . $_SERVER['HTTP_HOST'] . '/datos-medicos/');
+//                 exit;
+//             }
+//         }
 //     }
-
 // }
+// function redirect_user_on_role() {
+//     global $wpdb;
+//     //retrieve current user info 
+//     global $current_user;
+//     get_currentuserinfo();
+//     // if(isset(get_currentuserinfo())){
+//     if (is_user_logged_in()) {
+//         // get_currentuserinfo();
+//         //If login user role is Subscriber
+//         $current_user = wp_get_current_user();
+//         $email_user = $current_user->user_email;
+
+// CONDICIONAL ESTÁ MAL COMPÁ!!!!!!!!!!!!!!!!!!
+//         // $human_user=get_user_meta($current_user->ID, 'wp_human_user');
+//         if (preg_match('/lifeband/',$email_user)) {
+//             wp_redirect('http://' . $_SERVER['HTTP_HOST'] . '/confirmar-datos/?hash=540f6f564efghahk');
+//             exit;
+//         } else {
+//             wp_redirect('http://' . $_SERVER['HTTP_HOST'] . '/datos-medicos/');
+//             exit;
+//         }
+//     }
+// }
+
 // add_filter( 'gettext', 'redirect_user_on_role', 20, 3 );
-// add_action('admin_init', 'redirect_user_on_role');
-require_once( 'add-functions.php');
+/*add_filter( 'login_redirect', 'redirect_user_on_role' );*/
+ // add_filter( 'admin_init', 'redirect_user_on_role' );
+//add_action('template_redirect', 'redirect_user_on_role');
+// function cm_redirect_users_by_role() {
+//     $current_user   = wp_get_current_user();
+//     $role_name      = $current_user->roles[0];
+//     if ( 'administrator' === $role_name ) {
+//         wp_redirect( 'http://lifeband.com.mx/datos-basicos' );
+//     } // if
+// } // cm_redirect_users_by_role
+// add_action( 'admin_init', 'cm_redirect_users_by_role' );
+// require_once( 'add-functions.php');
+
+/*function redirect_home( $redirect_to, $request, $user )
+{
+    return wp_redirect('http://' . $_SERVER['HTTP_HOST'] . '/confirmar-datos/?hash=540f6f564efghahk'); 
+    // exit();
+    // return home_url();
+}*/
+// add_filter( 'login_redirect', 'redirect_home' );
+// function cm_redirect_users_by_role() {
+ 
+//     $current_user   = wp_get_current_user();
+//     $role_name      = $current_user->roles[0];
+ 
+//     if ( 'administrator' !== $role_name ) {
+//         // wp_redirect( 'http://yoursite.com/dashboard' );
+//         wp_redirect('http://' . $_SERVER['HTTP_HOST'] . '/confirmar-datos/?hash=540f6f564efghahk');
+//     }else{
+//         wp_redirect('http://' . $_SERVER['HTTP_HOST'] . '/datos-basicos/');
+
+//     }
+//      // if
+ 
+// } // cm_redirect_users_by_role
+// add_action( 'admin_init', 'cm_redirect_users_by_role' );
 require_once( 'functions-enfold.php');
