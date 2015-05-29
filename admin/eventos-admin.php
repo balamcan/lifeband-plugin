@@ -91,8 +91,8 @@ if (!empty($_POST['f_termino_fs']) || !empty($_POST['h_termino_fs'])) {
 }
 $eventos = $wpdb->get_results('select id, nombre, date(f_inicio) as f_inicio, time(f_inicio) as h_inicio, date(f_termino) as f_termino,
 time(f_termino) as h_termino, lugar, descripcion, activo from '.$wpdb->prefix.'evento as e', OBJECT);
-<<<<<<< Updated upstream
-=======
+// <<<<<<< Updated upstream
+// =======
 
 $correos = $wpdb->get_results('SELECT c.*, e.nombre as evento FROM '.$wpdb->prefix.'correos_evento as c '
         . 'LEFT JOIN '.$wpdb->prefix.'evento as e on c.id_'.$wpdb->prefix.'evento = e.id', ARRAY_A);
@@ -111,8 +111,8 @@ $qNumberOfRows = $wpdb->get_row('SELECT Count(*) as number FROM '.$wpdb->prefix.
 
 $numberOfRows = ceil($qNumberOfRows->number / $fin);
 //$numberOfRows = $numberOfRows ;
-$paginator = paginator($numberOfRows, $inicio);
->>>>>>> Stashed changes
+// $paginator = paginator($numberOfRows, $inicio);
+// >>>>>>> Stashed changes
 ?>
 
 <style type="text/css">
@@ -249,7 +249,15 @@ $paginator = paginator($numberOfRows, $inicio);
                     <a href="http://lifeband.com.mx/wp-admin/admin.php?page=lifeband-plugin-event-menu&editar_fs= '.$e->id.'&activar_fs= '.(($e->activo=='1')?'0':'1'). '">Activo</a> 
                 </td> 
                 
-                <td><a href="http://lifeband.com.mx/printqr/?id= ' . $e->id . '">QRs</a></td> 
+                <td>
+
+                <a href="http://lifeband.com.mx/printqr/?id= ' . $e->id . '">QRs</a>&nbsp;
+                <a href="http://lifeband.com.mx/printqr2/?id= ' . $e->id . '">Medalla grande</a>&nbsp;
+                <a href="http://lifeband.com.mx/printqr3/?id= ' . $e->id . '">Pulsera</a>&nbsp;
+                <a href="http://lifeband.com.mx/printqr4/?id= ' . $e->id . '">Medalla chica</a>&nbsp;
+                <a href="http://lifeband.com.mx/printqrrecipe/?id= ' . $e->id . '">Instructivo</a>
+
+                </td> 
             </tr>';
             }
             ?>
